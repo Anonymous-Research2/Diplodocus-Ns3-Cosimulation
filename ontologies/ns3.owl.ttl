@@ -1,0 +1,80 @@
+@prefix : <http://labsoc.telecom-paris.fr/ns3#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://labsoc.telecom-paris.fr/ns3> rdf:type owl:Ontology ;
+    rdfs:comment "Minimal NS3 ontology: covers the Packet and NsTime concepts needed." .
+
+### ----------------------------------------------------------------
+### Classes
+### ----------------------------------------------------------------
+
+:Packet rdf:type owl:Class ;
+    rdfs:comment "An ns3::Packet object injected into a socket for transmission." .
+
+:Socket rdf:type owl:Class ;
+    rdfs:comment "An ns3::Socket, the endpoint a Packet is sent through." .
+
+:NsTimePoint rdf:type owl:Class ;
+    rdfs:comment "A point in NS3's physical simulated time, measured in nanoseconds." .
+
+:TransferResult rdf:type owl:Class ;
+    rdfs:comment "The result of a completed NS3 transfer: arrival time and measured latency." .
+
+### ----------------------------------------------------------------
+### Object properties
+### ----------------------------------------------------------------
+
+:sentThrough rdf:type owl:ObjectProperty ;
+    rdfs:domain :Packet ;
+    rdfs:range :Socket ;
+    rdfs:comment "Links a Packet to the Socket it is transmitted through." .
+
+:arrivesAt rdf:type owl:ObjectProperty ;
+    rdfs:domain :TransferResult ;
+    rdfs:range :NsTimePoint ;
+    rdfs:comment "The NS3 simulated time at which a packet transfer completed." .
+
+### ----------------------------------------------------------------
+### Datatype properties (the values that change at runtime)
+### ----------------------------------------------------------------
+
+:PacketSize rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Packet ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "The size of the packet in bytes, as given to ns3::Packet's constructor." .
+
+:nsValue rdf:type owl:DatatypeProperty ;
+    rdfs:domain :NsTimePoint ;
+    rdfs:range xsd:double ;
+    rdfs:comment "The nanosecond value of an NsTimePoint." .
+
+:measuredLatencyNs rdf:type owl:DatatypeProperty ;
+    rdfs:domain :TransferResult ;
+    rdfs:range xsd:double ;
+    rdfs:comment "The end-to-end latency measured by NS3 for this transfer, in nanoseconds." .
+    
+
+### ================================================================
+### Socket kinds and their configuration (new)
+### ================================================================
+
+:TcpSocket rdf:type owl:Class ;
+    rdfs:subClassOf :Socket ;
+    rdfs:comment "ns3::TcpSocket: reliable, flow-controlled. A send() blocks when the send buffer (SndBufSize) is full." .
+
+:UdpSocket rdf:type owl:Class ;
+    rdfs:subClassOf :Socket ;
+    rdfs:comment "ns3::UdpSocket: datagrams, no retransmission, no flow control. Losses reach the application." .
+
+:TcpSocket owl:disjointWith :UdpSocket .
+
+:sndBufSize rdf:type owl:DatatypeProperty ;
+    rdfs:domain :TcpSocket ;
+    rdfs:comment "ns3::TcpSocket attribute SndBufSize, in bytes. (No rdfs:range on purpose: the value is computed by a SWRL builtin.)" .
+
+:errorRate rdf:type owl:DatatypeProperty ;
+    rdfs:domain :UdpSocket ;
+    rdfs:comment "ErrorRate of the ns3::RateErrorModel (ErrorUnit = packet) installed as ReceiveErrorModel on the receiving NetDevice of this flow. (No rdfs:range on purpose: computed by a SWRL builtin.)" .

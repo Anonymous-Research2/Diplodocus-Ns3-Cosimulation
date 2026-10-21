@@ -1,0 +1,414 @@
+@prefix :     <http://labsoc.telecom-paris.fr/mapping#> .
+@prefix dip:  <http://labsoc.telecom-paris.fr/diplodocus#> .
+@prefix ns3:  <http://labsoc.telecom-paris.fr/ns3#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix swrlb:<http://www.w3.org/2003/11/swrlb#> .
+@prefix var:  <urn:swrl-var#> .
+
+<http://labsoc.telecom-paris.fr/mapping> rdf:type owl:Ontology ;
+    rdfs:comment "Mapping ontology between Diplodocus and NS3." .
+
+### ----------------------------------------------------------------
+### PART A — Class equivalences (OWL reasoner, both Jena and Pellet)
+### ----------------------------------------------------------------
+dip:DataQuantity   owl:equivalentClass ns3:Packet .
+dip:NetTask        owl:equivalentClass ns3:Socket .
+dip:CycleTimePoint owl:equivalentClass ns3:NsTimePoint .
+
+### ----------------------------------------------------------------
+### PART B — Property equivalences (OWL reasoner, both Jena and Pellet)
+### ----------------------------------------------------------------
+dip:DataSize owl:equivalentProperty ns3:PacketSize .
+ns3:PacketSize owl:equivalentProperty dip:DataSize .
+
+### ----------------------------------------------------------------
+### SWRL variable declarations
+###
+### FIX: variables must be NAMED URI resources, not anonymous blank
+### nodes. Previously each "[ rdf:type swrl:Variable ; rdf:value \"x\" ]"
+### created a brand new, disconnected blank node -- Openllet's rule
+### loader requires a URI it can resolve, hence the
+### "UnsupportedOperationException: ... is not a URI node" crash.
+### Each variable below is declared once and reused by URI everywhere
+### it appears in the rule body/head. Variables are namespaced per
+### rule (CycleToNsRule / NsToCycleRule) to keep them clearly scoped.
+### ----------------------------------------------------------------
+
+var:CycleToNsRule_c      rdf:type swrl:Variable .
+var:CycleToNsRule_cv     rdf:type swrl:Variable .
+var:CycleToNsRule_t      rdf:type swrl:Variable .
+var:CycleToNsRule_f      rdf:type swrl:Variable .
+var:CycleToNsRule_period rdf:type swrl:Variable .
+var:CycleToNsRule_nsv    rdf:type swrl:Variable .
+
+var:NsToCycleRule_r      rdf:type swrl:Variable .
+var:NsToCycleRule_lat    rdf:type swrl:Variable .
+var:NsToCycleRule_t      rdf:type swrl:Variable .
+var:NsToCycleRule_f      rdf:type swrl:Variable .
+var:NsToCycleRule_fGHz   rdf:type swrl:Variable .
+var:NsToCycleRule_dc     rdf:type swrl:Variable .
+
+### ----------------------------------------------------------------
+### PART C — SWRL Rule 1: Diplodocus cycle -> NS3 nanoseconds
+###
+### In human terms:
+###   ns_value = cycleValue * (1e9 / masterClockFrequencyHz)
+###
+### SWRL body:
+###   dip:CycleTimePoint(?c)
+###   dip:cycleValue(?c, ?cv)
+###   dip:NetTask(?t)
+###   dip:masterClockFrequencyHz(?t, ?f)
+###   swrlb:divide(?period, 1000000000.0, ?f)   -- period = 1e9/f
+###   swrlb:multiply(?nsv, ?cv, ?period)         -- nsv = cv * period
+###
+### SWRL head:
+###   ns3:NsTimePoint(?c)
+###   ns3:nsValue(?c, ?nsv)
+### ----------------------------------------------------------------
+
+:CycleToNsRule rdf:type swrl:Imp ;
+    rdfs:label "cycle_to_ns" ;
+    rdfs:comment "Fired by Pellet SWRL engine. Infers ns3:nsValue on every dip:CycleTimePoint individual." ;
+    swrl:body [
+        rdf:type swrl:AtomList ;
+        rdf:first [
+            rdf:type swrl:ClassAtom ;
+            swrl:classPredicate dip:CycleTimePoint ;
+            swrl:argument1 var:CycleToNsRule_c
+        ] ;
+        rdf:rest [
+            rdf:type swrl:AtomList ;
+            rdf:first [
+                rdf:type swrl:DatavaluedPropertyAtom ;
+                swrl:propertyPredicate dip:cycleValue ;
+                swrl:argument1 var:CycleToNsRule_c ;
+                swrl:argument2 var:CycleToNsRule_cv
+            ] ;
+            rdf:rest [
+                rdf:type swrl:AtomList ;
+                rdf:first [
+                    rdf:type swrl:ClassAtom ;
+                    swrl:classPredicate dip:NetTask ;
+                    swrl:argument1 var:CycleToNsRule_t
+                ] ;
+                rdf:rest [
+                    rdf:type swrl:AtomList ;
+                    rdf:first [
+                        rdf:type swrl:DatavaluedPropertyAtom ;
+                        swrl:propertyPredicate dip:masterClockFrequencyHz ;
+                        swrl:argument1 var:CycleToNsRule_t ;
+                        swrl:argument2 var:CycleToNsRule_f
+                    ] ;
+                    rdf:rest [
+                        rdf:type swrl:AtomList ;
+                        rdf:first [
+                            rdf:type swrl:BuiltinAtom ;
+                            swrl:builtin swrlb:divide ;
+                            swrl:arguments [
+                                rdf:type rdf:List ;
+                                rdf:first var:CycleToNsRule_period ;
+                                rdf:rest [
+                                    rdf:type rdf:List ;
+                                    rdf:first "1000000000.0"^^xsd:double ;
+                                    rdf:rest [
+                                        rdf:type rdf:List ;
+                                        rdf:first var:CycleToNsRule_f ;
+                                        rdf:rest rdf:nil
+                                    ]
+                                ]
+                            ]
+                        ] ;
+                        rdf:rest [
+                            rdf:type swrl:AtomList ;
+                            rdf:first [
+                                rdf:type swrl:BuiltinAtom ;
+                                swrl:builtin swrlb:multiply ;
+                                swrl:arguments [
+                                    rdf:type rdf:List ;
+                                    rdf:first var:CycleToNsRule_nsv ;
+                                    rdf:rest [
+                                        rdf:type rdf:List ;
+                                        rdf:first var:CycleToNsRule_cv ;
+                                        rdf:rest [
+                                            rdf:type rdf:List ;
+                                            rdf:first var:CycleToNsRule_period ;
+                                            rdf:rest rdf:nil
+                                        ]
+                                    ]
+                                ]
+                            ] ;
+                            rdf:rest rdf:nil
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ] ;
+    swrl:head [
+        rdf:type swrl:AtomList ;
+        rdf:first [
+            rdf:type swrl:ClassAtom ;
+            swrl:classPredicate ns3:NsTimePoint ;
+            swrl:argument1 var:CycleToNsRule_c
+        ] ;
+        rdf:rest [
+            rdf:type swrl:AtomList ;
+            rdf:first [
+                rdf:type swrl:DatavaluedPropertyAtom ;
+                swrl:propertyPredicate ns3:nsValue ;
+                swrl:argument1 var:CycleToNsRule_c ;
+                swrl:argument2 var:CycleToNsRule_nsv
+            ] ;
+            rdf:rest rdf:nil
+        ]
+    ] .
+
+### ----------------------------------------------------------------
+### PART D — SWRL Rule 2: NS3 nanoseconds -> Diplodocus cycles
+###
+### In human terms:
+###   delay_cycles = measuredLatencyNs * (masterClockFrequencyHz / 1e9)
+###
+### SWRL body:
+###   ns3:TransferResult(?r)
+###   ns3:measuredLatencyNs(?r, ?lat)
+###   dip:NetTask(?t)
+###   dip:masterClockFrequencyHz(?t, ?f)
+###   swrlb:divide(?fGHz, ?f, 1000000000.0)     -- fGHz = f/1e9
+###   swrlb:multiply(?dc, ?lat, ?fGHz)           -- dc = lat * fGHz
+###
+### SWRL head:
+###   dip:CycleTimePoint(?r)
+###   dip:cycleValue(?r, ?dc)
+### ----------------------------------------------------------------
+
+:NsToCycleRule rdf:type swrl:Imp ;
+    rdfs:label "ns_to_cycle" ;
+    rdfs:comment "Fired by Pellet SWRL engine. Infers dip:cycleValue on every ns3:TransferResult individual." ;
+    swrl:body [
+        rdf:type swrl:AtomList ;
+        rdf:first [
+            rdf:type swrl:ClassAtom ;
+            swrl:classPredicate ns3:TransferResult ;
+            swrl:argument1 var:NsToCycleRule_r
+        ] ;
+        rdf:rest [
+            rdf:type swrl:AtomList ;
+            rdf:first [
+                rdf:type swrl:DatavaluedPropertyAtom ;
+                swrl:propertyPredicate ns3:measuredLatencyNs ;
+                swrl:argument1 var:NsToCycleRule_r ;
+                swrl:argument2 var:NsToCycleRule_lat
+            ] ;
+            rdf:rest [
+                rdf:type swrl:AtomList ;
+                rdf:first [
+                    rdf:type swrl:ClassAtom ;
+                    swrl:classPredicate dip:NetTask ;
+                    swrl:argument1 var:NsToCycleRule_t
+                ] ;
+                rdf:rest [
+                    rdf:type swrl:AtomList ;
+                    rdf:first [
+                        rdf:type swrl:DatavaluedPropertyAtom ;
+                        swrl:propertyPredicate dip:masterClockFrequencyHz ;
+                        swrl:argument1 var:NsToCycleRule_t ;
+                        swrl:argument2 var:NsToCycleRule_f
+                    ] ;
+                    rdf:rest [
+                        rdf:type swrl:AtomList ;
+                        rdf:first [
+                            rdf:type swrl:BuiltinAtom ;
+                            swrl:builtin swrlb:divide ;
+                            swrl:arguments [
+                                rdf:type rdf:List ;
+                                rdf:first var:NsToCycleRule_fGHz ;
+                                rdf:rest [
+                                    rdf:type rdf:List ;
+                                    rdf:first var:NsToCycleRule_f ;
+                                    rdf:rest [
+                                        rdf:type rdf:List ;
+                                        rdf:first "1000000000.0"^^xsd:double ;
+                                        rdf:rest rdf:nil
+                                    ]
+                                ]
+                            ]
+                        ] ;
+                        rdf:rest [
+                            rdf:type swrl:AtomList ;
+                            rdf:first [
+                                rdf:type swrl:BuiltinAtom ;
+                                swrl:builtin swrlb:multiply ;
+                                swrl:arguments [
+                                    rdf:type rdf:List ;
+                                    rdf:first var:NsToCycleRule_dc ;
+                                    rdf:rest [
+                                        rdf:type rdf:List ;
+                                        rdf:first var:NsToCycleRule_lat ;
+                                        rdf:rest [
+                                            rdf:type rdf:List ;
+                                            rdf:first var:NsToCycleRule_fGHz ;
+                                            rdf:rest rdf:nil
+                                        ]
+                                    ]
+                                ]
+                            ] ;
+                            rdf:rest rdf:nil
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ] ;
+    swrl:head [
+        rdf:type swrl:AtomList ;
+        rdf:first [
+            rdf:type swrl:ClassAtom ;
+            swrl:classPredicate dip:CycleTimePoint ;
+            swrl:argument1 var:NsToCycleRule_r
+        ] ;
+        rdf:rest [
+            rdf:type swrl:AtomList ;
+            rdf:first [
+                rdf:type swrl:DatavaluedPropertyAtom ;
+                swrl:propertyPredicate dip:cycleValue ;
+                swrl:argument1 var:NsToCycleRule_r ;
+                swrl:argument2 var:NsToCycleRule_dc
+            ] ;
+            rdf:rest rdf:nil
+        ]
+    ] .
+
+### ================================================================
+### PART E - Transport selection from Diplodocus channel semantics (new)
+###
+### Each axiom encodes ONE independent requirement of a network-mapped
+### channel on the network transport. The reasoner combines them:
+###   - a lossless channel needs reliable delivery           -> TCP
+###   - a blocking-write channel needs backpressure          -> TCP
+###   - a lossy channel needs losses visible to the reader   -> UDP
+### TCP and UDP are disjoint (ns3 ontology). A channel that is both
+### blocking AND lossy therefore makes its NetTasks members of two
+### disjoint classes: the ontology becomes INCONSISTENT and Pellet
+### explains which axioms conflict. Channels mapped on a Bus are never
+### NetworkChannels, so they never constrain the socket.
+### dip:NetTask is equivalent to ns3:Socket (PART A), so the NetTask
+### individual itself is classified as a TcpSocket or a UdpSocket.
+### ================================================================
+
+[ rdf:type owl:Class ;
+  owl:intersectionOf ( dip:NetTask
+      [ rdf:type owl:Restriction ; owl:onProperty dip:handlesChannel ;
+        owl:someValuesFrom [ rdf:type owl:Class ;
+            owl:intersectionOf ( dip:NetworkChannel dip:LosslessChannel ) ] ] )
+] rdfs:subClassOf ns3:TcpSocket .
+
+[ rdf:type owl:Class ;
+  owl:intersectionOf ( dip:NetTask
+      [ rdf:type owl:Restriction ; owl:onProperty dip:handlesChannel ;
+        owl:someValuesFrom [ rdf:type owl:Class ;
+            owl:intersectionOf ( dip:NetworkChannel dip:BackpressureChannel ) ] ] )
+] rdfs:subClassOf ns3:TcpSocket .
+
+[ rdf:type owl:Class ;
+  owl:intersectionOf ( dip:NetTask
+      [ rdf:type owl:Restriction ; owl:onProperty dip:handlesChannel ;
+        owl:someValuesFrom [ rdf:type owl:Class ;
+            owl:intersectionOf ( dip:NetworkChannel dip:LossyChannel ) ] ] )
+] rdfs:subClassOf ns3:UdpSocket .
+
+### ================================================================
+### PART F - Socket parameters derived from channel attributes (new)
+###
+### SndBufRule:    TcpSocket(?t) ^ handlesChannel(?t,?ch) ^ NetworkChannel(?ch)
+###                ^ capacitySamples(?ch,?cap) ^ widthBytes(?ch,?w)
+###                ^ multiply(?b,?cap,?w)          -> sndBufSize(?t,?b)
+###   The TCP send buffer holds exactly the 'capacity' samples of the
+###   Diplodocus channel, so a TCP send() blocks exactly when the
+###   Diplodocus writer would block.
+### ErrorRateRule: UdpSocket(?t) ^ handlesChannel(?t,?ch) ^ NetworkChannel(?ch)
+###                ^ lossPercentage(?ch,?p)
+###                ^ divide(?r,?p,100.0)           -> errorRate(?t,?r)
+### Note: the class atoms TcpSocket / UdpSocket are INFERRED (PART E),
+### not asserted: the rules fire on the reasoner's classification.
+### ================================================================
+
+var:SndBufRule_t rdf:type swrl:Variable .
+var:SndBufRule_ch rdf:type swrl:Variable .
+var:SndBufRule_cap rdf:type swrl:Variable .
+var:SndBufRule_w rdf:type swrl:Variable .
+var:SndBufRule_b rdf:type swrl:Variable .
+var:ErrorRateRule_t rdf:type swrl:Variable .
+var:ErrorRateRule_ch rdf:type swrl:Variable .
+var:ErrorRateRule_p rdf:type swrl:Variable .
+var:ErrorRateRule_r rdf:type swrl:Variable .
+
+:SndBufRule rdf:type swrl:Imp ;
+    rdfs:label "snd_buf_from_capacity" ;
+    rdfs:comment "TCP SndBufSize = capacity x width of the network channel." ;
+    swrl:body [
+    rdf:type swrl:AtomList ;
+    rdf:first [ rdf:type swrl:ClassAtom ; swrl:classPredicate ns3:TcpSocket ; swrl:argument1 var:SndBufRule_t ] ;
+    rdf:rest [
+    rdf:type swrl:AtomList ;
+    rdf:first [ rdf:type swrl:IndividualPropertyAtom ; swrl:propertyPredicate dip:handlesChannel ; swrl:argument1 var:SndBufRule_t ; swrl:argument2 var:SndBufRule_ch ] ;
+    rdf:rest [
+    rdf:type swrl:AtomList ;
+    rdf:first [ rdf:type swrl:ClassAtom ; swrl:classPredicate dip:NetworkChannel ; swrl:argument1 var:SndBufRule_ch ] ;
+    rdf:rest [
+    rdf:type swrl:AtomList ;
+    rdf:first [ rdf:type swrl:DatavaluedPropertyAtom ; swrl:propertyPredicate dip:capacitySamples ; swrl:argument1 var:SndBufRule_ch ; swrl:argument2 var:SndBufRule_cap ] ;
+    rdf:rest [
+    rdf:type swrl:AtomList ;
+    rdf:first [ rdf:type swrl:DatavaluedPropertyAtom ; swrl:propertyPredicate dip:widthBytes ; swrl:argument1 var:SndBufRule_ch ; swrl:argument2 var:SndBufRule_w ] ;
+    rdf:rest [
+    rdf:type swrl:AtomList ;
+    rdf:first [ rdf:type swrl:BuiltinAtom ; swrl:builtin swrlb:multiply ; swrl:arguments [ rdf:type rdf:List ; rdf:first var:SndBufRule_b ; rdf:rest [ rdf:type rdf:List ; rdf:first var:SndBufRule_cap ; rdf:rest [ rdf:type rdf:List ; rdf:first var:SndBufRule_w ; rdf:rest rdf:nil ] ] ] ] ;
+    rdf:rest rdf:nil
+]
+]
+]
+]
+]
+] ;
+    swrl:head [
+    rdf:type swrl:AtomList ;
+    rdf:first [ rdf:type swrl:DatavaluedPropertyAtom ; swrl:propertyPredicate ns3:sndBufSize ; swrl:argument1 var:SndBufRule_t ; swrl:argument2 var:SndBufRule_b ] ;
+    rdf:rest rdf:nil
+] .
+
+:ErrorRateRule rdf:type swrl:Imp ;
+    rdfs:label "error_rate_from_loss" ;
+    rdfs:comment "UDP RateErrorModel ErrorRate = lossPercentage / 100." ;
+    swrl:body [
+    rdf:type swrl:AtomList ;
+    rdf:first [ rdf:type swrl:ClassAtom ; swrl:classPredicate ns3:UdpSocket ; swrl:argument1 var:ErrorRateRule_t ] ;
+    rdf:rest [
+    rdf:type swrl:AtomList ;
+    rdf:first [ rdf:type swrl:IndividualPropertyAtom ; swrl:propertyPredicate dip:handlesChannel ; swrl:argument1 var:ErrorRateRule_t ; swrl:argument2 var:ErrorRateRule_ch ] ;
+    rdf:rest [
+    rdf:type swrl:AtomList ;
+    rdf:first [ rdf:type swrl:ClassAtom ; swrl:classPredicate dip:NetworkChannel ; swrl:argument1 var:ErrorRateRule_ch ] ;
+    rdf:rest [
+    rdf:type swrl:AtomList ;
+    rdf:first [ rdf:type swrl:DatavaluedPropertyAtom ; swrl:propertyPredicate dip:lossPercentage ; swrl:argument1 var:ErrorRateRule_ch ; swrl:argument2 var:ErrorRateRule_p ] ;
+    rdf:rest [
+    rdf:type swrl:AtomList ;
+    rdf:first [ rdf:type swrl:BuiltinAtom ; swrl:builtin swrlb:divide ; swrl:arguments [ rdf:type rdf:List ; rdf:first var:ErrorRateRule_r ; rdf:rest [ rdf:type rdf:List ; rdf:first var:ErrorRateRule_p ; rdf:rest [ rdf:type rdf:List ; rdf:first "100.0"^^xsd:double ; rdf:rest rdf:nil ] ] ] ] ;
+    rdf:rest rdf:nil
+]
+]
+]
+]
+] ;
+    swrl:head [
+    rdf:type swrl:AtomList ;
+    rdf:first [ rdf:type swrl:DatavaluedPropertyAtom ; swrl:propertyPredicate ns3:errorRate ; swrl:argument1 var:ErrorRateRule_t ; swrl:argument2 var:ErrorRateRule_r ] ;
+    rdf:rest rdf:nil
+] .
+

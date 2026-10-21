@@ -1,0 +1,225 @@
+@prefix : <http://labsoc.telecom-paris.fr/diplodocus#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://labsoc.telecom-paris.fr/diplodocus> rdf:type owl:Ontology ;
+    rdfs:comment "Minimal Diplodocus ontology: covers the DataSize and CycleTime concepts of a network transfer, extended with channel semantics (blocking, loss) and channel-to-architecture mapping. Instantiated for the WACS/WADC running case study." .
+
+### ================================================================
+### PART 1 - ORIGINAL TRANSFER CORE (unchanged)
+### ================================================================
+
+### ----------------------------------------------------------------
+### Classes
+### ----------------------------------------------------------------
+
+:NetTask rdf:type owl:Class ;
+    rdfs:comment "A TMLNetTask: a Diplodocus task that performs a network transfer (one channel end)." .
+
+:WriteChannelCommand rdf:type owl:Class ;
+    rdfs:comment "A time-consuming command that writes a quantity of data to a channel destined for the network." .
+
+:DataQuantity rdf:type owl:Class ;
+    rdfs:comment "An abstract quantity of data manipulated inside Diplodocus (bytes, not a real buffer)." .
+
+:CycleTimePoint rdf:type owl:Class ;
+    rdfs:comment "A point in Diplodocus' abstract logical clock, measured in master-clock cycles." .
+
+### ----------------------------------------------------------------
+### Object properties
+### ----------------------------------------------------------------
+
+:hasDataQuantity rdf:type owl:ObjectProperty ;
+    rdfs:domain :WriteChannelCommand ;
+    rdfs:range :DataQuantity ;
+    rdfs:comment "Links a WriteChannelCommand to the data quantity it transfers." .
+
+:startsAtCycle rdf:type owl:ObjectProperty ;
+    rdfs:domain :WriteChannelCommand ;
+    rdfs:range :CycleTimePoint ;
+    rdfs:comment "The Diplodocus cycle at which the network transaction begins." .
+
+:endsAtCycle rdf:type owl:ObjectProperty ;
+    rdfs:domain :WriteChannelCommand ;
+    rdfs:range :CycleTimePoint ;
+    rdfs:comment "The Diplodocus cycle at which the network transaction completes. Filled in only after the NS3 result returns." .
+
+### ----------------------------------------------------------------
+### Datatype properties (the values that change at runtime)
+### ----------------------------------------------------------------
+
+:DataSize rdf:type owl:DatatypeProperty ;
+    rdfs:domain :DataQuantity ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "The size of the data quantity in bytes. Read from the live Diplodocus simulation state, not static." .
+
+:cycleValue rdf:type owl:DatatypeProperty ;
+    rdfs:domain :CycleTimePoint ;
+    rdfs:range xsd:double ;
+    rdfs:comment "The integer cycle count of a CycleTimePoint, w.r.t. the master clock." .
+
+:masterClockFrequencyHz rdf:type owl:DatatypeProperty ;
+    rdfs:domain :NetTask ;
+    rdfs:range xsd:double ;
+    rdfs:comment "The master clock frequency (Hz) used to convert this task's cycles to/from nanoseconds." .
+
+### ================================================================
+### PART 2 - CHANNEL SEMANTICS AND MAPPING (new)
+###
+### Only Diplodocus concepts appear here. Nothing in this ontology
+### mentions ns-3: what a channel REQUIRES from a network is stated
+### in the mapping ontology.
+### ================================================================
+
+### ----------------------------------------------------------------
+### Classes
+### ----------------------------------------------------------------
+
+:Channel rdf:type owl:Class ;
+    rdfs:comment "A TML data channel between two task ports (TMLbrbwChannel, TMLbrnbwChannel, ...). Attributes are those of the port dialog in TTool." .
+
+:ArchitectureElement rdf:type owl:Class ;
+    rdfs:comment "A communication element of the DIPLODOCUS architecture on which a channel can be mapped." .
+
+:Bus rdf:type owl:Class ;
+    rdfs:subClassOf :ArchitectureElement ;
+    rdfs:comment "A DIPLODOCUS bus (local, memory-mapped communication)." .
+
+:Network rdf:type owl:Class ;
+    rdfs:subClassOf :ArchitectureElement ;
+    rdfs:comment "A DIPLODOCUS network element (link between network interfaces / routers)." .
+
+:Bus owl:disjointWith :Network .
+
+### Defined classes: membership is COMPUTED by the reasoner from the
+### channel attributes and from the mapping; nobody asserts them.
+
+:NetworkChannel rdf:type owl:Class ;
+    owl:equivalentClass [
+        rdf:type owl:Class ;
+        owl:intersectionOf ( :Channel
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :mappedOn ;
+                               owl:someValuesFrom :Network ] )
+    ] ;
+    rdfs:comment "A channel mapped on at least one Network element. Decided by the MAPPING, not by the tasks (Y-chart separation)." .
+
+:BackpressureChannel rdf:type owl:Class ;
+    owl:equivalentClass [
+        rdf:type owl:Class ;
+        owl:intersectionOf ( :Channel
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :isBlocking ;
+                               owl:hasValue "true"^^xsd:boolean ] )
+    ] ;
+    rdfs:comment "Blocking-write channel (TMLbrbwChannel): the writer is suspended when 'capacity' samples are pending." .
+
+:LossyChannel rdf:type owl:Class ;
+    owl:equivalentClass [
+        rdf:type owl:Class ;
+        owl:intersectionOf ( :Channel
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :isLossy ;
+                               owl:hasValue "true"^^xsd:boolean ] )
+    ] ;
+    rdfs:comment "Channel whose semantics include data loss (lossPercentage): the reader must observe missing samples." .
+
+:LosslessChannel rdf:type owl:Class ;
+    owl:equivalentClass [
+        rdf:type owl:Class ;
+        owl:intersectionOf ( :Channel
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :isLossy ;
+                               owl:hasValue "false"^^xsd:boolean ] )
+    ] ;
+    rdfs:comment "Channel whose semantics guarantee delivery of every written sample." .
+
+### ----------------------------------------------------------------
+### Object properties
+### ----------------------------------------------------------------
+
+:handlesChannel rdf:type owl:ObjectProperty ;
+    rdfs:domain :NetTask ;
+    rdfs:range :Channel ;
+    rdfs:comment "A NetTask (network-interface task) reads or writes this channel." .
+
+:writesOn rdf:type owl:ObjectProperty ;
+    rdfs:domain :WriteChannelCommand ;
+    rdfs:range :Channel ;
+    rdfs:comment "The channel a WriteChannelCommand writes to." .
+
+:issuedBy rdf:type owl:ObjectProperty ;
+    rdfs:domain :WriteChannelCommand ;
+    rdfs:range :NetTask ;
+    rdfs:comment "The NetTask that executes this WriteChannelCommand." .
+
+:mappedOn rdf:type owl:ObjectProperty ;
+    rdfs:domain :Channel ;
+    rdfs:range :ArchitectureElement ;
+    rdfs:comment "Architecture element (bus, network) a channel is mapped on (TTool mapping)." .
+
+### ----------------------------------------------------------------
+### Datatype properties (read from the TTool port dialog)
+### ----------------------------------------------------------------
+
+:channelName rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Channel ;
+    rdfs:range xsd:string .
+
+:isBlocking rdf:type owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Channel ;
+    rdfs:range xsd:boolean ;
+    rdfs:comment "Port dialog 'Blocking?'. true => TMLbrbwChannel (blocking write)." .
+
+:isLossy rdf:type owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Channel ;
+    rdfs:range xsd:boolean ;
+    rdfs:comment "Port dialog 'Lossy'." .
+
+:lossPercentage rdf:type owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Channel ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "Port dialog 'Loss percentage'." .
+
+:maxNbOfLoss rdf:type owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Channel ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "Port dialog 'Max nb of loss' (0 = unbounded)." .
+
+:capacitySamples rdf:type owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Channel ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "Port dialog 'Capacity' (samples pending before a blocking writer is suspended)." .
+
+:widthBytes rdf:type owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Channel ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "Port dialog 'Width (in Byte)': size of one sample." .
+
+### ================================================================
+### PART 3 - START-UP MODEL CHECK (new)
+###
+### Diplodocus writes ONE ModelCheckRequest before cycle 0. The Java
+### bridge then reads the TTool model, adds the Channel / NetTask /
+### Network / Bus individuals below, and asks the reasoner whether the
+### network channels can be co-simulated (consistency + TCP/UDP).
+### ================================================================
+
+:ModelCheckRequest rdf:type owl:Class ;
+    rdfs:comment "Request, written by Diplodocus at start-up, to check the network channels of a TTool model before co-simulation." .
+
+:modelPath rdf:type owl:DatatypeProperty ;
+    rdfs:domain :ModelCheckRequest ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Path of the TTool .xml model to check." .
+
+### ================================================================
+### PART 4 - INDIVIDUALS used by the transfer pipeline
+### (the channel / NI-task individuals are generated at start-up)
+### ================================================================
+
+:EV_ChargingRequest_NetTask rdf:type :NetTask ;
+    rdfs:comment "Clock reference used by the cycle <-> ns conversions." ;
+    :masterClockFrequencyHz "20000.0"^^xsd:double .
