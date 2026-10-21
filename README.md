@@ -56,12 +56,17 @@ The three ontologies are in [`ontologies/`](ontologies/):
 
 The mapper adds individuals to these ontologies at run time. Start each run from the original files.
 
-## 3. The mapper
+## 3. NS-3 script
+The script that is used to configure on runtime NS-3 is in [`ns3/`](ns3/):
+It should be put in: /home/your-machine/ns-3-dev/scratch 
+
+## 4. The mapper
+
 
 The mapper is in [`mapper/`](mapper/) <!-- TODO: exact path -->.
 It reads the TTool model, runs the reasoner, configures ns-3 command by command, and writes the results back into the ontologies.
 
-## 4. Run
+## 5. Run
 
 ```bash
 make demo
