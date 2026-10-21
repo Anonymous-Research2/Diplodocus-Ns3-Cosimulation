@@ -79,15 +79,6 @@ Then start the simulation of the model from TTool (DIPLODOCUS simulator).
 
 ## 5. Results
 
-| Example | Console output | DIPLODOCUS trace |
-|---|---|---|
-| Nominal | `results/nominal/` <!-- TODO: file name --> | `results/nominal/` <!-- TODO: .html file --> |
-| Fault | `results/fault/` <!-- TODO: file name --> | – |
 
-## Reference
 
-<!-- TODO: paper reference (MODELSWARD 2027) -->
 
-## Authors
-
-Aissam Belghiat, Ludovic Apvrille, Sophie Coudert, LTCI, Télécom Paris, Institut Polytechnique de Paris.
