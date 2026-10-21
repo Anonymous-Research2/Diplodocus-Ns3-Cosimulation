@@ -89,13 +89,11 @@ Then start the simulation of the model from TTool (DIPLODOCUS simulator).
 
 The log of the co-simulation and the html file showing the co-simulation is in [`results/`](results/):
 
+## Diplodocus ↔ NS3 synchronisation — WACS nominal model (UDP + TCP)
 We provide also the table of synchronization to prove both clocks advance consistently. 
 
-Diplodocus runs at 200 MHz, so 1 cycle = 5 ns. Expected Diplodocus cycle = NS3 time (ns) ÷ 5. The table below covers 6 of the 10 iterations: the start, the middle and the end of a complete session of 20 network commands, all of which completed (none failed).
+The table below covers 6 of the 10 iterations: the start, the middle and the end of a complete session of 20 network commands, all of which completed (none failed).
 
-## Diplodocus ↔ NS3 synchronisation — WACS nominal model (UDP + TCP)
-
-Master clock 200 MHz → 1 cycle = 5 ns. Expected Diplodocus cycle = NS3 time (ns) ÷ 5.
 Session: 20 network commands (10 iterations per direction), 20 simulated, 0 failed.
 
 | Phase | Iter | Command | Direction | Transport | Diplo start (cycle) | NS3 inject (ns) | Diplo send end (cycle) | NS3 SEND_END (ns) | Diplo recv end (cycle) | NS3 RECV_END (ns) | Sync |
