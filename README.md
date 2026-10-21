@@ -25,11 +25,11 @@ DIPLODOCUS and ns-3 don't talk to each other directly. Each one works with its o
 │   ├── diplodocus.owl.ttl        # DIPLODOCUS ontology
 │   ├── ns3.owl.ttl               # ns-3 ontology
 │   └── mapping.owl.ttl           # mapping ontology (equivalences, SWRL rules, transport axioms)
-├── mapper/                       # <!-- TODO: path / description of the mapper (Java, Maven) -->
-├── ns3/                          # <!-- TODO: path of the ns-3 script (SynAuto.cc) -->
+├── mapper/                       # <!-- path / description of the mapper (Java, Maven) -->
+├── ns3/                          # <!-- path of the ns-3 script (SynAuto.cc) -->
 ├── results/
-│   ├── nominal/                  # <!-- TODO: console output + DIPLODOCUS trace (.html) -->
-│   └── fault/                    # <!-- TODO: console output -->
+│   ├── nominal/                  # <!--  console output + DIPLODOCUS trace (.html) -->
+│   └── fault/                    # <!-- console output -->
 └── Makefile
 ```
 
