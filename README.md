@@ -38,6 +38,7 @@ DIPLODOCUS and ns-3 don't talk to each other directly. Each one works with its o
 ## 1. Prerequisites
 
 - **TTool / DIPLODOCUS**: install it by following https://ttool.telecom-paris.fr
+  *Important*: To use the Diplodocus–NS-3 integration, download the diplodocus-ns3 branch instead of the standard TTool version.
 - **ns-3**: install it by following https://www.nsnam.org
 - **Java** (JDK) and **Maven**, used to build the mapper.
 
