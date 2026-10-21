@@ -113,10 +113,8 @@ Session: 20 network commands (10 iterations per direction), 20 simulated, 0 fail
 | End | 10 | SubTxNI → CCRxNI | NI0 → NI1 | UDP | 7223 | 36115 | 7402 | 37012 | 7422 | 37112 | ✅ |
 | End | 10 | CCTxNI → SubRxNI | NI1 → NI0 | TCP | 7207 | 36035 | 7978 | 39888 | 7998 | 39988 | ✅ |
 
-**Observations**
-- Every command is injected in NS3 exactly at its Diplodocus start cycle (NS3 time = cycle × 5 ns), from the first to the last iteration.
-- Send and receive ends match NS3 to the cycle (≤ 1 cycle, only rounding: e.g. 39888 ns / 5 = 7977.6 → 7978).
+*Observations*
+- Every command is injected in NS3 exactly at its Diplodocus start cycle, from the first to the last iteration.
 - No drift between the two clocks over the whole session.
-- Receive end = send end + propagation (20 cycles = 100 ns) for both transports.
 - Transports selected by the start-up ontology check: UDP (errorRate 0.02) for the lossy measurement channel, TCP (sndBufSize 32) for the blocking command channel.
 
