@@ -66,6 +66,72 @@ It should be put in: /home/your-machine/ns-3-dev/scratch
 The mapper is in [`mapper/`](mapper/) <!-- TODO: exact path -->.
 It reads the TTool model, runs the reasoner, configures ns-3 command by command, and writes the results back into the ontologies.
 
+
+## Implementation of the semantic bridge
+
+The co-simulation links three parts: an extension of the **DIPLODOCUS** C++ simulator, a **Java ontology bridge**, and an **NS-3 script**. They exchange data through the ontologies, two small text files and two local UDP ports.
+
+### 1. DIPLODOCUS extension (C++)
+
+| File | Role |
+|---|---|
+| `OntologyBridgeTask.cpp/.h` | Called when a network transaction starts on an NI. A write is added to `diplodocus.owl.ttl` as a `WriteChannelCommand` individual (data size + start cycle); a read records its start cycle. |
+| `OntologyBridgeRunner.cpp/.h` | Replaces the default NS-3 runner. It launches NS-3 and requests the start-up model check. It drives the time synchronisation (one time slice per DIPLODOCUS transaction, or NS-3 runs until its next result when no transaction is left). It reads the results and sets the end of each network transaction. |
+| `NetBridgeConfig.h` | Reads `netbridge.conf`: path of the TTool model and sender/receiver pairs of NI tasks, so nothing depends on task names. |
+| `TMLNetTask.cpp` (modified) | Single-core NI rules: one network operation at a time on an NI, and a read starts only once its data has been sent. |
+| `TMLNetCommand.cpp` (modified) | Labels network transactions `Nw` / `Nr` in the HTML trace. |
+
+### 2. Ontologies (Turtle)
+
+| File | Content |
+|---|---|
+| `diplodocus.owl.ttl` | DIPLODOCUS concepts: channels (blocking, lossy), network tasks, data size, cycle time points, master clock. Receives the network transactions at run time. |
+| `ns3.owl.ttl` | NS-3 concepts: packets, sockets (`UdpSocket`, `TcpSocket`), time points, transfer results. |
+| `mapping.owl.ttl` | Equivalences between the two ontologies, axioms choosing UDP or TCP for each channel, and SWRL rules: cycle ↔ ns conversion, `errorRate`, `sndBufSize`. |
+
+### 3. Java bridge (Jena + Openllet)
+
+| Class | Role |
+|---|---|
+| `ModelChecker.java` | Before cycle 0: reads the TTool model, adds its NI channels to the ontology and runs the reasoner. If the model is inconsistent, it gives an explanation and DIPLODOCUS stops. Otherwise it fixes the transport per channel (UDP + `errorRate`, or TCP + `sndBufSize`). |
+| `DiploToNs3Mapper3PelletJenaOldRT2D2cl2SyncUDP.java` | Watches `diplodocus.owl.ttl`. For each new transaction, it maps it to NS-3 (packet size, start time in ns) and sends it to NS-3. It writes each measured latency, converted to cycles, back to the ontologies and to `net_done.sidechannel`. |
+| `Ns3RunnerVisualSyncUDP.java` | Sends the commands to NS-3 (`packetSize`, `nsValue`, `direction`, `transport`) and reads the NS-3 results. |
+
+### 4. NS-3 script
+
+`scratch/java-bridge-sim-Visual-RT2_SynAuto.cc` simulates a 1 Gbps point-to-point link between NI0 and NI1; a shared CSMA link is optional. It:
+- injects each transfer at its DIPLODOCUS start time, over UDP (with a loss model) or TCP (with a send buffer);
+- measures the send end and the receive end;
+- stops at each result, and answers every time slice with its current time.
+
+### 5. Exchanges
+
+| Channel | Direction | Content |
+|---|---|---|
+| `diplodocus.owl.ttl` (+ `.lock` file) | DIPLODOCUS ↔ Java | Network transactions and their end cycles. The lock is shared by C++ and Java. |
+| `net_done.sidechannel` | Java → DIPLODOCUS | `NET_DONE <task> <duration in cycles> <iteration>` |
+| `net_check.result` | Java → DIPLODOCUS | Model check verdict (`CONSISTENT` / `INCONSISTENT`) |
+| UDP port 9999 | Java → NS-3 | One command per transfer |
+| UDP port 9998 | DIPLODOCUS ↔ NS-3 | Time slices; replies `now=…;results=…` |
+
+### Execution flow
+
+1. DIPLODOCUS requests the model check → Java reasons and returns the verdict and the transport per channel.
+2. A network transaction starts on an NI → it is written to the ontology → Java maps it and sends it to NS-3 → NS-3 injects it at the same time instant.
+3. DIPLODOCUS and NS-3 advance together, slice by slice.
+4. NS-3 produces a result → Java converts it to cycles → DIPLODOCUS ends the transaction at that cycle.
+
+
+
+
+
+
+
+
+
+
+
+
 ## 5. Run
 
 ```bash
