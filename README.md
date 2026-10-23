@@ -69,7 +69,7 @@ It reads the TTool model, runs the reasoner, configures ns-3 command by command,
 
 ## Implementation of the semantic bridge
 
-The co-simulation links three parts: an extension of the **DIPLODOCUS** C++ simulator, a **Java ontology bridge**, and an **NS-3 script**. They exchange data through the ontologies, two small text files and two local UDP ports.
+The co-simulation links three parts: an extension of the **DIPLODOCUS** C++ simulator, a **Java ontology bridge**, and an **NS-3 script**. They exchange data through the ontologies, and two local UDP ports.
 
 ### 1. DIPLODOCUS extension (C++)
 
@@ -103,22 +103,13 @@ The co-simulation links three parts: an extension of the **DIPLODOCUS** C++ simu
 - measures the send end and the receive end;
 - stops at each result, and answers every time slice with its current time.
 
-### 5. Exchanges
-
-| Channel | Direction | Content |
-|---|---|---|
-| `diplodocus.owl.ttl` (+ `.lock` file) | DIPLODOCUS ↔ Java | Network transactions and their end cycles. The lock is shared by C++ and Java. |
-| `net_done.sidechannel` | Java → DIPLODOCUS | `NET_DONE <task> <duration in cycles> <iteration>` |
-| `net_check.result` | Java → DIPLODOCUS | Model check verdict (`CONSISTENT` / `INCONSISTENT`) |
-| UDP port 9999 | Java → NS-3 | One command per transfer |
-| UDP port 9998 | DIPLODOCUS ↔ NS-3 | Time slices; replies `now=…;results=…` |
-
 ### Execution flow
 
 1. DIPLODOCUS requests the model check → Java reasons and returns the verdict and the transport per channel.
 2. A network transaction starts on an NI → it is written to the ontology → Java maps it and sends it to NS-3 → NS-3 injects it at the same time instant.
 3. DIPLODOCUS and NS-3 advance together, slice by slice.
 4. NS-3 produces a result → Java converts it to cycles → DIPLODOCUS ends the transaction at that cycle.
+5. Java gives the hand to the user to enter their SPARQL queries for tracability and requierements check.
 
 
 
