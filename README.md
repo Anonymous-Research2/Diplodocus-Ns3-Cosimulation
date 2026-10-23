@@ -67,9 +67,9 @@ The mapper is in [`mapper/`](mapper/) <!-- TODO: exact path -->.
 It reads the TTool model, runs the reasoner, configures ns-3 command by command, and writes the results back into the ontologies.
 
 
-## Implementation of the semantic bridge
+## Some details of implementation of the semantic bridge
 
-The co-simulation links three parts: an extension of the **DIPLODOCUS** C++ simulator, a **Java ontology bridge**, and an **NS-3 script**. They exchange data through the ontologies, and two local UDP ports.
+The co-simulation links three parts: an extension of the **DIPLODOCUS** C++ simulator, a **Java ontology bridge**, and an **NS-3 script**. They exchange data through the ontologies.
 
 ### 1. DIPLODOCUS extension (C++)
 
