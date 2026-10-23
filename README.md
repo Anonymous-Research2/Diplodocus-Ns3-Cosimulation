@@ -77,9 +77,8 @@ The co-simulation links three parts: an extension of the **DIPLODOCUS** C++ simu
 |---|---|
 | `OntologyBridgeTask.cpp/.h` | Called when a network transaction starts on an NI. A write is added to `diplodocus.owl.ttl` as a `WriteChannelCommand` individual (data size + start cycle); a read records its start cycle. |
 | `OntologyBridgeRunner.cpp/.h` | Replaces the default NS-3 runner. It launches NS-3 and requests the start-up model check. It drives the time synchronisation (one time slice per DIPLODOCUS transaction, or NS-3 runs until its next result when no transaction is left). It reads the results and sets the end of each network transaction. |
-| `NetBridgeConfig.h` | Reads `netbridge.conf`: path of the TTool model and sender/receiver pairs of NI tasks, so nothing depends on task names. |
-| `TMLNetTask.cpp` (modified) | Single-core NI rules: one network operation at a time on an NI, and a read starts only once its data has been sent. |
-| `TMLNetCommand.cpp` (modified) | Labels network transactions `Nw` / `Nr` in the HTML trace. |
+| `TMLNetTask.cpp` | Single-core NI rules: one network operation at a time on an NI, and a read starts only once its data has been sent. |
+| `TMLNetCommand.cpp` | Labels network transactions `Nw` / `Nr` in the HTML trace. |
 
 ### 2. Ontologies (Turtle)
 
