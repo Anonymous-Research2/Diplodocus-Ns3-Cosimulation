@@ -9,7 +9,7 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   Loaded 488 triples (TBox + ABox + mapping).
 
 #########################################################
-  REAL-TIME PIPELINE: event-driven, concurrent Direction 1 + Direction 2
+  CO-SIMULATION PIPELINE (Phase I model check, then Phase II co-simulation)
 #########################################################
 
   Watching /home/isso84/eclipse/eclipse-workspace/Diplo-Ns3-mapper1/diplodocus.owl.ttl for changes (event-driven, no fixed polling delay).
@@ -17,7 +17,7 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [model-check] request found: ModelCheck_startup
 
 ########################################################
-  START-UP MODEL CHECK (before cycle 0)
+  PHASE I -- Before the simulation: start-up model check (before cycle 0)
 ########################################################
   [model-check] TTool model : /home/isso84/TTool-ns3/modeling/NS3/WACS_WADC_nominal.xml
   [model-check] NI tasks    : [CCRxNI, CCTxNI, SubTxNI, SubRxNI]
@@ -34,6 +34,10 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [model-check] channel cmdPktOut__cmdPktIn (CCTxNI -> SubRxNI): we need a TCP transport, sndBufSize=32  [blocking channel: TCP backpressure reproduces the blocking write]
   [model-check] NS3 configuration for CCTxNI: ;transport=TCP;sndBufSize=32
   [model-check] NS3 configuration for SubTxNI: ;transport=UDP;errorRate=0.02
+########################################################
+
+########################################################
+  PHASE II -- During the simulation: Diplodocus <-> NS-3 co-simulation
 ########################################################
 
 
@@ -1849,13 +1853,13 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
 [ns3] INJECTION_TIME commandId=19 injectionTimeNs=36115
 [ns3] [bridge] INJECT id=19 NI0->NI1 size=48 UDP errorRate=0.020000 t=36115
 [ns3] [bridge] NS3 paused at 36115 ns results=36
-[ns3] [bridge] Running NS3 for 95 ns (now=36115 ns, until=36210 ns)
-[ns3] [bridge] NS3 paused at 36210 ns results=36
-[ns3] [bridge] Running NS3 for 10 ns (now=36210 ns, until=36220 ns)
-[ns3] [bridge] NS3 paused at 36220 ns results=36
-[ns3] [bridge] Running NS3 for 115 ns (now=36220 ns, until=36335 ns)
-[ns3] [bridge] NS3 paused at 36335 ns results=36
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=36335 ns, until=1.00363e+07 ns)
+[ns3] [bridge] Running NS3 for 65 ns (now=36115 ns, until=36180 ns)
+[ns3] [bridge] NS3 paused at 36180 ns results=36
+[ns3] [bridge] Running NS3 for 10 ns (now=36180 ns, until=36190 ns)
+[ns3] [bridge] NS3 paused at 36190 ns results=36
+[ns3] [bridge] Running NS3 for 55 ns (now=36190 ns, until=36245 ns)
+[ns3] [bridge] NS3 paused at 36245 ns results=36
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=36245 ns, until=1.00362e+07 ns)
 [ns3] [bridge] SEND_END id=19 NI0 UDP t=37012
 [ns3] RESULT_START
 [ns3] commandId=19
@@ -2000,3 +2004,71 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   Commands detected      : 21
   Successfully simulated  : 20
   Failed / timed out      : 0
+
+########################################################
+  PHASE III -- After the simulation: requirements and traceability (SPARQL)
+########################################################
+  Results loaded: 1067 triples (diplodocus + ns3 + mapping).
+
+  Enter your SPARQL queries on the simulation results
+  (prefixes dip:, ns3:, rdf:, rdfs:, owl:, xsd: are predefined).
+  Type a query on one or several lines, end it with a line containing only ';'.
+  Type 'exit' to quit.
+sparql> SELECT ?req ?flow (COUNT(?res) AS ?transfers) (MAX(?lat) AS ?worstNs) ?boundNs
+       (IF(MAX(?lat) <= ?boundNs, "SATISFIED", "VIOLATED") AS ?verdict)
+WHERE {
+  VALUES (?req ?flow ?boundNs) {
+    ("Req_PMU_PDC_100ms"  "SubTxNI" 1.0E8)
+    ("Req_WADC_PSS_100ms" "CCTxNI"  1.0E8) }
+  ?res ns3:resultOf ?cmd ; ns3:receiveLatencyNs ?lat .
+  FILTER(CONTAINS(STR(?cmd), CONCAT("__", ?flow, "_iter")))
+}
+GROUP BY ?req ?flow ?boundNs
+;
+-----------------------------------------------------------------------------------------------
+| req                  | flow      | transfers | worstNs              | boundNs | verdict     |
+===============================================================================================
+| "Req_PMU_PDC_100ms"  | "SubTxNI" | 10        | "997.0"^^xsd:double  | 1.0E8   | "SATISFIED" |
+| "Req_WADC_PSS_100ms" | "CCTxNI"  | 10        | "3957.0"^^xsd:double | 1.0E8   | "SATISFIED" |
+-----------------------------------------------------------------------------------------------
+sparql> SELECT ?req ?flow (COUNT(?res) AS ?transfers) (MAX(?lat) AS ?worstNs) ?boundNs
+       (IF(MAX(?lat) <= ?boundNs, "SATISFIED", "VIOLATED") AS ?verdict)
+WHERE {
+  VALUES (?req ?flow ?boundNs) {
+    ("Req_PMU_PDC_3us"  "SubTxNI" 3000.0)
+    ("Req_WADC_PSS_3us" "CCTxNI"  3000.0) }
+  ?res ns3:resultOf ?cmd ; ns3:receiveLatencyNs ?lat .
+  FILTER(CONTAINS(STR(?cmd), CONCAT("__", ?flow, "_iter")))
+}
+GROUP BY ?req ?flow ?boundNs
+;
+---------------------------------------------------------------------------------------------
+| req                | flow      | transfers | worstNs              | boundNs | verdict     |
+=============================================================================================
+| "Req_WADC_PSS_3us" | "CCTxNI"  | 10        | "3957.0"^^xsd:double | 3000.0  | "VIOLATED"  |
+| "Req_PMU_PDC_3us"  | "SubTxNI" | 10        | "997.0"^^xsd:double  | 3000.0  | "SATISFIED" |
+---------------------------------------------------------------------------------------------
+sparql> SELECT ?cmd ?startCycle ?endCycle ?sendNs ?recvNs
+WHERE {
+  ?res ns3:resultOf ?cmd ; ns3:measuredLatencyNs ?sendNs ; ns3:receiveLatencyNs ?recvNs .
+  FILTER(?recvNs > 3000.0)
+  ?cmd dip:startsAtCycle/dip:cycleValue ?startCycle ;
+       dip:endsAtCycle/dip:cycleValue   ?endCycle .
+}
+ORDER BY ?startCycle
+;
+----------------------------------------------------------------------------------------------------------------------------------
+| cmd                                  | startCycle         | endCycle             | sendNs               | recvNs               |
+==================================================================================================================================
+| dip:cmd_WACS__CCTxNI_iter1_WriteCmd  | "20"^^xsd:double   | "720.0"^^xsd:double  | "3500.0"^^xsd:double | "3600.0"^^xsd:double |
+| dip:cmd_WACS__CCTxNI_iter2_WriteCmd  | "755"^^xsd:double  | "1526.0"^^xsd:double | "3857.0"^^xsd:double | "3957.0"^^xsd:double |
+| dip:cmd_WACS__CCTxNI_iter3_WriteCmd  | "1564"^^xsd:double | "2333.0"^^xsd:double | "3844.0"^^xsd:double | "3944.0"^^xsd:double |
+| dip:cmd_WACS__CCTxNI_iter4_WriteCmd  | "2371"^^xsd:double | "3139.0"^^xsd:double | "3841.0"^^xsd:double | "3941.0"^^xsd:double |
+| dip:cmd_WACS__CCTxNI_iter5_WriteCmd  | "3177"^^xsd:double | "3946.0"^^xsd:double | "3843.0"^^xsd:double | "3943.0"^^xsd:double |
+| dip:cmd_WACS__CCTxNI_iter6_WriteCmd  | "3984"^^xsd:double | "4752.0"^^xsd:double | "3840.0"^^xsd:double | "3940.0"^^xsd:double |
+| dip:cmd_WACS__CCTxNI_iter7_WriteCmd  | "4790"^^xsd:double | "5558.0"^^xsd:double | "3842.0"^^xsd:double | "3942.0"^^xsd:double |
+| dip:cmd_WACS__CCTxNI_iter8_WriteCmd  | "5596"^^xsd:double | "6365.0"^^xsd:double | "3844.0"^^xsd:double | "3944.0"^^xsd:double |
+| dip:cmd_WACS__CCTxNI_iter9_WriteCmd  | "6403"^^xsd:double | "7171.0"^^xsd:double | "3841.0"^^xsd:double | "3941.0"^^xsd:double |
+| dip:cmd_WACS__CCTxNI_iter10_WriteCmd | "7207"^^xsd:double | "7978.0"^^xsd:double | "3853.0"^^xsd:double | "3953.0"^^xsd:double |
+----------------------------------------------------------------------------------------------------------------------------------
+sparql> 
