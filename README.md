@@ -55,7 +55,7 @@ Wait for results
 
 ## 6. Results
 
-The log of the co-simulation and the html file showing the co-simulation are in [`results/`](results/):
+The log of the co-simulation and the html file showing the co-simulation of the nominal and fault models are in [`results/`](results/):
 
 
 ## Appendix: Some details of implementation of the semantic bridge and it works
