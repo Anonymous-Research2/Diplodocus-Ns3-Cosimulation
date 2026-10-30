@@ -5,7 +5,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://labsoc.telecom-paris.fr/ns3> rdf:type owl:Ontology ;
-    rdfs:comment "Minimal NS3 ontology: covers the Packet and NsTime concepts needed." .
+    rdfs:comment "Essential NS3 ontology: covers the main concepts needed." .
 
 ### ----------------------------------------------------------------
 ### Classes
@@ -54,7 +54,7 @@
 :measuredLatencyNs rdf:type owl:DatatypeProperty ;
     rdfs:domain :TransferResult ;
     rdfs:range xsd:double ;
-    rdfs:comment "The end-to-end latency measured by NS3 for this transfer, in nanoseconds." .
+    rdfs:comment "The send latency measured by NS3 for this transfer, in nanoseconds." .
     
 
 ### ================================================================
@@ -78,3 +78,60 @@
 :errorRate rdf:type owl:DatatypeProperty ;
     rdfs:domain :UdpSocket ;
     rdfs:comment "ErrorRate of the ns3::RateErrorModel (ErrorUnit = packet) installed as ReceiveErrorModel on the receiving NetDevice of this flow. (No rdfs:range on purpose: computed by a SWRL builtin.)" .
+
+### ================================================================
+### Results written by the bridge (declared, already used by Java)
+### ================================================================
+
+:receiveLatencyNs rdf:type owl:DatatypeProperty ;
+    rdfs:domain :TransferResult ;
+    rdfs:range xsd:double ;
+    rdfs:comment "Time between the send and the reception of the transfer at the receiving node, in nanoseconds." .
+
+:resultOf rdf:type owl:ObjectProperty ;
+    rdfs:domain :TransferResult ;
+    rdfs:comment "Links an NS3 result to the source-simulator command that produced it. No rdfs:range on purpose: keeps this ontology independent of the source simulator." .
+
+### ================================================================
+### Topology
+### ================================================================
+
+:Node rdf:type owl:Class ;
+    rdfs:comment "An ns3::Node." .
+
+:Router rdf:type owl:Class ;
+    rdfs:subClassOf :Node ;
+    rdfs:comment "An ns3::Node with IP forwarding between its subnets (Ipv4GlobalRouting)." .
+
+:Link rdf:type owl:Class ;
+    rdfs:comment "An ns3::Channel connecting node devices." .
+
+:PointToPointLink rdf:type owl:Class ;
+    rdfs:subClassOf :Link ;
+    rdfs:comment "ns3::PointToPointChannel: full-duplex (default)." .
+
+:CsmaLink rdf:type owl:Class ;
+    rdfs:subClassOf :Link ;
+    rdfs:comment "ns3::CsmaChannel: shared medium, half-duplex (--shared)." .
+
+:PointToPointLink owl:disjointWith :CsmaLink .
+
+:connectedTo rdf:type owl:ObjectProperty ;
+    rdfs:domain :Node ;
+    rdfs:range :Link ;
+    rdfs:comment "A node (through one of its NetDevices) is connected to a link." .
+
+:boundTo rdf:type owl:ObjectProperty ;
+    rdfs:domain :Socket ;
+    rdfs:range :Node ;
+    rdfs:comment "The node a socket is created on." .
+
+:dataRateBps rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Link ;
+    rdfs:range xsd:long ;
+    rdfs:comment "DataRate of the link in bit/s." .
+
+:delayNs rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Link ;
+    rdfs:range xsd:double ;
+    rdfs:comment "Propagation Delay attribute of the link, in nanoseconds." .
