@@ -5,7 +5,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://labsoc.telecom-paris.fr/diplodocus> rdf:type owl:Ontology ;
-    rdfs:comment "Minimal Diplodocus ontology: covers the DataSize and CycleTime concepts of a network transfer, extended with channel semantics (blocking, loss) and channel-to-architecture mapping. Instantiated for the WACS/WADC running case study." .
+    rdfs:comment "Minimal Diplodocus ontology: covers the DataSize and CycleTime concepts of a network transfer, extended with channel semantics (blocking, loss), channel-to-architecture mapping and the network topology. Instantiated for the WACS/WADC running case study." .
 
 ### ================================================================
 ### PART 1 - ORIGINAL TRANSFER CORE (unchanged)
@@ -16,7 +16,7 @@
 ### ----------------------------------------------------------------
 
 :NetTask rdf:type owl:Class ;
-    rdfs:comment "A TMLNetTask: a Diplodocus task that performs a network transfer (one channel end)." .
+    rdfs:comment "A TMLNetTask: a Diplodocus task that performs a network transfer (one network channel end)." .
 
 :WriteChannelCommand rdf:type owl:Class ;
     rdfs:comment "A time-consuming command that writes a quantity of data to a channel destined for the network." .
@@ -58,12 +58,12 @@
 :cycleValue rdf:type owl:DatatypeProperty ;
     rdfs:domain :CycleTimePoint ;
     rdfs:range xsd:double ;
-    rdfs:comment "The integer cycle count of a CycleTimePoint, w.r.t. the master clock." .
+    rdfs:comment "The cycle count of a CycleTimePoint, w.r.t. the master clock (whole cycles, stored as xsd:double)." .
 
-:masterClockFrequencyHz rdf:type owl:DatatypeProperty ;
+:FrequencyHz rdf:type owl:DatatypeProperty ;
     rdfs:domain :NetTask ;
     rdfs:range xsd:double ;
-    rdfs:comment "The master clock frequency (Hz) used to convert this task's cycles to/from nanoseconds." .
+    rdfs:comment "Frequency (Hz) of the node executing this task, used to convert its cycles to/from nanoseconds. In TTool it equals the master clock frequency divided by the node's clock divider; with a divider of 1 (as in the case study) it is the master clock frequency." .
 
 ### ================================================================
 ### PART 2 - CHANNEL SEMANTICS AND MAPPING (new)
@@ -81,17 +81,46 @@
     rdfs:comment "A TML data channel between two task ports (TMLbrbwChannel, TMLbrnbwChannel, ...). Attributes are those of the port dialog in TTool." .
 
 :ArchitectureElement rdf:type owl:Class ;
-    rdfs:comment "A communication element of the DIPLODOCUS architecture on which a channel can be mapped." .
+    rdfs:comment "Any node of the DIPLODOCUS architecture (TTool deployment diagram): CPU, memory, bus, network interface, network, router." .
+
+:ExecutionNode rdf:type owl:Class ;
+    rdfs:subClassOf :ArchitectureElement ;
+    rdfs:comment "An architecture node on which TASKS are mapped (CPU, network interface)." .
+
+:CommunicationElement rdf:type owl:Class ;
+    rdfs:subClassOf :ArchitectureElement ;
+    rdfs:comment "An architecture node a channel can be mapped on (storage or transport): bus, memory, network, router." .
+
+:ExecutionNode owl:disjointWith :CommunicationElement .
+
+:CPU rdf:type owl:Class ;
+    rdfs:subClassOf :ExecutionNode ;
+    rdfs:comment "A DIPLODOCUS processor executing application tasks." .
+
+:NetworkInterface rdf:type owl:Class ;
+    rdfs:subClassOf :ExecutionNode ;
+    rdfs:comment "TTool 'Network Interface': execution node hosting the networking tasks (NetTasks) that move data between local channels and a network." .
+
+:CPU owl:disjointWith :NetworkInterface .
 
 :Bus rdf:type owl:Class ;
-    rdfs:subClassOf :ArchitectureElement ;
+    rdfs:subClassOf :CommunicationElement ;
     rdfs:comment "A DIPLODOCUS bus (local, memory-mapped communication)." .
 
+:Memory rdf:type owl:Class ;
+    rdfs:subClassOf :CommunicationElement ;
+    rdfs:comment "A DIPLODOCUS memory storing the samples of the channels mapped on it." .
+
 :Network rdf:type owl:Class ;
-    rdfs:subClassOf :ArchitectureElement ;
+    rdfs:subClassOf :CommunicationElement ;
     rdfs:comment "A DIPLODOCUS network element (link between network interfaces / routers)." .
 
-:Bus owl:disjointWith :Network .
+:NetworkRouter rdf:type owl:Class ;
+    rdfs:subClassOf :CommunicationElement ;
+    rdfs:comment "TTool 'Network Router': relay forwarding packets between the networks it is attached to (the network counterpart of a bus bridge). A channel can also be mapped on it." .
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Bus :Memory :Network :NetworkRouter ) ] .
 
 ### Defined classes: membership is COMPUTED by the reasoner from the
 ### channel attributes and from the mapping; nobody asserts them.
@@ -145,6 +174,18 @@
     rdfs:range :Channel ;
     rdfs:comment "A NetTask (network-interface task) reads or writes this channel." .
 
+:writesChannel rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :handlesChannel ;
+    rdfs:domain :NetTask ;
+    rdfs:range :Channel ;
+    rdfs:comment "The NetTask is the WRITER (origin) of this channel." .
+
+:readsChannel rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :handlesChannel ;
+    rdfs:domain :NetTask ;
+    rdfs:range :Channel ;
+    rdfs:comment "The NetTask is the READER (destination) of this channel." .
+
 :writesOn rdf:type owl:ObjectProperty ;
     rdfs:domain :WriteChannelCommand ;
     rdfs:range :Channel ;
@@ -157,8 +198,13 @@
 
 :mappedOn rdf:type owl:ObjectProperty ;
     rdfs:domain :Channel ;
-    rdfs:range :ArchitectureElement ;
-    rdfs:comment "Architecture element (bus, network) a channel is mapped on (TTool mapping)." .
+    rdfs:range :CommunicationElement ;
+    rdfs:comment "Communication element (bus, memory, network, router) a channel is mapped on (TTool mapping)." .
+
+:executesOn rdf:type owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain :NetTask ;
+    rdfs:range :NetworkInterface ;
+    rdfs:comment "TTool mapping: the network interface a NetTask is mapped on." .
 
 ### ----------------------------------------------------------------
 ### Datatype properties (read from the TTool port dialog)
@@ -199,11 +245,33 @@
     rdfs:comment "Port dialog 'Width (in Byte)': size of one sample." .
 
 ### ================================================================
+### PART 2b - NETWORK TOPOLOGY (read from the TTool deployment diagram)
+###
+### Network interfaces and routers are the nodes of the network path;
+### networks are the links between them.
+### ================================================================
+
+:attachedTo rdf:type owl:ObjectProperty ;
+    rdfs:domain [ rdf:type owl:Class ; owl:unionOf ( :NetworkInterface :NetworkRouter ) ] ;
+    rdfs:range :Network ;
+    rdfs:comment "Network a network interface or a router is connected to in the TTool deployment diagram." .
+
+:bandwidthBps rdf:type owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain [ rdf:type owl:Class ; owl:unionOf ( :NetworkInterface :NetworkRouter :Network ) ] ;
+    rdfs:range xsd:long ;
+    rdfs:comment "Bandwidth from the TTool node dialog, converted to bit/s (TTool unit: 0 = kb/s, 1 = Mb/s, 2 = Gb/s)." .
+
+:propagationSpeed rdf:type owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Network ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "TTool 'propagation speed' field of a network, stored as entered (TTool defines no unit for it). Not used to compute the NS-3 delay." .
+
+### ================================================================
 ### PART 3 - START-UP MODEL CHECK (new)
 ###
 ### Diplodocus writes ONE ModelCheckRequest before cycle 0. The Java
 ### bridge then reads the TTool model, adds the Channel / NetTask /
-### Network / Bus individuals below, and asks the reasoner whether the
+### Network / Bus / NetworkInterface / NetworkRouter individuals, and asks the reasoner whether the
 ### network channels can be co-simulated (consistency + TCP/UDP).
 ### ================================================================
 
@@ -222,4 +290,4 @@
 
 :EV_ChargingRequest_NetTask rdf:type :NetTask ;
     rdfs:comment "Clock reference used by the cycle <-> ns conversions." ;
-    :masterClockFrequencyHz "20000.0"^^xsd:double .
+    :FrequencyHz "200000000.0"^^xsd:double .
