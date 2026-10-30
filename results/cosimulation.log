@@ -6,7 +6,7 @@
 log4j:WARN No appenders could be found for logger (org.apache.jena.util.FileManager).
 log4j:WARN Please initialize the log4j system properly.
 log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
-  Loaded 488 triples (TBox + ABox + mapping).
+  Loaded 523 triples (TBox + ABox + mapping).
 
 #########################################################
   CO-SIMULATION PIPELINE (Phase I model check, then Phase II co-simulation)
@@ -27,11 +27,12 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [model-check] channel cmdOut__cmdIn  WADC -> CCTxNI  mapped on Bus [Bus1]  blocking=true lossy=false loss%=0 capacity=8 width=4
   [model-check] channel measOut__measIn  PMU -> SubTxNI  mapped on Bus [Bus0]  blocking=true lossy=false loss%=0 capacity=8 width=4
   [model-check] channel cmdToPSS__cmdFromNI  SubRxNI -> PSS  mapped on Bus [Bus0]  blocking=true lossy=false loss%=0 capacity=8 width=4
-  [model-check] 72 triples added to diplodocus.owl.ttl (channels, NI tasks, networks, buses).
+  [model-check] 90 triples added to diplodocus.owl.ttl (channels, NI tasks, networks, buses).
   [model-check] Running Openllet on diplodocus + ns3 + mapping ...
   [model-check] Reasoner: ontology CONSISTENT -> the model can be co-simulated.
   [model-check] channel measPktOut__measPktIn (SubTxNI -> CCRxNI): we need a UDP transport, errorRate=0.02  [lossy channel: losses must reach the reader, TCP would hide them]
   [model-check] channel cmdPktOut__cmdPktIn (CCTxNI -> SubRxNI): we need a TCP transport, sndBufSize=32  [blocking channel: TCP backpressure reproduces the blocking write]
+  [model-check] topology: router {NR0=1000000000}, NI bandwidths {NI1=1000000000, NI0=1000000000}, networks {Network1=1000000000, Network0=1000000000}, connections [NI0-Network0, NI1-Network1, NR0-Network1, NR0-Network0] -> /home/isso84/TTool-ns3/simulators/c++2/net_topology.conf
   [model-check] NS3 configuration for CCTxNI: ;transport=TCP;sndBufSize=32
   [model-check] NS3 configuration for SubTxNI: ;transport=UDP;errorRate=0.02
 ########################################################
@@ -110,120 +111,87 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [side-channel] wrote NET_DONE WACS__SubTxNI 125 iter=1
 [ns3] [bridge] NS3 paused at 724 ns results=1
 [ns3] [bridge] Running NS3 for 1e+07 ns (now=724 ns, until=1.00007e+07 ns)
-[ns3] [bridge] RECV_END id=1 t=824
+[ns3] [bridge] RECV_END id=1 t=1448
 [ns3] RESULT_START
 [ns3] commandId=1
-[ns3] receiveMeasuredLatencyNs=824
+[ns3] receiveMeasuredLatencyNs=1448
 [ns3] RESULT_END
 
   --- NS-3 RECEIVE result for: cmd_WACS__SubTxNI_iter1_WriteCmd
-  Measured receive latency (ns): 724.0
-  [DEBUG-RECV] receiveLatencyNs=724.0
+  Measured receive latency (ns): 1348.0
+  [DEBUG-RECV] receiveLatencyNs=1348.0
   [DEBUG-RECV] capturedSendLatencyNs=624.0
   [DEBUG-RECV] capturedSenderEndCycle=145
-  [DEBUG-RECV] propagationNs=100.0
-  [DEBUG-RECV] propagationCycles=20.0
-  [DEBUG-RECV] rcvEndCycle=165
+  [DEBUG-RECV] propagationNs=724.0
+  [DEBUG-RECV] propagationCycles=144.8
+  [DEBUG-RECV] rcvEndCycle=289
   [WARNING] Receiver startCycle for iter=1 not found in /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI, using 0
   [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI) = 0.0
-  [side-channel] NET_DONE WACS__CCRxNI 165 iter=1  (senderEndCycle=145, propagationNs=100.0, propagationCycles=20.0)
-  [DEBUG-RECV] rcvDurationCycles=145
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCRxNI 145 1
-  [side-channel] wrote NET_DONE WACS__CCRxNI 145 iter=1
-[ns3] [bridge] NS3 paused at 824 ns results=2
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=824 ns, until=1.00008e+07 ns)
-[ns3] [bridge] TCP connected id=0 t=1288
-[ns3] [bridge] SEND_END id=0 NI1 TCP t=3600
+  [side-channel] NET_DONE WACS__CCRxNI 289 iter=1  (senderEndCycle=145, propagationNs=724.0, propagationCycles=144.8)
+  [DEBUG-RECV] rcvDurationCycles=270
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCRxNI 270 1
+  [side-channel] wrote NET_DONE WACS__CCRxNI 270 iter=1
+[ns3] [bridge] NS3 paused at 1448 ns results=2
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=1448 ns, until=1.00014e+07 ns)
+[ns3] [bridge] TCP connected id=0 t=2156
+[ns3] [bridge] SEND_END id=0 NI1 TCP t=5588
 [ns3] RESULT_START
 [ns3] commandId=0
-[ns3] sendMeasuredLatencyNs=3600
+[ns3] sendMeasuredLatencyNs=5588
 [ns3] RESULT_END
 
   --- NS-3 result ready for: cmd_WACS__CCTxNI_iter1_WriteCmd
-  Measured latency (ns): 3500.0
+  Measured latency (ns): 5488.0
   Created -> cmd_WACS__CCTxNI_iter1_DataQty_Packet, EV_ChargingRequest_NetTask_Socket, cmd_WACS__CCTxNI_iter1_StartCycle_NsTimePoint, _TransferResult1
   ns3.owl.ttl updated.
   --- Backpropagating result: _TransferResult1
-  [DEBUG-SEND] measuredLatencyNs=3500.0
+  [DEBUG-SEND] measuredLatencyNs=5488.0
   [DEBUG-SEND] cycleVal=20
-  [DEBUG-SEND] endCycle=720
+  [DEBUG-SEND] endCycle=1118
   [DEBUG-SEND] masterClockHz=2.0E8
-  [PART D - SWRL inverse ns->cycle]  delay_cycles = 3500.0 * (2.0E8 / 1e9) = 700.0
-  [PART D - SWRL inverse ns->cycle]  endCycle = 20 + 700 = 720
+  [PART D - SWRL inverse ns->cycle]  delay_cycles = 5488.0 * (2.0E8 / 1e9) = 1097.6000000000001
+  [PART D - SWRL inverse ns->cycle]  endCycle = 20 + 1098 = 1118
   Linked cmd_WACS__CCTxNI_iter1_WriteCmd --dip:endsAtCycle--> _TransferResult1_EndCycle
-  Created -> _TransferResult1_EndCycle with dip:cycleValue = 720
+  Created -> _TransferResult1_EndCycle with dip:cycleValue = 1118
   diplodocus.owl.ttl updated.
-  [side-channel] writing NET_DONE WACS__CCTxNI 720 iter=1
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCTxNI 700 1
-  [side-channel] wrote NET_DONE WACS__CCTxNI 700 iter=1
-[ns3] [bridge] NS3 paused at 3600 ns results=3
-[ns3] [bridge] Running NS3 for 5 ns (now=3600 ns, until=3605 ns)
-[ns3] [bridge] NS3 paused at 3605 ns results=3
-[ns3] [bridge] Running NS3 for 10 ns (now=3605 ns, until=3615 ns)
-[ns3] [bridge] NS3 paused at 3615 ns results=3
-[ns3] [bridge] Running NS3 for 10 ns (now=3615 ns, until=3625 ns)
-[ns3] [bridge] NS3 paused at 3625 ns results=3
-[ns3] [bridge] Running NS3 for 10 ns (now=3625 ns, until=3635 ns)
-[ns3] [bridge] NS3 paused at 3635 ns results=3
-[ns3] [bridge] Running NS3 for 10 ns (now=3635 ns, until=3645 ns)
-[ns3] [bridge] NS3 paused at 3645 ns results=3
-[ns3] [bridge] Running NS3 for 10 ns (now=3645 ns, until=3655 ns)
-[ns3] [bridge] NS3 paused at 3655 ns results=3
-[ns3] [bridge] Running NS3 for 10 ns (now=3655 ns, until=3665 ns)
-[ns3] [bridge] NS3 paused at 3665 ns results=3
-[ns3] [bridge] Running NS3 for 10 ns (now=3665 ns, until=3675 ns)
-[ns3] [bridge] NS3 paused at 3675 ns results=3
-[ns3] [bridge] Running NS3 for 10 ns (now=3675 ns, until=3685 ns)
-[ns3] [bridge] NS3 paused at 3685 ns results=3
-[ns3] [bridge] Running NS3 for 10 ns (now=3685 ns, until=3695 ns)
-[ns3] [bridge] NS3 paused at 3695 ns results=3
-[ns3] [bridge] Running NS3 for 10 ns (now=3695 ns, until=3705 ns)
-[ns3] [bridge] RECV_END id=0 t=3700
-[ns3] RESULT_START
-[ns3] commandId=0
-[ns3] receiveMeasuredLatencyNs=3700
-[ns3] RESULT_END
-
-  --- NS-3 RECEIVE result for: cmd_WACS__CCTxNI_iter1_WriteCmd
-  Measured receive latency (ns): 3600.0
-  [DEBUG-RECV] receiveLatencyNs=3600.0
-  [DEBUG-RECV] capturedSendLatencyNs=3500.0
-  [DEBUG-RECV] capturedSenderEndCycle=720
-  [DEBUG-RECV] propagationNs=100.0
-  [DEBUG-RECV] propagationCycles=20.0
-  [DEBUG-RECV] rcvEndCycle=740
-  [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI) = 145.0
-  [side-channel] NET_DONE WACS__SubRxNI 740 iter=1  (senderEndCycle=720, propagationNs=100.0, propagationCycles=20.0)
-  [DEBUG-RECV] rcvDurationCycles=720
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubRxNI 720 1
-  [side-channel] wrote NET_DONE WACS__SubRxNI 720 iter=1
-[ns3] [bridge] NS3 paused at 3700 ns results=4
-[ns3] [bridge] Running NS3 for 5 ns (now=3700 ns, until=3705 ns)
-[ns3] [bridge] NS3 paused at 3705 ns results=4
-[ns3] [bridge] Running NS3 for 10 ns (now=3705 ns, until=3715 ns)
-[ns3] [bridge] NS3 paused at 3715 ns results=4
-[ns3] [bridge] Running NS3 for 5 ns (now=3715 ns, until=3720 ns)
-[ns3] [bridge] NS3 paused at 3720 ns results=4
-[ns3] [bridge] Running NS3 for 5 ns (now=3720 ns, until=3725 ns)
-[ns3] [bridge] NS3 paused at 3725 ns results=4
-[ns3] [bridge] Running NS3 for 5 ns (now=3725 ns, until=3730 ns)
-[ns3] [bridge] NS3 paused at 3730 ns results=4
-[ns3] [bridge] Running NS3 for 5 ns (now=3730 ns, until=3735 ns)
-[ns3] [bridge] NS3 paused at 3735 ns results=4
-[ns3] [bridge] Running NS3 for 5 ns (now=3735 ns, until=3740 ns)
-[ns3] [bridge] NS3 paused at 3740 ns results=4
-[ns3] [bridge] Running NS3 for 5 ns (now=3740 ns, until=3745 ns)
-[ns3] [bridge] NS3 paused at 3745 ns results=4
-[ns3] [bridge] Running NS3 for 5 ns (now=3745 ns, until=3750 ns)
-[ns3] [bridge] NS3 paused at 3750 ns results=4
-[ns3] [bridge] Running NS3 for 5 ns (now=3750 ns, until=3755 ns)
-[ns3] [bridge] NS3 paused at 3755 ns results=4
-[ns3] [bridge] Running NS3 for 5 ns (now=3755 ns, until=3760 ns)
-[ns3] [bridge] NS3 paused at 3760 ns results=4
-[ns3] [bridge] Running NS3 for 5 ns (now=3760 ns, until=3765 ns)
-[ns3] [bridge] NS3 paused at 3765 ns results=4
-[ns3] [bridge] Running NS3 for 5 ns (now=3765 ns, until=3770 ns)
-[ns3] [bridge] NS3 paused at 3770 ns results=4
+  [side-channel] writing NET_DONE WACS__CCTxNI 1118 iter=1
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCTxNI 1098 1
+  [side-channel] wrote NET_DONE WACS__CCTxNI 1098 iter=1
+[ns3] [bridge] NS3 paused at 5588 ns results=3
+[ns3] [bridge] Running NS3 for 7 ns (now=5588 ns, until=5595 ns)
+[ns3] [bridge] NS3 paused at 5595 ns results=3
+[ns3] [bridge] Running NS3 for 10 ns (now=5595 ns, until=5605 ns)
+[ns3] [bridge] NS3 paused at 5605 ns results=3
+[ns3] [bridge] Running NS3 for 10 ns (now=5605 ns, until=5615 ns)
+[ns3] [bridge] NS3 paused at 5615 ns results=3
+[ns3] [bridge] Running NS3 for 10 ns (now=5615 ns, until=5625 ns)
+[ns3] [bridge] NS3 paused at 5625 ns results=3
+[ns3] [bridge] Running NS3 for 10 ns (now=5625 ns, until=5635 ns)
+[ns3] [bridge] NS3 paused at 5635 ns results=3
+[ns3] [bridge] Running NS3 for 10 ns (now=5635 ns, until=5645 ns)
+[ns3] [bridge] NS3 paused at 5645 ns results=3
+[ns3] [bridge] Running NS3 for 10 ns (now=5645 ns, until=5655 ns)
+[ns3] [bridge] NS3 paused at 5655 ns results=3
+[ns3] [bridge] Running NS3 for 10 ns (now=5655 ns, until=5665 ns)
+[ns3] [bridge] NS3 paused at 5665 ns results=3
+[ns3] [bridge] Running NS3 for 10 ns (now=5665 ns, until=5675 ns)
+[ns3] [bridge] NS3 paused at 5675 ns results=3
+[ns3] [bridge] Running NS3 for 10 ns (now=5675 ns, until=5685 ns)
+[ns3] [bridge] NS3 paused at 5685 ns results=3
+[ns3] [bridge] Running NS3 for 10 ns (now=5685 ns, until=5695 ns)
+[ns3] [bridge] NS3 paused at 5695 ns results=3
+[ns3] [bridge] Running NS3 for 10 ns (now=5695 ns, until=5705 ns)
+[ns3] [bridge] NS3 paused at 5705 ns results=3
+[ns3] [bridge] Running NS3 for 10 ns (now=5705 ns, until=5715 ns)
+[ns3] [bridge] NS3 paused at 5715 ns results=3
+[ns3] [bridge] Running NS3 for 10 ns (now=5715 ns, until=5725 ns)
+[ns3] [bridge] NS3 paused at 5725 ns results=3
+[ns3] [bridge] Running NS3 for 10 ns (now=5725 ns, until=5735 ns)
+[ns3] [bridge] NS3 paused at 5735 ns results=3
+[ns3] [bridge] Running NS3 for 10 ns (now=5735 ns, until=5745 ns)
+[ns3] [bridge] NS3 paused at 5745 ns results=3
+[ns3] [bridge] Running NS3 for 10 ns (now=5745 ns, until=5755 ns)
+[ns3] [bridge] NS3 paused at 5755 ns results=3
 
   [event] diplodocus.owl.ttl changed - found 1 new command(s) (submitting in creation order, without waiting for results).
 
@@ -234,40 +202,75 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [PART A]  cmd_WACS__CCTxNI_iter2_DataQty -> ns3:Packet? true
   [PART A]  EV_ChargingRequest_NetTask -> ns3:Socket? true
   [PART A]  cmd_WACS__CCTxNI_iter2_StartCycle -> ns3:NsTimePoint? true
-  [PART C - SWRL cycle->ns]  cycleValue=755  f=2.0E8 Hz  -->  nsValue=3775.0 ns
+  [PART C - SWRL cycle->ns]  cycleValue=1153  f=2.0E8 Hz  -->  nsValue=5765.0 ns
 [DEBUG] pairedReceiverTaskName=WACS__SubRxNI
 [DEBUG] rcvStartFile=/home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI
 [DEBUG] receiverStartCycle=null
 [DEBUG] WACS__CCTxNI transport fields=';transport=TCP;sndBufSize=32'
 [DEBUG] WACS__CCTxNI direction=1
-  [bridge] Commande envoyée à NS3: packetSize=48;id=2;nsValue=3775;direction=1;transport=TCP;sndBufSize=32
+  [bridge] Commande envoyée à NS3: packetSize=48;id=2;nsValue=5765;direction=1;transport=TCP;sndBufSize=32
   Submitted cmd_WACS__CCTxNI_iter2_WriteCmd to NS-3 (packetSize=48, id=2) - moving on without waiting for its result.
-[ns3] [bridge] Drained #3 raw='packetSize=48;id=2;nsValue=3775;direction=1;transport=TCP;sndBufSize=32'
-[ns3] [bridge] SCHEDULED id=2 at 3775 ns
-[ns3] [bridge] Running NS3 for 5 ns (now=3770 ns, until=3775 ns)
-[ns3] INJECTION_TIME commandId=2 injectionTimeNs=3775
-[ns3] [bridge] INJECT id=2 NI1->NI0 size=48 TCP sndBuf=32 t=3775
-[ns3] [bridge] NS3 paused at 3775 ns results=4
-[ns3] [bridge] Running NS3 for 5 ns (now=3775 ns, until=3780 ns)
-[ns3] [bridge] NS3 paused at 3780 ns results=4
-[ns3] [bridge] Running NS3 for 5 ns (now=3780 ns, until=3785 ns)
-[ns3] [bridge] NS3 paused at 3785 ns results=4
-[ns3] [bridge] Running NS3 for 5 ns (now=3785 ns, until=3790 ns)
-[ns3] [bridge] NS3 paused at 3790 ns results=4
-[ns3] [bridge] Running NS3 for 10 ns (now=3790 ns, until=3800 ns)
-[ns3] [bridge] NS3 paused at 3800 ns results=4
-[ns3] [bridge] Running NS3 for 10 ns (now=3800 ns, until=3810 ns)
-[ns3] [bridge] NS3 paused at 3810 ns results=4
-[ns3] [bridge] Running NS3 for 10 ns (now=3810 ns, until=3820 ns)
-[ns3] [bridge] NS3 paused at 3820 ns results=4
-[ns3] [bridge] Running NS3 for 10 ns (now=3820 ns, until=3830 ns)
-[ns3] [bridge] NS3 paused at 3830 ns results=4
-[ns3] [bridge] Running NS3 for 10 ns (now=3830 ns, until=3840 ns)
-[ns3] [bridge] NS3 paused at 3840 ns results=4
-[ns3] [bridge] Running NS3 for 10 ns (now=3840 ns, until=3850 ns)
-[ns3] [bridge] NS3 paused at 3850 ns results=4
-[ns3] [bridge] Running NS3 for 10 ns (now=3850 ns, until=3860 ns)
-[ns3] [bridge] NS3 paused at 3860 ns results=4
+[ns3] [bridge] Drained #3 raw='packetSize=48;id=2;nsValue=5765;direction=1;transport=TCP;sndBufSize=32'
+[ns3] [bridge] SCHEDULED id=2 at 5765 ns
+[ns3] [bridge] Running NS3 for 10 ns (now=5755 ns, until=5765 ns)
+[ns3] INJECTION_TIME commandId=2 injectionTimeNs=5765
+[ns3] [bridge] INJECT id=2 NI1->NI0 size=48 TCP sndBuf=32 t=5765
+[ns3] [bridge] NS3 paused at 5765 ns results=3
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=5765 ns, until=1.00058e+07 ns)
+[ns3] [bridge] RECV_END id=0 t=6248
+[ns3] RESULT_START
+[ns3] commandId=0
+[ns3] receiveMeasuredLatencyNs=6248
+[ns3] RESULT_END
+
+  --- NS-3 RECEIVE result for: cmd_WACS__CCTxNI_iter1_WriteCmd
+  Measured receive latency (ns): 6148.0
+  [DEBUG-RECV] receiveLatencyNs=6148.0
+  [DEBUG-RECV] capturedSendLatencyNs=5488.0
+  [DEBUG-RECV] capturedSenderEndCycle=1118
+  [DEBUG-RECV] propagationNs=660.0
+  [DEBUG-RECV] propagationCycles=132.0
+  [DEBUG-RECV] rcvEndCycle=1250
+  [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI) = 145.0
+  [side-channel] NET_DONE WACS__SubRxNI 1250 iter=1  (senderEndCycle=1118, propagationNs=660.0, propagationCycles=132.0)
+  [DEBUG-RECV] rcvDurationCycles=1230
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubRxNI 1230 1
+  [side-channel] wrote NET_DONE WACS__SubRxNI 1230 iter=1
+[ns3] [bridge] NS3 paused at 6248 ns results=4
+[ns3] [bridge] Running NS3 for 2 ns (now=6248 ns, until=6250 ns)
+[ns3] [bridge] NS3 paused at 6250 ns results=4
+[ns3] [bridge] Running NS3 for 10 ns (now=6250 ns, until=6260 ns)
+[ns3] [bridge] NS3 paused at 6260 ns results=4
+[ns3] [bridge] Running NS3 for 10 ns (now=6260 ns, until=6270 ns)
+[ns3] [bridge] NS3 paused at 6270 ns results=4
+[ns3] [bridge] Running NS3 for 10 ns (now=6270 ns, until=6280 ns)
+[ns3] [bridge] NS3 paused at 6280 ns results=4
+[ns3] [bridge] Running NS3 for 10 ns (now=6280 ns, until=6290 ns)
+[ns3] [bridge] NS3 paused at 6290 ns results=4
+[ns3] [bridge] Running NS3 for 10 ns (now=6290 ns, until=6300 ns)
+[ns3] [bridge] NS3 paused at 6300 ns results=4
+[ns3] [bridge] Running NS3 for 10 ns (now=6300 ns, until=6310 ns)
+[ns3] [bridge] NS3 paused at 6310 ns results=4
+[ns3] [bridge] Running NS3 for 10 ns (now=6310 ns, until=6320 ns)
+[ns3] [bridge] NS3 paused at 6320 ns results=4
+[ns3] [bridge] Running NS3 for 10 ns (now=6320 ns, until=6330 ns)
+[ns3] [bridge] NS3 paused at 6330 ns results=4
+[ns3] [bridge] Running NS3 for 10 ns (now=6330 ns, until=6340 ns)
+[ns3] [bridge] NS3 paused at 6340 ns results=4
+[ns3] [bridge] Running NS3 for 10 ns (now=6340 ns, until=6350 ns)
+[ns3] [bridge] NS3 paused at 6350 ns results=4
+[ns3] [bridge] Running NS3 for 10 ns (now=6350 ns, until=6360 ns)
+[ns3] [bridge] NS3 paused at 6360 ns results=4
+[ns3] [bridge] Running NS3 for 10 ns (now=6360 ns, until=6370 ns)
+[ns3] [bridge] NS3 paused at 6370 ns results=4
+[ns3] [bridge] Running NS3 for 10 ns (now=6370 ns, until=6380 ns)
+[ns3] [bridge] NS3 paused at 6380 ns results=4
+[ns3] [bridge] Running NS3 for 10 ns (now=6380 ns, until=6390 ns)
+[ns3] [bridge] NS3 paused at 6390 ns results=4
+[ns3] [bridge] Running NS3 for 10 ns (now=6390 ns, until=6400 ns)
+[ns3] [bridge] NS3 paused at 6400 ns results=4
+[ns3] [bridge] Running NS3 for 10 ns (now=6400 ns, until=6410 ns)
+[ns3] [bridge] NS3 paused at 6410 ns results=4
 
   [event] diplodocus.owl.ttl changed - found 1 new command(s) (submitting in creation order, without waiting for results).
 
@@ -278,152 +281,135 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [PART A]  cmd_WACS__SubTxNI_iter2_DataQty -> ns3:Packet? true
   [PART A]  EV_ChargingRequest_NetTask -> ns3:Socket? true
   [PART A]  cmd_WACS__SubTxNI_iter2_StartCycle -> ns3:NsTimePoint? true
-  [PART C - SWRL cycle->ns]  cycleValue=774  f=2.0E8 Hz  -->  nsValue=3870.0 ns
+  [PART C - SWRL cycle->ns]  cycleValue=1284  f=2.0E8 Hz  -->  nsValue=6420.0 ns
 [DEBUG] pairedReceiverTaskName=WACS__CCRxNI
 [DEBUG] rcvStartFile=/home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI
 [DEBUG] receiverStartCycle=null
 [DEBUG] WACS__SubTxNI transport fields=';transport=UDP;errorRate=0.02'
 [DEBUG] WACS__SubTxNI direction=0
-  [bridge] Commande envoyée à NS3: packetSize=48;id=3;nsValue=3870;direction=0;transport=UDP;errorRate=0.02
+  [bridge] Commande envoyée à NS3: packetSize=48;id=3;nsValue=6420;direction=0;transport=UDP;errorRate=0.02
   Submitted cmd_WACS__SubTxNI_iter2_WriteCmd to NS-3 (packetSize=48, id=3) - moving on without waiting for its result.
-[ns3] [bridge] Drained #4 raw='packetSize=48;id=3;nsValue=3870;direction=0;transport=UDP;errorRate=0.02'
-[ns3] [bridge] SCHEDULED id=3 at 3870 ns
-[ns3] [bridge] Running NS3 for 10 ns (now=3860 ns, until=3870 ns)
-[ns3] INJECTION_TIME commandId=3 injectionTimeNs=3870
-[ns3] [bridge] INJECT id=3 NI0->NI1 size=48 UDP errorRate=0.020000 t=3870
-[ns3] [bridge] NS3 paused at 3870 ns results=4
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=3870 ns, until=1.00039e+07 ns)
-[ns3] [bridge] SEND_END id=3 NI0 UDP t=4756
+[ns3] [bridge] Drained #4 raw='packetSize=48;id=3;nsValue=6420;direction=0;transport=UDP;errorRate=0.02'
+[ns3] [bridge] SCHEDULED id=3 at 6420 ns
+[ns3] [bridge] Running NS3 for 10 ns (now=6410 ns, until=6420 ns)
+[ns3] INJECTION_TIME commandId=3 injectionTimeNs=6420
+[ns3] [bridge] INJECT id=3 NI0->NI1 size=48 UDP errorRate=0.020000 t=6420
+[ns3] [bridge] NS3 paused at 6420 ns results=4
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=6420 ns, until=1.00064e+07 ns)
+[ns3] [bridge] SEND_END id=3 NI0 UDP t=7304
 [ns3] RESULT_START
 [ns3] commandId=3
-[ns3] sendMeasuredLatencyNs=4756
+[ns3] sendMeasuredLatencyNs=7304
 [ns3] RESULT_END
 
   --- NS-3 result ready for: cmd_WACS__SubTxNI_iter2_WriteCmd
-  Measured latency (ns): 886.0
+  Measured latency (ns): 884.0
   Created -> cmd_WACS__SubTxNI_iter2_DataQty_Packet, EV_ChargingRequest_NetTask_Socket, cmd_WACS__SubTxNI_iter2_StartCycle_NsTimePoint, _TransferResult4
   ns3.owl.ttl updated.
   --- Backpropagating result: _TransferResult4
-  [DEBUG-SEND] measuredLatencyNs=886.0
-  [DEBUG-SEND] cycleVal=774
-  [DEBUG-SEND] endCycle=951
+  [DEBUG-SEND] measuredLatencyNs=884.0
+  [DEBUG-SEND] cycleVal=1284
+  [DEBUG-SEND] endCycle=1461
   [DEBUG-SEND] masterClockHz=2.0E8
-  [PART D - SWRL inverse ns->cycle]  delay_cycles = 886.0 * (2.0E8 / 1e9) = 177.20000000000002
-  [PART D - SWRL inverse ns->cycle]  endCycle = 774 + 177 = 951
+  [PART D - SWRL inverse ns->cycle]  delay_cycles = 884.0 * (2.0E8 / 1e9) = 176.8
+  [PART D - SWRL inverse ns->cycle]  endCycle = 1284 + 177 = 1461
   Linked cmd_WACS__SubTxNI_iter2_WriteCmd --dip:endsAtCycle--> _TransferResult4_EndCycle
-  Created -> _TransferResult4_EndCycle with dip:cycleValue = 951
+  Created -> _TransferResult4_EndCycle with dip:cycleValue = 1461
   diplodocus.owl.ttl updated.
-  [side-channel] writing NET_DONE WACS__SubTxNI 951 iter=2
+  [side-channel] writing NET_DONE WACS__SubTxNI 1461 iter=2
 [DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubTxNI 177 2
   [side-channel] wrote NET_DONE WACS__SubTxNI 177 iter=2
-[ns3] [bridge] NS3 paused at 4756 ns results=5
-[ns3] [bridge] Running NS3 for 9 ns (now=4756 ns, until=4765 ns)
-[ns3] [bridge] NS3 paused at 4765 ns results=5
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=4765 ns, until=1.00048e+07 ns)
-[ns3] [bridge] RECV_END id=3 t=4856
+[ns3] [bridge] NS3 paused at 7304 ns results=5
+[ns3] [bridge] Running NS3 for 1 ns (now=7304 ns, until=7305 ns)
+[ns3] [bridge] NS3 paused at 7305 ns results=5
+[ns3] [bridge] Running NS3 for 10 ns (now=7305 ns, until=7315 ns)
+[ns3] [bridge] NS3 paused at 7315 ns results=5
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=7315 ns, until=1.00073e+07 ns)
+[ns3] [bridge] RECV_END id=3 t=8028
 [ns3] RESULT_START
 [ns3] commandId=3
-[ns3] receiveMeasuredLatencyNs=4856
+[ns3] receiveMeasuredLatencyNs=8028
 [ns3] RESULT_END
 
   --- NS-3 RECEIVE result for: cmd_WACS__SubTxNI_iter2_WriteCmd
-  Measured receive latency (ns): 986.0
-  [DEBUG-RECV] receiveLatencyNs=986.0
-  [DEBUG-RECV] capturedSendLatencyNs=886.0
-  [DEBUG-RECV] capturedSenderEndCycle=951
-  [DEBUG-RECV] propagationNs=100.0
-  [DEBUG-RECV] propagationCycles=20.0
-  [DEBUG-RECV] rcvEndCycle=971
+  Measured receive latency (ns): 1608.0
+  [DEBUG-RECV] receiveLatencyNs=1608.0
+  [DEBUG-RECV] capturedSendLatencyNs=884.0
+  [DEBUG-RECV] capturedSenderEndCycle=1461
+  [DEBUG-RECV] propagationNs=724.0
+  [DEBUG-RECV] propagationCycles=144.8
+  [DEBUG-RECV] rcvEndCycle=1605
   [WARNING] Receiver startCycle for iter=2 not found in /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI, using 0
   [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI) = 0.0
-  [side-channel] NET_DONE WACS__CCRxNI 971 iter=2  (senderEndCycle=951, propagationNs=100.0, propagationCycles=20.0)
-  [DEBUG-RECV] rcvDurationCycles=197
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCRxNI 197 2
-  [side-channel] wrote NET_DONE WACS__CCRxNI 197 iter=2
-[ns3] [bridge] NS3 paused at 4856 ns results=6
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=4856 ns, until=1.00049e+07 ns)
-[ns3] [bridge] TCP connected id=2 t=5320
-[ns3] [bridge] SEND_END id=2 NI1 TCP t=7632
+  [side-channel] NET_DONE WACS__CCRxNI 1605 iter=2  (senderEndCycle=1461, propagationNs=724.0, propagationCycles=144.8)
+  [DEBUG-RECV] rcvDurationCycles=322
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCRxNI 322 2
+  [side-channel] wrote NET_DONE WACS__CCRxNI 322 iter=2
+[ns3] [bridge] NS3 paused at 8028 ns results=6
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=8028 ns, until=1.0008e+07 ns)
+[ns3] [bridge] TCP connected id=2 t=8492
+[ns3] [bridge] SEND_END id=2 NI1 TCP t=11924
 [ns3] RESULT_START
 [ns3] commandId=2
-[ns3] sendMeasuredLatencyNs=7632
+[ns3] sendMeasuredLatencyNs=11924
 [ns3] RESULT_END
 
   --- NS-3 result ready for: cmd_WACS__CCTxNI_iter2_WriteCmd
-  Measured latency (ns): 3857.0
+  Measured latency (ns): 6159.0
   Created -> cmd_WACS__CCTxNI_iter2_DataQty_Packet, EV_ChargingRequest_NetTask_Socket, cmd_WACS__CCTxNI_iter2_StartCycle_NsTimePoint, _TransferResult3
   ns3.owl.ttl updated.
   --- Backpropagating result: _TransferResult3
-  [DEBUG-SEND] measuredLatencyNs=3857.0
-  [DEBUG-SEND] cycleVal=755
-  [DEBUG-SEND] endCycle=1526
+  [DEBUG-SEND] measuredLatencyNs=6159.0
+  [DEBUG-SEND] cycleVal=1153
+  [DEBUG-SEND] endCycle=2385
   [DEBUG-SEND] masterClockHz=2.0E8
-  [PART D - SWRL inverse ns->cycle]  delay_cycles = 3857.0 * (2.0E8 / 1e9) = 771.4000000000001
-  [PART D - SWRL inverse ns->cycle]  endCycle = 755 + 771 = 1526
+  [PART D - SWRL inverse ns->cycle]  delay_cycles = 6159.0 * (2.0E8 / 1e9) = 1231.8000000000002
+  [PART D - SWRL inverse ns->cycle]  endCycle = 1153 + 1232 = 2385
   Linked cmd_WACS__CCTxNI_iter2_WriteCmd --dip:endsAtCycle--> _TransferResult3_EndCycle
-  Created -> _TransferResult3_EndCycle with dip:cycleValue = 1526
+  Created -> _TransferResult3_EndCycle with dip:cycleValue = 2385
   diplodocus.owl.ttl updated.
-  [side-channel] writing NET_DONE WACS__CCTxNI 1526 iter=2
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCTxNI 771 2
-  [side-channel] wrote NET_DONE WACS__CCTxNI 771 iter=2
-[ns3] [bridge] NS3 paused at 7632 ns results=7
-[ns3] [bridge] Running NS3 for 8 ns (now=7632 ns, until=7640 ns)
-[ns3] [bridge] NS3 paused at 7640 ns results=7
-[ns3] [bridge] Running NS3 for 10 ns (now=7640 ns, until=7650 ns)
-[ns3] [bridge] NS3 paused at 7650 ns results=7
-[ns3] [bridge] Running NS3 for 10 ns (now=7650 ns, until=7660 ns)
-[ns3] [bridge] NS3 paused at 7660 ns results=7
-[ns3] [bridge] Running NS3 for 10 ns (now=7660 ns, until=7670 ns)
-[ns3] [bridge] NS3 paused at 7670 ns results=7
-[ns3] [bridge] Running NS3 for 10 ns (now=7670 ns, until=7680 ns)
-[ns3] [bridge] NS3 paused at 7680 ns results=7
-[ns3] [bridge] Running NS3 for 10 ns (now=7680 ns, until=7690 ns)
-[ns3] [bridge] NS3 paused at 7690 ns results=7
-[ns3] [bridge] Running NS3 for 10 ns (now=7690 ns, until=7700 ns)
-[ns3] [bridge] NS3 paused at 7700 ns results=7
-[ns3] [bridge] Running NS3 for 10 ns (now=7700 ns, until=7710 ns)
-[ns3] [bridge] NS3 paused at 7710 ns results=7
-[ns3] [bridge] Running NS3 for 10 ns (now=7710 ns, until=7720 ns)
-[ns3] [bridge] NS3 paused at 7720 ns results=7
-[ns3] [bridge] Running NS3 for 10 ns (now=7720 ns, until=7730 ns)
-[ns3] [bridge] NS3 paused at 7730 ns results=7
-[ns3] [bridge] Running NS3 for 10 ns (now=7730 ns, until=7740 ns)
-[ns3] [bridge] RECV_END id=2 t=7732
-[ns3] RESULT_START
-[ns3] commandId=2
-[ns3] receiveMeasuredLatencyNs=7732
-[ns3] RESULT_END
-
-  --- NS-3 RECEIVE result for: cmd_WACS__CCTxNI_iter2_WriteCmd
-  Measured receive latency (ns): 3957.0
-  [DEBUG-RECV] receiveLatencyNs=3957.0
-  [DEBUG-RECV] capturedSendLatencyNs=3857.0
-  [DEBUG-RECV] capturedSenderEndCycle=1526
-  [DEBUG-RECV] propagationNs=100.0
-  [DEBUG-RECV] propagationCycles=20.0
-  [DEBUG-RECV] rcvEndCycle=1546
-  [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI) = 953.0
-  [side-channel] NET_DONE WACS__SubRxNI 1546 iter=2  (senderEndCycle=1526, propagationNs=100.0, propagationCycles=20.0)
-  [DEBUG-RECV] rcvDurationCycles=791
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubRxNI 791 2
-  [side-channel] wrote NET_DONE WACS__SubRxNI 791 iter=2
-[ns3] [bridge] NS3 paused at 7732 ns results=8
-[ns3] [bridge] Running NS3 for 8 ns (now=7732 ns, until=7740 ns)
-[ns3] [bridge] NS3 paused at 7740 ns results=8
-[ns3] [bridge] Running NS3 for 10 ns (now=7740 ns, until=7750 ns)
-[ns3] [bridge] NS3 paused at 7750 ns results=8
-[ns3] [bridge] Running NS3 for 10 ns (now=7750 ns, until=7760 ns)
-[ns3] [bridge] NS3 paused at 7760 ns results=8
-[ns3] [bridge] Running NS3 for 10 ns (now=7760 ns, until=7770 ns)
-[ns3] [bridge] NS3 paused at 7770 ns results=8
-[ns3] [bridge] Running NS3 for 10 ns (now=7770 ns, until=7780 ns)
-[ns3] [bridge] NS3 paused at 7780 ns results=8
-[ns3] [bridge] Running NS3 for 10 ns (now=7780 ns, until=7790 ns)
-[ns3] [bridge] NS3 paused at 7790 ns results=8
-[ns3] [bridge] Running NS3 for 10 ns (now=7790 ns, until=7800 ns)
-[ns3] [bridge] NS3 paused at 7800 ns results=8
-[ns3] [bridge] Running NS3 for 10 ns (now=7800 ns, until=7810 ns)
-[ns3] [bridge] NS3 paused at 7810 ns results=8
+  [side-channel] writing NET_DONE WACS__CCTxNI 2385 iter=2
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCTxNI 1232 2
+  [side-channel] wrote NET_DONE WACS__CCTxNI 1232 iter=2
+[ns3] [bridge] NS3 paused at 11924 ns results=7
+[ns3] [bridge] Running NS3 for 1 ns (now=11924 ns, until=11925 ns)
+[ns3] [bridge] NS3 paused at 11925 ns results=7
+[ns3] [bridge] Running NS3 for 10 ns (now=11925 ns, until=11935 ns)
+[ns3] [bridge] NS3 paused at 11935 ns results=7
+[ns3] [bridge] Running NS3 for 10 ns (now=11935 ns, until=11945 ns)
+[ns3] [bridge] NS3 paused at 11945 ns results=7
+[ns3] [bridge] Running NS3 for 10 ns (now=11945 ns, until=11955 ns)
+[ns3] [bridge] NS3 paused at 11955 ns results=7
+[ns3] [bridge] Running NS3 for 10 ns (now=11955 ns, until=11965 ns)
+[ns3] [bridge] NS3 paused at 11965 ns results=7
+[ns3] [bridge] Running NS3 for 10 ns (now=11965 ns, until=11975 ns)
+[ns3] [bridge] NS3 paused at 11975 ns results=7
+[ns3] [bridge] Running NS3 for 10 ns (now=11975 ns, until=11985 ns)
+[ns3] [bridge] NS3 paused at 11985 ns results=7
+[ns3] [bridge] Running NS3 for 10 ns (now=11985 ns, until=11995 ns)
+[ns3] [bridge] NS3 paused at 11995 ns results=7
+[ns3] [bridge] Running NS3 for 10 ns (now=11995 ns, until=12005 ns)
+[ns3] [bridge] NS3 paused at 12005 ns results=7
+[ns3] [bridge] Running NS3 for 10 ns (now=12005 ns, until=12015 ns)
+[ns3] [bridge] NS3 paused at 12015 ns results=7
+[ns3] [bridge] Running NS3 for 10 ns (now=12015 ns, until=12025 ns)
+[ns3] [bridge] NS3 paused at 12025 ns results=7
+[ns3] [bridge] Running NS3 for 10 ns (now=12025 ns, until=12035 ns)
+[ns3] [bridge] NS3 paused at 12035 ns results=7
+[ns3] [bridge] Running NS3 for 10 ns (now=12035 ns, until=12045 ns)
+[ns3] [bridge] NS3 paused at 12045 ns results=7
+[ns3] [bridge] Running NS3 for 10 ns (now=12045 ns, until=12055 ns)
+[ns3] [bridge] NS3 paused at 12055 ns results=7
+[ns3] [bridge] Running NS3 for 10 ns (now=12055 ns, until=12065 ns)
+[ns3] [bridge] NS3 paused at 12065 ns results=7
+[ns3] [bridge] Running NS3 for 10 ns (now=12065 ns, until=12075 ns)
+[ns3] [bridge] NS3 paused at 12075 ns results=7
+[ns3] [bridge] Running NS3 for 10 ns (now=12075 ns, until=12085 ns)
+[ns3] [bridge] NS3 paused at 12085 ns results=7
+[ns3] [bridge] Running NS3 for 10 ns (now=12085 ns, until=12095 ns)
+[ns3] [bridge] NS3 paused at 12095 ns results=7
+[ns3] [bridge] Running NS3 for 10 ns (now=12095 ns, until=12105 ns)
+[ns3] [bridge] NS3 paused at 12105 ns results=7
 
   [event] diplodocus.owl.ttl changed - found 1 new command(s) (submitting in creation order, without waiting for results).
 
@@ -434,34 +420,75 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [PART A]  cmd_WACS__CCTxNI_iter3_DataQty -> ns3:Packet? true
   [PART A]  EV_ChargingRequest_NetTask -> ns3:Socket? true
   [PART A]  cmd_WACS__CCTxNI_iter3_StartCycle -> ns3:NsTimePoint? true
-  [PART C - SWRL cycle->ns]  cycleValue=1564  f=2.0E8 Hz  -->  nsValue=7820.0 ns
+  [PART C - SWRL cycle->ns]  cycleValue=2423  f=2.0E8 Hz  -->  nsValue=12115.0 ns
 [DEBUG] pairedReceiverTaskName=WACS__SubRxNI
 [DEBUG] rcvStartFile=/home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI
 [DEBUG] receiverStartCycle=null
 [DEBUG] WACS__CCTxNI transport fields=';transport=TCP;sndBufSize=32'
 [DEBUG] WACS__CCTxNI direction=1
-  [bridge] Commande envoyée à NS3: packetSize=48;id=4;nsValue=7820;direction=1;transport=TCP;sndBufSize=32
+  [bridge] Commande envoyée à NS3: packetSize=48;id=4;nsValue=12115;direction=1;transport=TCP;sndBufSize=32
   Submitted cmd_WACS__CCTxNI_iter3_WriteCmd to NS-3 (packetSize=48, id=4) - moving on without waiting for its result.
-[ns3] [bridge] Drained #5 raw='packetSize=48;id=4;nsValue=7820;direction=1;transport=TCP;sndBufSize=32'
-[ns3] [bridge] SCHEDULED id=4 at 7820 ns
-[ns3] [bridge] Running NS3 for 10 ns (now=7810 ns, until=7820 ns)
-[ns3] INJECTION_TIME commandId=4 injectionTimeNs=7820
-[ns3] [bridge] INJECT id=4 NI1->NI0 size=48 TCP sndBuf=32 t=7820
-[ns3] [bridge] NS3 paused at 7820 ns results=8
-[ns3] [bridge] Running NS3 for 10 ns (now=7820 ns, until=7830 ns)
-[ns3] [bridge] NS3 paused at 7830 ns results=8
-[ns3] [bridge] Running NS3 for 10 ns (now=7830 ns, until=7840 ns)
-[ns3] [bridge] NS3 paused at 7840 ns results=8
-[ns3] [bridge] Running NS3 for 10 ns (now=7840 ns, until=7850 ns)
-[ns3] [bridge] NS3 paused at 7850 ns results=8
-[ns3] [bridge] Running NS3 for 10 ns (now=7850 ns, until=7860 ns)
-[ns3] [bridge] NS3 paused at 7860 ns results=8
-[ns3] [bridge] Running NS3 for 10 ns (now=7860 ns, until=7870 ns)
-[ns3] [bridge] NS3 paused at 7870 ns results=8
-[ns3] [bridge] Running NS3 for 10 ns (now=7870 ns, until=7880 ns)
-[ns3] [bridge] NS3 paused at 7880 ns results=8
-[ns3] [bridge] Running NS3 for 10 ns (now=7880 ns, until=7890 ns)
-[ns3] [bridge] NS3 paused at 7890 ns results=8
+[ns3] [bridge] Drained #5 raw='packetSize=48;id=4;nsValue=12115;direction=1;transport=TCP;sndBufSize=32'
+[ns3] [bridge] SCHEDULED id=4 at 12115 ns
+[ns3] [bridge] Running NS3 for 10 ns (now=12105 ns, until=12115 ns)
+[ns3] INJECTION_TIME commandId=4 injectionTimeNs=12115
+[ns3] [bridge] INJECT id=4 NI1->NI0 size=48 TCP sndBuf=32 t=12115
+[ns3] [bridge] NS3 paused at 12115 ns results=7
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=12115 ns, until=1.00121e+07 ns)
+[ns3] [bridge] RECV_END id=2 t=12584
+[ns3] RESULT_START
+[ns3] commandId=2
+[ns3] receiveMeasuredLatencyNs=12584
+[ns3] RESULT_END
+
+  --- NS-3 RECEIVE result for: cmd_WACS__CCTxNI_iter2_WriteCmd
+  Measured receive latency (ns): 6819.0
+  [DEBUG-RECV] receiveLatencyNs=6819.0
+  [DEBUG-RECV] capturedSendLatencyNs=6159.0
+  [DEBUG-RECV] capturedSenderEndCycle=2385
+  [DEBUG-RECV] propagationNs=660.0
+  [DEBUG-RECV] propagationCycles=132.0
+  [DEBUG-RECV] rcvEndCycle=2517
+  [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI) = 1463.0
+  [side-channel] NET_DONE WACS__SubRxNI 2517 iter=2  (senderEndCycle=2385, propagationNs=660.0, propagationCycles=132.0)
+  [DEBUG-RECV] rcvDurationCycles=1364
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubRxNI 1364 2
+  [side-channel] wrote NET_DONE WACS__SubRxNI 1364 iter=2
+[ns3] [bridge] NS3 paused at 12584 ns results=8
+[ns3] [bridge] Running NS3 for 1 ns (now=12584 ns, until=12585 ns)
+[ns3] [bridge] NS3 paused at 12585 ns results=8
+[ns3] [bridge] Running NS3 for 10 ns (now=12585 ns, until=12595 ns)
+[ns3] [bridge] NS3 paused at 12595 ns results=8
+[ns3] [bridge] Running NS3 for 10 ns (now=12595 ns, until=12605 ns)
+[ns3] [bridge] NS3 paused at 12605 ns results=8
+[ns3] [bridge] Running NS3 for 10 ns (now=12605 ns, until=12615 ns)
+[ns3] [bridge] NS3 paused at 12615 ns results=8
+[ns3] [bridge] Running NS3 for 10 ns (now=12615 ns, until=12625 ns)
+[ns3] [bridge] NS3 paused at 12625 ns results=8
+[ns3] [bridge] Running NS3 for 10 ns (now=12625 ns, until=12635 ns)
+[ns3] [bridge] NS3 paused at 12635 ns results=8
+[ns3] [bridge] Running NS3 for 10 ns (now=12635 ns, until=12645 ns)
+[ns3] [bridge] NS3 paused at 12645 ns results=8
+[ns3] [bridge] Running NS3 for 10 ns (now=12645 ns, until=12655 ns)
+[ns3] [bridge] NS3 paused at 12655 ns results=8
+[ns3] [bridge] Running NS3 for 10 ns (now=12655 ns, until=12665 ns)
+[ns3] [bridge] NS3 paused at 12665 ns results=8
+[ns3] [bridge] Running NS3 for 10 ns (now=12665 ns, until=12675 ns)
+[ns3] [bridge] NS3 paused at 12675 ns results=8
+[ns3] [bridge] Running NS3 for 10 ns (now=12675 ns, until=12685 ns)
+[ns3] [bridge] NS3 paused at 12685 ns results=8
+[ns3] [bridge] Running NS3 for 10 ns (now=12685 ns, until=12695 ns)
+[ns3] [bridge] NS3 paused at 12695 ns results=8
+[ns3] [bridge] Running NS3 for 10 ns (now=12695 ns, until=12705 ns)
+[ns3] [bridge] NS3 paused at 12705 ns results=8
+[ns3] [bridge] Running NS3 for 10 ns (now=12705 ns, until=12715 ns)
+[ns3] [bridge] NS3 paused at 12715 ns results=8
+[ns3] [bridge] Running NS3 for 10 ns (now=12715 ns, until=12725 ns)
+[ns3] [bridge] NS3 paused at 12725 ns results=8
+[ns3] [bridge] Running NS3 for 10 ns (now=12725 ns, until=12735 ns)
+[ns3] [bridge] NS3 paused at 12735 ns results=8
+[ns3] [bridge] Running NS3 for 10 ns (now=12735 ns, until=12745 ns)
+[ns3] [bridge] NS3 paused at 12745 ns results=8
 
   [event] diplodocus.owl.ttl changed - found 1 new command(s) (submitting in creation order, without waiting for results).
 
@@ -472,156 +499,131 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [PART A]  cmd_WACS__SubTxNI_iter3_DataQty -> ns3:Packet? true
   [PART A]  EV_ChargingRequest_NetTask -> ns3:Socket? true
   [PART A]  cmd_WACS__SubTxNI_iter3_StartCycle -> ns3:NsTimePoint? true
-  [PART C - SWRL cycle->ns]  cycleValue=1580  f=2.0E8 Hz  -->  nsValue=7900.0 ns
+  [PART C - SWRL cycle->ns]  cycleValue=2551  f=2.0E8 Hz  -->  nsValue=12755.0 ns
 [DEBUG] pairedReceiverTaskName=WACS__CCRxNI
 [DEBUG] rcvStartFile=/home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI
 [DEBUG] receiverStartCycle=null
 [DEBUG] WACS__SubTxNI transport fields=';transport=UDP;errorRate=0.02'
 [DEBUG] WACS__SubTxNI direction=0
-  [bridge] Commande envoyée à NS3: packetSize=48;id=5;nsValue=7900;direction=0;transport=UDP;errorRate=0.02
+  [bridge] Commande envoyée à NS3: packetSize=48;id=5;nsValue=12755;direction=0;transport=UDP;errorRate=0.02
   Submitted cmd_WACS__SubTxNI_iter3_WriteCmd to NS-3 (packetSize=48, id=5) - moving on without waiting for its result.
-[ns3] [bridge] Drained #6 raw='packetSize=48;id=5;nsValue=7900;direction=0;transport=UDP;errorRate=0.02'
-[ns3] [bridge] SCHEDULED id=5 at 7900 ns
-[ns3] [bridge] Running NS3 for 10 ns (now=7890 ns, until=7900 ns)
-[ns3] INJECTION_TIME commandId=5 injectionTimeNs=7900
-[ns3] [bridge] INJECT id=5 NI0->NI1 size=48 UDP errorRate=0.020000 t=7900
-[ns3] [bridge] NS3 paused at 7900 ns results=8
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=7900 ns, until=1.00079e+07 ns)
-[ns3] [bridge] SEND_END id=5 NI0 UDP t=8788
+[ns3] [bridge] Drained #6 raw='packetSize=48;id=5;nsValue=12755;direction=0;transport=UDP;errorRate=0.02'
+[ns3] [bridge] SCHEDULED id=5 at 12755 ns
+[ns3] [bridge] Running NS3 for 10 ns (now=12745 ns, until=12755 ns)
+[ns3] INJECTION_TIME commandId=5 injectionTimeNs=12755
+[ns3] [bridge] INJECT id=5 NI0->NI1 size=48 UDP errorRate=0.020000 t=12755
+[ns3] [bridge] NS3 paused at 12755 ns results=8
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=12755 ns, until=1.00128e+07 ns)
+[ns3] [bridge] SEND_END id=5 NI0 UDP t=13640
 [ns3] RESULT_START
 [ns3] commandId=5
-[ns3] sendMeasuredLatencyNs=8788
+[ns3] sendMeasuredLatencyNs=13640
 [ns3] RESULT_END
 
   --- NS-3 result ready for: cmd_WACS__SubTxNI_iter3_WriteCmd
-  Measured latency (ns): 888.0
+  Measured latency (ns): 885.0
   Created -> cmd_WACS__SubTxNI_iter3_DataQty_Packet, EV_ChargingRequest_NetTask_Socket, cmd_WACS__SubTxNI_iter3_StartCycle_NsTimePoint, _TransferResult6
   ns3.owl.ttl updated.
   --- Backpropagating result: _TransferResult6
-  [DEBUG-SEND] measuredLatencyNs=888.0
-  [DEBUG-SEND] cycleVal=1580
-  [DEBUG-SEND] endCycle=1758
+  [DEBUG-SEND] measuredLatencyNs=885.0
+  [DEBUG-SEND] cycleVal=2551
+  [DEBUG-SEND] endCycle=2728
   [DEBUG-SEND] masterClockHz=2.0E8
-  [PART D - SWRL inverse ns->cycle]  delay_cycles = 888.0 * (2.0E8 / 1e9) = 177.60000000000002
-  [PART D - SWRL inverse ns->cycle]  endCycle = 1580 + 178 = 1758
+  [PART D - SWRL inverse ns->cycle]  delay_cycles = 885.0 * (2.0E8 / 1e9) = 177.0
+  [PART D - SWRL inverse ns->cycle]  endCycle = 2551 + 177 = 2728
   Linked cmd_WACS__SubTxNI_iter3_WriteCmd --dip:endsAtCycle--> _TransferResult6_EndCycle
-  Created -> _TransferResult6_EndCycle with dip:cycleValue = 1758
+  Created -> _TransferResult6_EndCycle with dip:cycleValue = 2728
   diplodocus.owl.ttl updated.
-  [side-channel] writing NET_DONE WACS__SubTxNI 1758 iter=3
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubTxNI 178 3
-  [side-channel] wrote NET_DONE WACS__SubTxNI 178 iter=3
-[ns3] [bridge] NS3 paused at 8788 ns results=9
-[ns3] [bridge] Running NS3 for 2 ns (now=8788 ns, until=8790 ns)
-[ns3] [bridge] NS3 paused at 8790 ns results=9
-[ns3] [bridge] Running NS3 for 10 ns (now=8790 ns, until=8800 ns)
-[ns3] [bridge] NS3 paused at 8800 ns results=9
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=8800 ns, until=1.00088e+07 ns)
-[ns3] [bridge] RECV_END id=5 t=8888
+  [side-channel] writing NET_DONE WACS__SubTxNI 2728 iter=3
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubTxNI 177 3
+  [side-channel] wrote NET_DONE WACS__SubTxNI 177 iter=3
+[ns3] [bridge] NS3 paused at 13640 ns results=9
+[ns3] [bridge] Running NS3 for 10 ns (now=13640 ns, until=13650 ns)
+[ns3] [bridge] NS3 paused at 13650 ns results=9
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=13650 ns, until=1.00136e+07 ns)
+[ns3] [bridge] RECV_END id=5 t=14364
 [ns3] RESULT_START
 [ns3] commandId=5
-[ns3] receiveMeasuredLatencyNs=8888
+[ns3] receiveMeasuredLatencyNs=14364
 [ns3] RESULT_END
 
   --- NS-3 RECEIVE result for: cmd_WACS__SubTxNI_iter3_WriteCmd
-  Measured receive latency (ns): 988.0
-  [DEBUG-RECV] receiveLatencyNs=988.0
-  [DEBUG-RECV] capturedSendLatencyNs=888.0
-  [DEBUG-RECV] capturedSenderEndCycle=1758
-  [DEBUG-RECV] propagationNs=100.0
-  [DEBUG-RECV] propagationCycles=20.0
-  [DEBUG-RECV] rcvEndCycle=1778
+  Measured receive latency (ns): 1609.0
+  [DEBUG-RECV] receiveLatencyNs=1609.0
+  [DEBUG-RECV] capturedSendLatencyNs=885.0
+  [DEBUG-RECV] capturedSenderEndCycle=2728
+  [DEBUG-RECV] propagationNs=724.0
+  [DEBUG-RECV] propagationCycles=144.8
+  [DEBUG-RECV] rcvEndCycle=2872
   [WARNING] Receiver startCycle for iter=3 not found in /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI, using 0
   [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI) = 0.0
-  [side-channel] NET_DONE WACS__CCRxNI 1778 iter=3  (senderEndCycle=1758, propagationNs=100.0, propagationCycles=20.0)
-  [DEBUG-RECV] rcvDurationCycles=198
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCRxNI 198 3
-  [side-channel] wrote NET_DONE WACS__CCRxNI 198 iter=3
-[ns3] [bridge] NS3 paused at 8888 ns results=10
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=8888 ns, until=1.00089e+07 ns)
-[ns3] [bridge] TCP connected id=4 t=9352
-[ns3] [bridge] SEND_END id=4 NI1 TCP t=11664
+  [side-channel] NET_DONE WACS__CCRxNI 2872 iter=3  (senderEndCycle=2728, propagationNs=724.0, propagationCycles=144.8)
+  [DEBUG-RECV] rcvDurationCycles=322
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCRxNI 322 3
+  [side-channel] wrote NET_DONE WACS__CCRxNI 322 iter=3
+[ns3] [bridge] NS3 paused at 14364 ns results=10
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=14364 ns, until=1.00144e+07 ns)
+[ns3] [bridge] TCP connected id=4 t=14828
+[ns3] [bridge] SEND_END id=4 NI1 TCP t=18260
 [ns3] RESULT_START
 [ns3] commandId=4
-[ns3] sendMeasuredLatencyNs=11664
+[ns3] sendMeasuredLatencyNs=18260
 [ns3] RESULT_END
 
   --- NS-3 result ready for: cmd_WACS__CCTxNI_iter3_WriteCmd
-  Measured latency (ns): 3844.0
+  Measured latency (ns): 6145.0
   Created -> cmd_WACS__CCTxNI_iter3_DataQty_Packet, EV_ChargingRequest_NetTask_Socket, cmd_WACS__CCTxNI_iter3_StartCycle_NsTimePoint, _TransferResult5
   ns3.owl.ttl updated.
   --- Backpropagating result: _TransferResult5
-  [DEBUG-SEND] measuredLatencyNs=3844.0
-  [DEBUG-SEND] cycleVal=1564
-  [DEBUG-SEND] endCycle=2333
+  [DEBUG-SEND] measuredLatencyNs=6145.0
+  [DEBUG-SEND] cycleVal=2423
+  [DEBUG-SEND] endCycle=3652
   [DEBUG-SEND] masterClockHz=2.0E8
-  [PART D - SWRL inverse ns->cycle]  delay_cycles = 3844.0 * (2.0E8 / 1e9) = 768.8000000000001
-  [PART D - SWRL inverse ns->cycle]  endCycle = 1564 + 769 = 2333
+  [PART D - SWRL inverse ns->cycle]  delay_cycles = 6145.0 * (2.0E8 / 1e9) = 1229.0
+  [PART D - SWRL inverse ns->cycle]  endCycle = 2423 + 1229 = 3652
   Linked cmd_WACS__CCTxNI_iter3_WriteCmd --dip:endsAtCycle--> _TransferResult5_EndCycle
-  Created -> _TransferResult5_EndCycle with dip:cycleValue = 2333
+  Created -> _TransferResult5_EndCycle with dip:cycleValue = 3652
   diplodocus.owl.ttl updated.
-  [side-channel] writing NET_DONE WACS__CCTxNI 2333 iter=3
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCTxNI 769 3
-  [side-channel] wrote NET_DONE WACS__CCTxNI 769 iter=3
-[ns3] [bridge] NS3 paused at 11664 ns results=11
-[ns3] [bridge] Running NS3 for 1 ns (now=11664 ns, until=11665 ns)
-[ns3] [bridge] NS3 paused at 11665 ns results=11
-[ns3] [bridge] Running NS3 for 10 ns (now=11665 ns, until=11675 ns)
-[ns3] [bridge] NS3 paused at 11675 ns results=11
-[ns3] [bridge] Running NS3 for 10 ns (now=11675 ns, until=11685 ns)
-[ns3] [bridge] NS3 paused at 11685 ns results=11
-[ns3] [bridge] Running NS3 for 10 ns (now=11685 ns, until=11695 ns)
-[ns3] [bridge] NS3 paused at 11695 ns results=11
-[ns3] [bridge] Running NS3 for 10 ns (now=11695 ns, until=11705 ns)
-[ns3] [bridge] NS3 paused at 11705 ns results=11
-[ns3] [bridge] Running NS3 for 10 ns (now=11705 ns, until=11715 ns)
-[ns3] [bridge] NS3 paused at 11715 ns results=11
-[ns3] [bridge] Running NS3 for 10 ns (now=11715 ns, until=11725 ns)
-[ns3] [bridge] NS3 paused at 11725 ns results=11
-[ns3] [bridge] Running NS3 for 10 ns (now=11725 ns, until=11735 ns)
-[ns3] [bridge] NS3 paused at 11735 ns results=11
-[ns3] [bridge] Running NS3 for 10 ns (now=11735 ns, until=11745 ns)
-[ns3] [bridge] NS3 paused at 11745 ns results=11
-[ns3] [bridge] Running NS3 for 10 ns (now=11745 ns, until=11755 ns)
-[ns3] [bridge] NS3 paused at 11755 ns results=11
-[ns3] [bridge] Running NS3 for 10 ns (now=11755 ns, until=11765 ns)
-[ns3] [bridge] RECV_END id=4 t=11764
-[ns3] RESULT_START
-[ns3] commandId=4
-[ns3] receiveMeasuredLatencyNs=11764
-[ns3] RESULT_END
-
-  --- NS-3 RECEIVE result for: cmd_WACS__CCTxNI_iter3_WriteCmd
-  Measured receive latency (ns): 3944.0
-  [DEBUG-RECV] receiveLatencyNs=3944.0
-  [DEBUG-RECV] capturedSendLatencyNs=3844.0
-  [DEBUG-RECV] capturedSenderEndCycle=2333
-  [DEBUG-RECV] propagationNs=100.0
-  [DEBUG-RECV] propagationCycles=20.0
-  [DEBUG-RECV] rcvEndCycle=2353
-  [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI) = 1760.0
-  [side-channel] NET_DONE WACS__SubRxNI 2353 iter=3  (senderEndCycle=2333, propagationNs=100.0, propagationCycles=20.0)
-  [DEBUG-RECV] rcvDurationCycles=789
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubRxNI 789 3
-  [side-channel] wrote NET_DONE WACS__SubRxNI 789 iter=3
-[ns3] [bridge] NS3 paused at 11764 ns results=12
-[ns3] [bridge] Running NS3 for 1 ns (now=11764 ns, until=11765 ns)
-[ns3] [bridge] NS3 paused at 11765 ns results=12
-[ns3] [bridge] Running NS3 for 10 ns (now=11765 ns, until=11775 ns)
-[ns3] [bridge] NS3 paused at 11775 ns results=12
-[ns3] [bridge] Running NS3 for 10 ns (now=11775 ns, until=11785 ns)
-[ns3] [bridge] NS3 paused at 11785 ns results=12
-[ns3] [bridge] Running NS3 for 10 ns (now=11785 ns, until=11795 ns)
-[ns3] [bridge] NS3 paused at 11795 ns results=12
-[ns3] [bridge] Running NS3 for 10 ns (now=11795 ns, until=11805 ns)
-[ns3] [bridge] NS3 paused at 11805 ns results=12
-[ns3] [bridge] Running NS3 for 10 ns (now=11805 ns, until=11815 ns)
-[ns3] [bridge] NS3 paused at 11815 ns results=12
-[ns3] [bridge] Running NS3 for 10 ns (now=11815 ns, until=11825 ns)
-[ns3] [bridge] NS3 paused at 11825 ns results=12
-[ns3] [bridge] Running NS3 for 10 ns (now=11825 ns, until=11835 ns)
-[ns3] [bridge] NS3 paused at 11835 ns results=12
-[ns3] [bridge] Running NS3 for 10 ns (now=11835 ns, until=11845 ns)
-[ns3] [bridge] NS3 paused at 11845 ns results=12
+  [side-channel] writing NET_DONE WACS__CCTxNI 3652 iter=3
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCTxNI 1229 3
+  [side-channel] wrote NET_DONE WACS__CCTxNI 1229 iter=3
+[ns3] [bridge] NS3 paused at 18260 ns results=11
+[ns3] [bridge] Running NS3 for 10 ns (now=18260 ns, until=18270 ns)
+[ns3] [bridge] NS3 paused at 18270 ns results=11
+[ns3] [bridge] Running NS3 for 10 ns (now=18270 ns, until=18280 ns)
+[ns3] [bridge] NS3 paused at 18280 ns results=11
+[ns3] [bridge] Running NS3 for 10 ns (now=18280 ns, until=18290 ns)
+[ns3] [bridge] NS3 paused at 18290 ns results=11
+[ns3] [bridge] Running NS3 for 10 ns (now=18290 ns, until=18300 ns)
+[ns3] [bridge] NS3 paused at 18300 ns results=11
+[ns3] [bridge] Running NS3 for 10 ns (now=18300 ns, until=18310 ns)
+[ns3] [bridge] NS3 paused at 18310 ns results=11
+[ns3] [bridge] Running NS3 for 10 ns (now=18310 ns, until=18320 ns)
+[ns3] [bridge] NS3 paused at 18320 ns results=11
+[ns3] [bridge] Running NS3 for 10 ns (now=18320 ns, until=18330 ns)
+[ns3] [bridge] NS3 paused at 18330 ns results=11
+[ns3] [bridge] Running NS3 for 10 ns (now=18330 ns, until=18340 ns)
+[ns3] [bridge] NS3 paused at 18340 ns results=11
+[ns3] [bridge] Running NS3 for 10 ns (now=18340 ns, until=18350 ns)
+[ns3] [bridge] NS3 paused at 18350 ns results=11
+[ns3] [bridge] Running NS3 for 10 ns (now=18350 ns, until=18360 ns)
+[ns3] [bridge] NS3 paused at 18360 ns results=11
+[ns3] [bridge] Running NS3 for 10 ns (now=18360 ns, until=18370 ns)
+[ns3] [bridge] NS3 paused at 18370 ns results=11
+[ns3] [bridge] Running NS3 for 10 ns (now=18370 ns, until=18380 ns)
+[ns3] [bridge] NS3 paused at 18380 ns results=11
+[ns3] [bridge] Running NS3 for 10 ns (now=18380 ns, until=18390 ns)
+[ns3] [bridge] NS3 paused at 18390 ns results=11
+[ns3] [bridge] Running NS3 for 10 ns (now=18390 ns, until=18400 ns)
+[ns3] [bridge] NS3 paused at 18400 ns results=11
+[ns3] [bridge] Running NS3 for 10 ns (now=18400 ns, until=18410 ns)
+[ns3] [bridge] NS3 paused at 18410 ns results=11
+[ns3] [bridge] Running NS3 for 10 ns (now=18410 ns, until=18420 ns)
+[ns3] [bridge] NS3 paused at 18420 ns results=11
+[ns3] [bridge] Running NS3 for 10 ns (now=18420 ns, until=18430 ns)
+[ns3] [bridge] NS3 paused at 18430 ns results=11
+[ns3] [bridge] Running NS3 for 10 ns (now=18430 ns, until=18440 ns)
+[ns3] [bridge] NS3 paused at 18440 ns results=11
 
   [event] diplodocus.owl.ttl changed - found 1 new command(s) (submitting in creation order, without waiting for results).
 
@@ -632,34 +634,73 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [PART A]  cmd_WACS__CCTxNI_iter4_DataQty -> ns3:Packet? true
   [PART A]  EV_ChargingRequest_NetTask -> ns3:Socket? true
   [PART A]  cmd_WACS__CCTxNI_iter4_StartCycle -> ns3:NsTimePoint? true
-  [PART C - SWRL cycle->ns]  cycleValue=2371  f=2.0E8 Hz  -->  nsValue=11855.0 ns
+  [PART C - SWRL cycle->ns]  cycleValue=3690  f=2.0E8 Hz  -->  nsValue=18450.0 ns
 [DEBUG] pairedReceiverTaskName=WACS__SubRxNI
 [DEBUG] rcvStartFile=/home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI
 [DEBUG] receiverStartCycle=null
 [DEBUG] WACS__CCTxNI transport fields=';transport=TCP;sndBufSize=32'
 [DEBUG] WACS__CCTxNI direction=1
-  [bridge] Commande envoyée à NS3: packetSize=48;id=6;nsValue=11855;direction=1;transport=TCP;sndBufSize=32
+  [bridge] Commande envoyée à NS3: packetSize=48;id=6;nsValue=18450;direction=1;transport=TCP;sndBufSize=32
   Submitted cmd_WACS__CCTxNI_iter4_WriteCmd to NS-3 (packetSize=48, id=6) - moving on without waiting for its result.
-[ns3] [bridge] Drained #7 raw='packetSize=48;id=6;nsValue=11855;direction=1;transport=TCP;sndBufSize=32'
-[ns3] [bridge] SCHEDULED id=6 at 11855 ns
-[ns3] [bridge] Running NS3 for 10 ns (now=11845 ns, until=11855 ns)
-[ns3] INJECTION_TIME commandId=6 injectionTimeNs=11855
-[ns3] [bridge] INJECT id=6 NI1->NI0 size=48 TCP sndBuf=32 t=11855
-[ns3] [bridge] NS3 paused at 11855 ns results=12
-[ns3] [bridge] Running NS3 for 10 ns (now=11855 ns, until=11865 ns)
-[ns3] [bridge] NS3 paused at 11865 ns results=12
-[ns3] [bridge] Running NS3 for 10 ns (now=11865 ns, until=11875 ns)
-[ns3] [bridge] NS3 paused at 11875 ns results=12
-[ns3] [bridge] Running NS3 for 10 ns (now=11875 ns, until=11885 ns)
-[ns3] [bridge] NS3 paused at 11885 ns results=12
-[ns3] [bridge] Running NS3 for 10 ns (now=11885 ns, until=11895 ns)
-[ns3] [bridge] NS3 paused at 11895 ns results=12
-[ns3] [bridge] Running NS3 for 10 ns (now=11895 ns, until=11905 ns)
-[ns3] [bridge] NS3 paused at 11905 ns results=12
-[ns3] [bridge] Running NS3 for 10 ns (now=11905 ns, until=11915 ns)
-[ns3] [bridge] NS3 paused at 11915 ns results=12
-[ns3] [bridge] Running NS3 for 10 ns (now=11915 ns, until=11925 ns)
-[ns3] [bridge] NS3 paused at 11925 ns results=12
+[ns3] [bridge] Drained #7 raw='packetSize=48;id=6;nsValue=18450;direction=1;transport=TCP;sndBufSize=32'
+[ns3] [bridge] SCHEDULED id=6 at 18450 ns
+[ns3] [bridge] Running NS3 for 10 ns (now=18440 ns, until=18450 ns)
+[ns3] INJECTION_TIME commandId=6 injectionTimeNs=18450
+[ns3] [bridge] INJECT id=6 NI1->NI0 size=48 TCP sndBuf=32 t=18450
+[ns3] [bridge] NS3 paused at 18450 ns results=11
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=18450 ns, until=1.00184e+07 ns)
+[ns3] [bridge] RECV_END id=4 t=18920
+[ns3] RESULT_START
+[ns3] commandId=4
+[ns3] receiveMeasuredLatencyNs=18920
+[ns3] RESULT_END
+
+  --- NS-3 RECEIVE result for: cmd_WACS__CCTxNI_iter3_WriteCmd
+  Measured receive latency (ns): 6805.0
+  [DEBUG-RECV] receiveLatencyNs=6805.0
+  [DEBUG-RECV] capturedSendLatencyNs=6145.0
+  [DEBUG-RECV] capturedSenderEndCycle=3652
+  [DEBUG-RECV] propagationNs=660.0
+  [DEBUG-RECV] propagationCycles=132.0
+  [DEBUG-RECV] rcvEndCycle=3784
+  [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI) = 2730.0
+  [side-channel] NET_DONE WACS__SubRxNI 3784 iter=3  (senderEndCycle=3652, propagationNs=660.0, propagationCycles=132.0)
+  [DEBUG-RECV] rcvDurationCycles=1361
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubRxNI 1361 3
+  [side-channel] wrote NET_DONE WACS__SubRxNI 1361 iter=3
+[ns3] [bridge] NS3 paused at 18920 ns results=12
+[ns3] [bridge] Running NS3 for 10 ns (now=18920 ns, until=18930 ns)
+[ns3] [bridge] NS3 paused at 18930 ns results=12
+[ns3] [bridge] Running NS3 for 10 ns (now=18930 ns, until=18940 ns)
+[ns3] [bridge] NS3 paused at 18940 ns results=12
+[ns3] [bridge] Running NS3 for 10 ns (now=18940 ns, until=18950 ns)
+[ns3] [bridge] NS3 paused at 18950 ns results=12
+[ns3] [bridge] Running NS3 for 10 ns (now=18950 ns, until=18960 ns)
+[ns3] [bridge] NS3 paused at 18960 ns results=12
+[ns3] [bridge] Running NS3 for 10 ns (now=18960 ns, until=18970 ns)
+[ns3] [bridge] NS3 paused at 18970 ns results=12
+[ns3] [bridge] Running NS3 for 10 ns (now=18970 ns, until=18980 ns)
+[ns3] [bridge] NS3 paused at 18980 ns results=12
+[ns3] [bridge] Running NS3 for 10 ns (now=18980 ns, until=18990 ns)
+[ns3] [bridge] NS3 paused at 18990 ns results=12
+[ns3] [bridge] Running NS3 for 10 ns (now=18990 ns, until=19000 ns)
+[ns3] [bridge] NS3 paused at 19000 ns results=12
+[ns3] [bridge] Running NS3 for 10 ns (now=19000 ns, until=19010 ns)
+[ns3] [bridge] NS3 paused at 19010 ns results=12
+[ns3] [bridge] Running NS3 for 10 ns (now=19010 ns, until=19020 ns)
+[ns3] [bridge] NS3 paused at 19020 ns results=12
+[ns3] [bridge] Running NS3 for 10 ns (now=19020 ns, until=19030 ns)
+[ns3] [bridge] NS3 paused at 19030 ns results=12
+[ns3] [bridge] Running NS3 for 10 ns (now=19030 ns, until=19040 ns)
+[ns3] [bridge] NS3 paused at 19040 ns results=12
+[ns3] [bridge] Running NS3 for 10 ns (now=19040 ns, until=19050 ns)
+[ns3] [bridge] NS3 paused at 19050 ns results=12
+[ns3] [bridge] Running NS3 for 10 ns (now=19050 ns, until=19060 ns)
+[ns3] [bridge] NS3 paused at 19060 ns results=12
+[ns3] [bridge] Running NS3 for 10 ns (now=19060 ns, until=19070 ns)
+[ns3] [bridge] NS3 paused at 19070 ns results=12
+[ns3] [bridge] Running NS3 for 10 ns (now=19070 ns, until=19080 ns)
+[ns3] [bridge] NS3 paused at 19080 ns results=12
 
   [event] diplodocus.owl.ttl changed - found 1 new command(s) (submitting in creation order, without waiting for results).
 
@@ -670,152 +711,131 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [PART A]  cmd_WACS__SubTxNI_iter4_DataQty -> ns3:Packet? true
   [PART A]  EV_ChargingRequest_NetTask -> ns3:Socket? true
   [PART A]  cmd_WACS__SubTxNI_iter4_StartCycle -> ns3:NsTimePoint? true
-  [PART C - SWRL cycle->ns]  cycleValue=2387  f=2.0E8 Hz  -->  nsValue=11935.0 ns
+  [PART C - SWRL cycle->ns]  cycleValue=3818  f=2.0E8 Hz  -->  nsValue=19090.0 ns
 [DEBUG] pairedReceiverTaskName=WACS__CCRxNI
 [DEBUG] rcvStartFile=/home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI
 [DEBUG] receiverStartCycle=null
 [DEBUG] WACS__SubTxNI transport fields=';transport=UDP;errorRate=0.02'
 [DEBUG] WACS__SubTxNI direction=0
-  [bridge] Commande envoyée à NS3: packetSize=48;id=7;nsValue=11935;direction=0;transport=UDP;errorRate=0.02
+  [bridge] Commande envoyée à NS3: packetSize=48;id=7;nsValue=19090;direction=0;transport=UDP;errorRate=0.02
   Submitted cmd_WACS__SubTxNI_iter4_WriteCmd to NS-3 (packetSize=48, id=7) - moving on without waiting for its result.
-[ns3] [bridge] Drained #8 raw='packetSize=48;id=7;nsValue=11935;direction=0;transport=UDP;errorRate=0.02'
-[ns3] [bridge] SCHEDULED id=7 at 11935 ns
-[ns3] [bridge] Running NS3 for 10 ns (now=11925 ns, until=11935 ns)
-[ns3] INJECTION_TIME commandId=7 injectionTimeNs=11935
-[ns3] [bridge] INJECT id=7 NI0->NI1 size=48 UDP errorRate=0.020000 t=11935
-[ns3] [bridge] NS3 paused at 11935 ns results=12
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=11935 ns, until=1.00119e+07 ns)
-[ns3] [bridge] SEND_END id=7 NI0 UDP t=12820
+[ns3] [bridge] Drained #8 raw='packetSize=48;id=7;nsValue=19090;direction=0;transport=UDP;errorRate=0.02'
+[ns3] [bridge] SCHEDULED id=7 at 19090 ns
+[ns3] [bridge] Running NS3 for 10 ns (now=19080 ns, until=19090 ns)
+[ns3] INJECTION_TIME commandId=7 injectionTimeNs=19090
+[ns3] [bridge] INJECT id=7 NI0->NI1 size=48 UDP errorRate=0.020000 t=19090
+[ns3] [bridge] NS3 paused at 19090 ns results=12
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=19090 ns, until=1.00191e+07 ns)
+[ns3] [bridge] SEND_END id=7 NI0 UDP t=19976
 [ns3] RESULT_START
 [ns3] commandId=7
-[ns3] sendMeasuredLatencyNs=12820
+[ns3] sendMeasuredLatencyNs=19976
 [ns3] RESULT_END
 
   --- NS-3 result ready for: cmd_WACS__SubTxNI_iter4_WriteCmd
-  Measured latency (ns): 885.0
+  Measured latency (ns): 886.0
   Created -> cmd_WACS__SubTxNI_iter4_DataQty_Packet, EV_ChargingRequest_NetTask_Socket, cmd_WACS__SubTxNI_iter4_StartCycle_NsTimePoint, _TransferResult8
   ns3.owl.ttl updated.
   --- Backpropagating result: _TransferResult8
-  [DEBUG-SEND] measuredLatencyNs=885.0
-  [DEBUG-SEND] cycleVal=2387
-  [DEBUG-SEND] endCycle=2564
+  [DEBUG-SEND] measuredLatencyNs=886.0
+  [DEBUG-SEND] cycleVal=3818
+  [DEBUG-SEND] endCycle=3995
   [DEBUG-SEND] masterClockHz=2.0E8
-  [PART D - SWRL inverse ns->cycle]  delay_cycles = 885.0 * (2.0E8 / 1e9) = 177.0
-  [PART D - SWRL inverse ns->cycle]  endCycle = 2387 + 177 = 2564
+  [PART D - SWRL inverse ns->cycle]  delay_cycles = 886.0 * (2.0E8 / 1e9) = 177.20000000000002
+  [PART D - SWRL inverse ns->cycle]  endCycle = 3818 + 177 = 3995
   Linked cmd_WACS__SubTxNI_iter4_WriteCmd --dip:endsAtCycle--> _TransferResult8_EndCycle
-  Created -> _TransferResult8_EndCycle with dip:cycleValue = 2564
+  Created -> _TransferResult8_EndCycle with dip:cycleValue = 3995
   diplodocus.owl.ttl updated.
-  [side-channel] writing NET_DONE WACS__SubTxNI 2564 iter=4
+  [side-channel] writing NET_DONE WACS__SubTxNI 3995 iter=4
 [DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubTxNI 177 4
   [side-channel] wrote NET_DONE WACS__SubTxNI 177 iter=4
-[ns3] [bridge] NS3 paused at 12820 ns results=13
-[ns3] [bridge] Running NS3 for 10 ns (now=12820 ns, until=12830 ns)
-[ns3] [bridge] NS3 paused at 12830 ns results=13
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=12830 ns, until=1.00128e+07 ns)
-[ns3] [bridge] RECV_END id=7 t=12920
+[ns3] [bridge] NS3 paused at 19976 ns results=13
+[ns3] [bridge] Running NS3 for 9 ns (now=19976 ns, until=19985 ns)
+[ns3] [bridge] NS3 paused at 19985 ns results=13
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=19985 ns, until=1.002e+07 ns)
+[ns3] [bridge] RECV_END id=7 t=20700
 [ns3] RESULT_START
 [ns3] commandId=7
-[ns3] receiveMeasuredLatencyNs=12920
+[ns3] receiveMeasuredLatencyNs=20700
 [ns3] RESULT_END
 
   --- NS-3 RECEIVE result for: cmd_WACS__SubTxNI_iter4_WriteCmd
-  Measured receive latency (ns): 985.0
-  [DEBUG-RECV] receiveLatencyNs=985.0
-  [DEBUG-RECV] capturedSendLatencyNs=885.0
-  [DEBUG-RECV] capturedSenderEndCycle=2564
-  [DEBUG-RECV] propagationNs=100.0
-  [DEBUG-RECV] propagationCycles=20.0
-  [DEBUG-RECV] rcvEndCycle=2584
+  Measured receive latency (ns): 1610.0
+  [DEBUG-RECV] receiveLatencyNs=1610.0
+  [DEBUG-RECV] capturedSendLatencyNs=886.0
+  [DEBUG-RECV] capturedSenderEndCycle=3995
+  [DEBUG-RECV] propagationNs=724.0
+  [DEBUG-RECV] propagationCycles=144.8
+  [DEBUG-RECV] rcvEndCycle=4139
   [WARNING] Receiver startCycle for iter=4 not found in /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI, using 0
   [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI) = 0.0
-  [side-channel] NET_DONE WACS__CCRxNI 2584 iter=4  (senderEndCycle=2564, propagationNs=100.0, propagationCycles=20.0)
-  [DEBUG-RECV] rcvDurationCycles=197
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCRxNI 197 4
-  [side-channel] wrote NET_DONE WACS__CCRxNI 197 iter=4
-[ns3] [bridge] NS3 paused at 12920 ns results=14
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=12920 ns, until=1.00129e+07 ns)
-[ns3] [bridge] TCP connected id=6 t=13384
-[ns3] [bridge] SEND_END id=6 NI1 TCP t=15696
+  [side-channel] NET_DONE WACS__CCRxNI 4139 iter=4  (senderEndCycle=3995, propagationNs=724.0, propagationCycles=144.8)
+  [DEBUG-RECV] rcvDurationCycles=322
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCRxNI 322 4
+  [side-channel] wrote NET_DONE WACS__CCRxNI 322 iter=4
+[ns3] [bridge] NS3 paused at 20700 ns results=14
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=20700 ns, until=1.00207e+07 ns)
+[ns3] [bridge] TCP connected id=6 t=21164
+[ns3] [bridge] SEND_END id=6 NI1 TCP t=24596
 [ns3] RESULT_START
 [ns3] commandId=6
-[ns3] sendMeasuredLatencyNs=15696
+[ns3] sendMeasuredLatencyNs=24596
 [ns3] RESULT_END
 
   --- NS-3 result ready for: cmd_WACS__CCTxNI_iter4_WriteCmd
-  Measured latency (ns): 3841.0
+  Measured latency (ns): 6146.0
   Created -> cmd_WACS__CCTxNI_iter4_DataQty_Packet, EV_ChargingRequest_NetTask_Socket, cmd_WACS__CCTxNI_iter4_StartCycle_NsTimePoint, _TransferResult7
   ns3.owl.ttl updated.
   --- Backpropagating result: _TransferResult7
-  [DEBUG-SEND] measuredLatencyNs=3841.0
-  [DEBUG-SEND] cycleVal=2371
-  [DEBUG-SEND] endCycle=3139
+  [DEBUG-SEND] measuredLatencyNs=6146.0
+  [DEBUG-SEND] cycleVal=3690
+  [DEBUG-SEND] endCycle=4919
   [DEBUG-SEND] masterClockHz=2.0E8
-  [PART D - SWRL inverse ns->cycle]  delay_cycles = 3841.0 * (2.0E8 / 1e9) = 768.2
-  [PART D - SWRL inverse ns->cycle]  endCycle = 2371 + 768 = 3139
+  [PART D - SWRL inverse ns->cycle]  delay_cycles = 6146.0 * (2.0E8 / 1e9) = 1229.2
+  [PART D - SWRL inverse ns->cycle]  endCycle = 3690 + 1229 = 4919
   Linked cmd_WACS__CCTxNI_iter4_WriteCmd --dip:endsAtCycle--> _TransferResult7_EndCycle
-  Created -> _TransferResult7_EndCycle with dip:cycleValue = 3139
+  Created -> _TransferResult7_EndCycle with dip:cycleValue = 4919
   diplodocus.owl.ttl updated.
-  [side-channel] writing NET_DONE WACS__CCTxNI 3139 iter=4
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCTxNI 768 4
-  [side-channel] wrote NET_DONE WACS__CCTxNI 768 iter=4
-[ns3] [bridge] NS3 paused at 15696 ns results=15
-[ns3] [bridge] Running NS3 for 9 ns (now=15696 ns, until=15705 ns)
-[ns3] [bridge] NS3 paused at 15705 ns results=15
-[ns3] [bridge] Running NS3 for 10 ns (now=15705 ns, until=15715 ns)
-[ns3] [bridge] NS3 paused at 15715 ns results=15
-[ns3] [bridge] Running NS3 for 10 ns (now=15715 ns, until=15725 ns)
-[ns3] [bridge] NS3 paused at 15725 ns results=15
-[ns3] [bridge] Running NS3 for 10 ns (now=15725 ns, until=15735 ns)
-[ns3] [bridge] NS3 paused at 15735 ns results=15
-[ns3] [bridge] Running NS3 for 10 ns (now=15735 ns, until=15745 ns)
-[ns3] [bridge] NS3 paused at 15745 ns results=15
-[ns3] [bridge] Running NS3 for 10 ns (now=15745 ns, until=15755 ns)
-[ns3] [bridge] NS3 paused at 15755 ns results=15
-[ns3] [bridge] Running NS3 for 10 ns (now=15755 ns, until=15765 ns)
-[ns3] [bridge] NS3 paused at 15765 ns results=15
-[ns3] [bridge] Running NS3 for 10 ns (now=15765 ns, until=15775 ns)
-[ns3] [bridge] NS3 paused at 15775 ns results=15
-[ns3] [bridge] Running NS3 for 10 ns (now=15775 ns, until=15785 ns)
-[ns3] [bridge] NS3 paused at 15785 ns results=15
-[ns3] [bridge] Running NS3 for 10 ns (now=15785 ns, until=15795 ns)
-[ns3] [bridge] NS3 paused at 15795 ns results=15
-[ns3] [bridge] Running NS3 for 10 ns (now=15795 ns, until=15805 ns)
-[ns3] [bridge] RECV_END id=6 t=15796
-[ns3] RESULT_START
-[ns3] commandId=6
-[ns3] receiveMeasuredLatencyNs=15796
-[ns3] RESULT_END
-
-  --- NS-3 RECEIVE result for: cmd_WACS__CCTxNI_iter4_WriteCmd
-  Measured receive latency (ns): 3941.0
-  [DEBUG-RECV] receiveLatencyNs=3941.0
-  [DEBUG-RECV] capturedSendLatencyNs=3841.0
-  [DEBUG-RECV] capturedSenderEndCycle=3139
-  [DEBUG-RECV] propagationNs=100.0
-  [DEBUG-RECV] propagationCycles=20.0
-  [DEBUG-RECV] rcvEndCycle=3159
-  [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI) = 2566.0
-  [side-channel] NET_DONE WACS__SubRxNI 3159 iter=4  (senderEndCycle=3139, propagationNs=100.0, propagationCycles=20.0)
-  [DEBUG-RECV] rcvDurationCycles=788
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubRxNI 788 4
-  [side-channel] wrote NET_DONE WACS__SubRxNI 788 iter=4
-[ns3] [bridge] NS3 paused at 15796 ns results=16
-[ns3] [bridge] Running NS3 for 9 ns (now=15796 ns, until=15805 ns)
-[ns3] [bridge] NS3 paused at 15805 ns results=16
-[ns3] [bridge] Running NS3 for 10 ns (now=15805 ns, until=15815 ns)
-[ns3] [bridge] NS3 paused at 15815 ns results=16
-[ns3] [bridge] Running NS3 for 10 ns (now=15815 ns, until=15825 ns)
-[ns3] [bridge] NS3 paused at 15825 ns results=16
-[ns3] [bridge] Running NS3 for 10 ns (now=15825 ns, until=15835 ns)
-[ns3] [bridge] NS3 paused at 15835 ns results=16
-[ns3] [bridge] Running NS3 for 10 ns (now=15835 ns, until=15845 ns)
-[ns3] [bridge] NS3 paused at 15845 ns results=16
-[ns3] [bridge] Running NS3 for 10 ns (now=15845 ns, until=15855 ns)
-[ns3] [bridge] NS3 paused at 15855 ns results=16
-[ns3] [bridge] Running NS3 for 10 ns (now=15855 ns, until=15865 ns)
-[ns3] [bridge] NS3 paused at 15865 ns results=16
-[ns3] [bridge] Running NS3 for 10 ns (now=15865 ns, until=15875 ns)
-[ns3] [bridge] NS3 paused at 15875 ns results=16
+  [side-channel] writing NET_DONE WACS__CCTxNI 4919 iter=4
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCTxNI 1229 4
+  [side-channel] wrote NET_DONE WACS__CCTxNI 1229 iter=4
+[ns3] [bridge] NS3 paused at 24596 ns results=15
+[ns3] [bridge] Running NS3 for 9 ns (now=24596 ns, until=24605 ns)
+[ns3] [bridge] NS3 paused at 24605 ns results=15
+[ns3] [bridge] Running NS3 for 10 ns (now=24605 ns, until=24615 ns)
+[ns3] [bridge] NS3 paused at 24615 ns results=15
+[ns3] [bridge] Running NS3 for 10 ns (now=24615 ns, until=24625 ns)
+[ns3] [bridge] NS3 paused at 24625 ns results=15
+[ns3] [bridge] Running NS3 for 10 ns (now=24625 ns, until=24635 ns)
+[ns3] [bridge] NS3 paused at 24635 ns results=15
+[ns3] [bridge] Running NS3 for 10 ns (now=24635 ns, until=24645 ns)
+[ns3] [bridge] NS3 paused at 24645 ns results=15
+[ns3] [bridge] Running NS3 for 10 ns (now=24645 ns, until=24655 ns)
+[ns3] [bridge] NS3 paused at 24655 ns results=15
+[ns3] [bridge] Running NS3 for 10 ns (now=24655 ns, until=24665 ns)
+[ns3] [bridge] NS3 paused at 24665 ns results=15
+[ns3] [bridge] Running NS3 for 10 ns (now=24665 ns, until=24675 ns)
+[ns3] [bridge] NS3 paused at 24675 ns results=15
+[ns3] [bridge] Running NS3 for 10 ns (now=24675 ns, until=24685 ns)
+[ns3] [bridge] NS3 paused at 24685 ns results=15
+[ns3] [bridge] Running NS3 for 10 ns (now=24685 ns, until=24695 ns)
+[ns3] [bridge] NS3 paused at 24695 ns results=15
+[ns3] [bridge] Running NS3 for 10 ns (now=24695 ns, until=24705 ns)
+[ns3] [bridge] NS3 paused at 24705 ns results=15
+[ns3] [bridge] Running NS3 for 10 ns (now=24705 ns, until=24715 ns)
+[ns3] [bridge] NS3 paused at 24715 ns results=15
+[ns3] [bridge] Running NS3 for 10 ns (now=24715 ns, until=24725 ns)
+[ns3] [bridge] NS3 paused at 24725 ns results=15
+[ns3] [bridge] Running NS3 for 10 ns (now=24725 ns, until=24735 ns)
+[ns3] [bridge] NS3 paused at 24735 ns results=15
+[ns3] [bridge] Running NS3 for 10 ns (now=24735 ns, until=24745 ns)
+[ns3] [bridge] NS3 paused at 24745 ns results=15
+[ns3] [bridge] Running NS3 for 10 ns (now=24745 ns, until=24755 ns)
+[ns3] [bridge] NS3 paused at 24755 ns results=15
+[ns3] [bridge] Running NS3 for 10 ns (now=24755 ns, until=24765 ns)
+[ns3] [bridge] NS3 paused at 24765 ns results=15
+[ns3] [bridge] Running NS3 for 10 ns (now=24765 ns, until=24775 ns)
+[ns3] [bridge] NS3 paused at 24775 ns results=15
 
   [event] diplodocus.owl.ttl changed - found 1 new command(s) (submitting in creation order, without waiting for results).
 
@@ -826,34 +846,73 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [PART A]  cmd_WACS__CCTxNI_iter5_DataQty -> ns3:Packet? true
   [PART A]  EV_ChargingRequest_NetTask -> ns3:Socket? true
   [PART A]  cmd_WACS__CCTxNI_iter5_StartCycle -> ns3:NsTimePoint? true
-  [PART C - SWRL cycle->ns]  cycleValue=3177  f=2.0E8 Hz  -->  nsValue=15885.0 ns
+  [PART C - SWRL cycle->ns]  cycleValue=4957  f=2.0E8 Hz  -->  nsValue=24785.0 ns
 [DEBUG] pairedReceiverTaskName=WACS__SubRxNI
 [DEBUG] rcvStartFile=/home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI
 [DEBUG] receiverStartCycle=null
 [DEBUG] WACS__CCTxNI transport fields=';transport=TCP;sndBufSize=32'
 [DEBUG] WACS__CCTxNI direction=1
-  [bridge] Commande envoyée à NS3: packetSize=48;id=8;nsValue=15885;direction=1;transport=TCP;sndBufSize=32
+  [bridge] Commande envoyée à NS3: packetSize=48;id=8;nsValue=24785;direction=1;transport=TCP;sndBufSize=32
   Submitted cmd_WACS__CCTxNI_iter5_WriteCmd to NS-3 (packetSize=48, id=8) - moving on without waiting for its result.
-[ns3] [bridge] Drained #9 raw='packetSize=48;id=8;nsValue=15885;direction=1;transport=TCP;sndBufSize=32'
-[ns3] [bridge] SCHEDULED id=8 at 15885 ns
-[ns3] [bridge] Running NS3 for 10 ns (now=15875 ns, until=15885 ns)
-[ns3] INJECTION_TIME commandId=8 injectionTimeNs=15885
-[ns3] [bridge] INJECT id=8 NI1->NI0 size=48 TCP sndBuf=32 t=15885
-[ns3] [bridge] NS3 paused at 15885 ns results=16
-[ns3] [bridge] Running NS3 for 10 ns (now=15885 ns, until=15895 ns)
-[ns3] [bridge] NS3 paused at 15895 ns results=16
-[ns3] [bridge] Running NS3 for 10 ns (now=15895 ns, until=15905 ns)
-[ns3] [bridge] NS3 paused at 15905 ns results=16
-[ns3] [bridge] Running NS3 for 10 ns (now=15905 ns, until=15915 ns)
-[ns3] [bridge] NS3 paused at 15915 ns results=16
-[ns3] [bridge] Running NS3 for 10 ns (now=15915 ns, until=15925 ns)
-[ns3] [bridge] NS3 paused at 15925 ns results=16
-[ns3] [bridge] Running NS3 for 10 ns (now=15925 ns, until=15935 ns)
-[ns3] [bridge] NS3 paused at 15935 ns results=16
-[ns3] [bridge] Running NS3 for 10 ns (now=15935 ns, until=15945 ns)
-[ns3] [bridge] NS3 paused at 15945 ns results=16
-[ns3] [bridge] Running NS3 for 10 ns (now=15945 ns, until=15955 ns)
-[ns3] [bridge] NS3 paused at 15955 ns results=16
+[ns3] [bridge] Drained #9 raw='packetSize=48;id=8;nsValue=24785;direction=1;transport=TCP;sndBufSize=32'
+[ns3] [bridge] SCHEDULED id=8 at 24785 ns
+[ns3] [bridge] Running NS3 for 10 ns (now=24775 ns, until=24785 ns)
+[ns3] INJECTION_TIME commandId=8 injectionTimeNs=24785
+[ns3] [bridge] INJECT id=8 NI1->NI0 size=48 TCP sndBuf=32 t=24785
+[ns3] [bridge] NS3 paused at 24785 ns results=15
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=24785 ns, until=1.00248e+07 ns)
+[ns3] [bridge] RECV_END id=6 t=25256
+[ns3] RESULT_START
+[ns3] commandId=6
+[ns3] receiveMeasuredLatencyNs=25256
+[ns3] RESULT_END
+
+  --- NS-3 RECEIVE result for: cmd_WACS__CCTxNI_iter4_WriteCmd
+  Measured receive latency (ns): 6806.0
+  [DEBUG-RECV] receiveLatencyNs=6806.0
+  [DEBUG-RECV] capturedSendLatencyNs=6146.0
+  [DEBUG-RECV] capturedSenderEndCycle=4919
+  [DEBUG-RECV] propagationNs=660.0
+  [DEBUG-RECV] propagationCycles=132.0
+  [DEBUG-RECV] rcvEndCycle=5051
+  [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI) = 3997.0
+  [side-channel] NET_DONE WACS__SubRxNI 5051 iter=4  (senderEndCycle=4919, propagationNs=660.0, propagationCycles=132.0)
+  [DEBUG-RECV] rcvDurationCycles=1361
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubRxNI 1361 4
+  [side-channel] wrote NET_DONE WACS__SubRxNI 1361 iter=4
+[ns3] [bridge] NS3 paused at 25256 ns results=16
+[ns3] [bridge] Running NS3 for 9 ns (now=25256 ns, until=25265 ns)
+[ns3] [bridge] NS3 paused at 25265 ns results=16
+[ns3] [bridge] Running NS3 for 10 ns (now=25265 ns, until=25275 ns)
+[ns3] [bridge] NS3 paused at 25275 ns results=16
+[ns3] [bridge] Running NS3 for 10 ns (now=25275 ns, until=25285 ns)
+[ns3] [bridge] NS3 paused at 25285 ns results=16
+[ns3] [bridge] Running NS3 for 10 ns (now=25285 ns, until=25295 ns)
+[ns3] [bridge] NS3 paused at 25295 ns results=16
+[ns3] [bridge] Running NS3 for 10 ns (now=25295 ns, until=25305 ns)
+[ns3] [bridge] NS3 paused at 25305 ns results=16
+[ns3] [bridge] Running NS3 for 10 ns (now=25305 ns, until=25315 ns)
+[ns3] [bridge] NS3 paused at 25315 ns results=16
+[ns3] [bridge] Running NS3 for 10 ns (now=25315 ns, until=25325 ns)
+[ns3] [bridge] NS3 paused at 25325 ns results=16
+[ns3] [bridge] Running NS3 for 10 ns (now=25325 ns, until=25335 ns)
+[ns3] [bridge] NS3 paused at 25335 ns results=16
+[ns3] [bridge] Running NS3 for 10 ns (now=25335 ns, until=25345 ns)
+[ns3] [bridge] NS3 paused at 25345 ns results=16
+[ns3] [bridge] Running NS3 for 10 ns (now=25345 ns, until=25355 ns)
+[ns3] [bridge] NS3 paused at 25355 ns results=16
+[ns3] [bridge] Running NS3 for 10 ns (now=25355 ns, until=25365 ns)
+[ns3] [bridge] NS3 paused at 25365 ns results=16
+[ns3] [bridge] Running NS3 for 10 ns (now=25365 ns, until=25375 ns)
+[ns3] [bridge] NS3 paused at 25375 ns results=16
+[ns3] [bridge] Running NS3 for 10 ns (now=25375 ns, until=25385 ns)
+[ns3] [bridge] NS3 paused at 25385 ns results=16
+[ns3] [bridge] Running NS3 for 10 ns (now=25385 ns, until=25395 ns)
+[ns3] [bridge] NS3 paused at 25395 ns results=16
+[ns3] [bridge] Running NS3 for 10 ns (now=25395 ns, until=25405 ns)
+[ns3] [bridge] NS3 paused at 25405 ns results=16
+[ns3] [bridge] Running NS3 for 10 ns (now=25405 ns, until=25415 ns)
+[ns3] [bridge] NS3 paused at 25415 ns results=16
 
   [event] diplodocus.owl.ttl changed - found 1 new command(s) (submitting in creation order, without waiting for results).
 
@@ -864,25 +923,25 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [PART A]  cmd_WACS__SubTxNI_iter5_DataQty -> ns3:Packet? true
   [PART A]  EV_ChargingRequest_NetTask -> ns3:Socket? true
   [PART A]  cmd_WACS__SubTxNI_iter5_StartCycle -> ns3:NsTimePoint? true
-  [PART C - SWRL cycle->ns]  cycleValue=3193  f=2.0E8 Hz  -->  nsValue=15965.0 ns
+  [PART C - SWRL cycle->ns]  cycleValue=5085  f=2.0E8 Hz  -->  nsValue=25425.0 ns
 [DEBUG] pairedReceiverTaskName=WACS__CCRxNI
 [DEBUG] rcvStartFile=/home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI
 [DEBUG] receiverStartCycle=null
 [DEBUG] WACS__SubTxNI transport fields=';transport=UDP;errorRate=0.02'
 [DEBUG] WACS__SubTxNI direction=0
-  [bridge] Commande envoyée à NS3: packetSize=48;id=9;nsValue=15965;direction=0;transport=UDP;errorRate=0.02
+  [bridge] Commande envoyée à NS3: packetSize=48;id=9;nsValue=25425;direction=0;transport=UDP;errorRate=0.02
   Submitted cmd_WACS__SubTxNI_iter5_WriteCmd to NS-3 (packetSize=48, id=9) - moving on without waiting for its result.
-[ns3] [bridge] Drained #10 raw='packetSize=48;id=9;nsValue=15965;direction=0;transport=UDP;errorRate=0.02'
-[ns3] [bridge] SCHEDULED id=9 at 15965 ns
-[ns3] [bridge] Running NS3 for 10 ns (now=15955 ns, until=15965 ns)
-[ns3] INJECTION_TIME commandId=9 injectionTimeNs=15965
-[ns3] [bridge] INJECT id=9 NI0->NI1 size=48 UDP errorRate=0.020000 t=15965
-[ns3] [bridge] NS3 paused at 15965 ns results=16
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=15965 ns, until=1.0016e+07 ns)
-[ns3] [bridge] SEND_END id=9 NI0 UDP t=16852
+[ns3] [bridge] Drained #10 raw='packetSize=48;id=9;nsValue=25425;direction=0;transport=UDP;errorRate=0.02'
+[ns3] [bridge] SCHEDULED id=9 at 25425 ns
+[ns3] [bridge] Running NS3 for 10 ns (now=25415 ns, until=25425 ns)
+[ns3] INJECTION_TIME commandId=9 injectionTimeNs=25425
+[ns3] [bridge] INJECT id=9 NI0->NI1 size=48 UDP errorRate=0.020000 t=25425
+[ns3] [bridge] NS3 paused at 25425 ns results=16
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=25425 ns, until=1.00254e+07 ns)
+[ns3] [bridge] SEND_END id=9 NI0 UDP t=26312
 [ns3] RESULT_START
 [ns3] commandId=9
-[ns3] sendMeasuredLatencyNs=16852
+[ns3] sendMeasuredLatencyNs=26312
 [ns3] RESULT_END
 
   --- NS-3 result ready for: cmd_WACS__SubTxNI_iter5_WriteCmd
@@ -891,127 +950,104 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   ns3.owl.ttl updated.
   --- Backpropagating result: _TransferResult10
   [DEBUG-SEND] measuredLatencyNs=887.0
-  [DEBUG-SEND] cycleVal=3193
-  [DEBUG-SEND] endCycle=3370
+  [DEBUG-SEND] cycleVal=5085
+  [DEBUG-SEND] endCycle=5262
   [DEBUG-SEND] masterClockHz=2.0E8
   [PART D - SWRL inverse ns->cycle]  delay_cycles = 887.0 * (2.0E8 / 1e9) = 177.4
-  [PART D - SWRL inverse ns->cycle]  endCycle = 3193 + 177 = 3370
+  [PART D - SWRL inverse ns->cycle]  endCycle = 5085 + 177 = 5262
   Linked cmd_WACS__SubTxNI_iter5_WriteCmd --dip:endsAtCycle--> _TransferResult10_EndCycle
-  Created -> _TransferResult10_EndCycle with dip:cycleValue = 3370
+  Created -> _TransferResult10_EndCycle with dip:cycleValue = 5262
   diplodocus.owl.ttl updated.
-  [side-channel] writing NET_DONE WACS__SubTxNI 3370 iter=5
+  [side-channel] writing NET_DONE WACS__SubTxNI 5262 iter=5
 [DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubTxNI 177 5
   [side-channel] wrote NET_DONE WACS__SubTxNI 177 iter=5
-[ns3] [bridge] NS3 paused at 16852 ns results=17
-[ns3] [bridge] Running NS3 for 8 ns (now=16852 ns, until=16860 ns)
-[ns3] [bridge] NS3 paused at 16860 ns results=17
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=16860 ns, until=1.00169e+07 ns)
-[ns3] [bridge] RECV_END id=9 t=16952
+[ns3] [bridge] NS3 paused at 26312 ns results=17
+[ns3] [bridge] Running NS3 for 8 ns (now=26312 ns, until=26320 ns)
+[ns3] [bridge] NS3 paused at 26320 ns results=17
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=26320 ns, until=1.00263e+07 ns)
+[ns3] [bridge] RECV_END id=9 t=27036
 [ns3] RESULT_START
 [ns3] commandId=9
-[ns3] receiveMeasuredLatencyNs=16952
+[ns3] receiveMeasuredLatencyNs=27036
 [ns3] RESULT_END
 
   --- NS-3 RECEIVE result for: cmd_WACS__SubTxNI_iter5_WriteCmd
-  Measured receive latency (ns): 987.0
-  [DEBUG-RECV] receiveLatencyNs=987.0
+  Measured receive latency (ns): 1611.0
+  [DEBUG-RECV] receiveLatencyNs=1611.0
   [DEBUG-RECV] capturedSendLatencyNs=887.0
-  [DEBUG-RECV] capturedSenderEndCycle=3370
-  [DEBUG-RECV] propagationNs=100.0
-  [DEBUG-RECV] propagationCycles=20.0
-  [DEBUG-RECV] rcvEndCycle=3390
+  [DEBUG-RECV] capturedSenderEndCycle=5262
+  [DEBUG-RECV] propagationNs=724.0
+  [DEBUG-RECV] propagationCycles=144.8
+  [DEBUG-RECV] rcvEndCycle=5406
   [WARNING] Receiver startCycle for iter=5 not found in /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI, using 0
   [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI) = 0.0
-  [side-channel] NET_DONE WACS__CCRxNI 3390 iter=5  (senderEndCycle=3370, propagationNs=100.0, propagationCycles=20.0)
-  [DEBUG-RECV] rcvDurationCycles=197
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCRxNI 197 5
-  [side-channel] wrote NET_DONE WACS__CCRxNI 197 iter=5
-[ns3] [bridge] NS3 paused at 16952 ns results=18
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=16952 ns, until=1.0017e+07 ns)
-[ns3] [bridge] TCP connected id=8 t=17416
-[ns3] [bridge] SEND_END id=8 NI1 TCP t=19728
+  [side-channel] NET_DONE WACS__CCRxNI 5406 iter=5  (senderEndCycle=5262, propagationNs=724.0, propagationCycles=144.8)
+  [DEBUG-RECV] rcvDurationCycles=322
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCRxNI 322 5
+  [side-channel] wrote NET_DONE WACS__CCRxNI 322 iter=5
+[ns3] [bridge] NS3 paused at 27036 ns results=18
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=27036 ns, until=1.0027e+07 ns)
+[ns3] [bridge] TCP connected id=8 t=27500
+[ns3] [bridge] SEND_END id=8 NI1 TCP t=30932
 [ns3] RESULT_START
 [ns3] commandId=8
-[ns3] sendMeasuredLatencyNs=19728
+[ns3] sendMeasuredLatencyNs=30932
 [ns3] RESULT_END
 
   --- NS-3 result ready for: cmd_WACS__CCTxNI_iter5_WriteCmd
-  Measured latency (ns): 3843.0
+  Measured latency (ns): 6147.0
   Created -> cmd_WACS__CCTxNI_iter5_DataQty_Packet, EV_ChargingRequest_NetTask_Socket, cmd_WACS__CCTxNI_iter5_StartCycle_NsTimePoint, _TransferResult9
   ns3.owl.ttl updated.
   --- Backpropagating result: _TransferResult9
-  [DEBUG-SEND] measuredLatencyNs=3843.0
-  [DEBUG-SEND] cycleVal=3177
-  [DEBUG-SEND] endCycle=3946
+  [DEBUG-SEND] measuredLatencyNs=6147.0
+  [DEBUG-SEND] cycleVal=4957
+  [DEBUG-SEND] endCycle=6186
   [DEBUG-SEND] masterClockHz=2.0E8
-  [PART D - SWRL inverse ns->cycle]  delay_cycles = 3843.0 * (2.0E8 / 1e9) = 768.6
-  [PART D - SWRL inverse ns->cycle]  endCycle = 3177 + 769 = 3946
+  [PART D - SWRL inverse ns->cycle]  delay_cycles = 6147.0 * (2.0E8 / 1e9) = 1229.4
+  [PART D - SWRL inverse ns->cycle]  endCycle = 4957 + 1229 = 6186
   Linked cmd_WACS__CCTxNI_iter5_WriteCmd --dip:endsAtCycle--> _TransferResult9_EndCycle
-  Created -> _TransferResult9_EndCycle with dip:cycleValue = 3946
+  Created -> _TransferResult9_EndCycle with dip:cycleValue = 6186
   diplodocus.owl.ttl updated.
-  [side-channel] writing NET_DONE WACS__CCTxNI 3946 iter=5
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCTxNI 769 5
-  [side-channel] wrote NET_DONE WACS__CCTxNI 769 iter=5
-[ns3] [bridge] NS3 paused at 19728 ns results=19
-[ns3] [bridge] Running NS3 for 2 ns (now=19728 ns, until=19730 ns)
-[ns3] [bridge] NS3 paused at 19730 ns results=19
-[ns3] [bridge] Running NS3 for 10 ns (now=19730 ns, until=19740 ns)
-[ns3] [bridge] NS3 paused at 19740 ns results=19
-[ns3] [bridge] Running NS3 for 10 ns (now=19740 ns, until=19750 ns)
-[ns3] [bridge] NS3 paused at 19750 ns results=19
-[ns3] [bridge] Running NS3 for 10 ns (now=19750 ns, until=19760 ns)
-[ns3] [bridge] NS3 paused at 19760 ns results=19
-[ns3] [bridge] Running NS3 for 10 ns (now=19760 ns, until=19770 ns)
-[ns3] [bridge] NS3 paused at 19770 ns results=19
-[ns3] [bridge] Running NS3 for 10 ns (now=19770 ns, until=19780 ns)
-[ns3] [bridge] NS3 paused at 19780 ns results=19
-[ns3] [bridge] Running NS3 for 10 ns (now=19780 ns, until=19790 ns)
-[ns3] [bridge] NS3 paused at 19790 ns results=19
-[ns3] [bridge] Running NS3 for 10 ns (now=19790 ns, until=19800 ns)
-[ns3] [bridge] NS3 paused at 19800 ns results=19
-[ns3] [bridge] Running NS3 for 10 ns (now=19800 ns, until=19810 ns)
-[ns3] [bridge] NS3 paused at 19810 ns results=19
-[ns3] [bridge] Running NS3 for 10 ns (now=19810 ns, until=19820 ns)
-[ns3] [bridge] NS3 paused at 19820 ns results=19
-[ns3] [bridge] Running NS3 for 10 ns (now=19820 ns, until=19830 ns)
-[ns3] [bridge] RECV_END id=8 t=19828
-[ns3] RESULT_START
-[ns3] commandId=8
-[ns3] receiveMeasuredLatencyNs=19828
-[ns3] RESULT_END
-
-  --- NS-3 RECEIVE result for: cmd_WACS__CCTxNI_iter5_WriteCmd
-  Measured receive latency (ns): 3943.0
-  [DEBUG-RECV] receiveLatencyNs=3943.0
-  [DEBUG-RECV] capturedSendLatencyNs=3843.0
-  [DEBUG-RECV] capturedSenderEndCycle=3946
-  [DEBUG-RECV] propagationNs=100.0
-  [DEBUG-RECV] propagationCycles=20.0
-  [DEBUG-RECV] rcvEndCycle=3966
-  [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI) = 3372.0
-  [side-channel] NET_DONE WACS__SubRxNI 3966 iter=5  (senderEndCycle=3946, propagationNs=100.0, propagationCycles=20.0)
-  [DEBUG-RECV] rcvDurationCycles=789
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubRxNI 789 5
-  [side-channel] wrote NET_DONE WACS__SubRxNI 789 iter=5
-[ns3] [bridge] NS3 paused at 19828 ns results=20
-[ns3] [bridge] Running NS3 for 2 ns (now=19828 ns, until=19830 ns)
-[ns3] [bridge] NS3 paused at 19830 ns results=20
-[ns3] [bridge] Running NS3 for 10 ns (now=19830 ns, until=19840 ns)
-[ns3] [bridge] NS3 paused at 19840 ns results=20
-[ns3] [bridge] Running NS3 for 10 ns (now=19840 ns, until=19850 ns)
-[ns3] [bridge] NS3 paused at 19850 ns results=20
-[ns3] [bridge] Running NS3 for 10 ns (now=19850 ns, until=19860 ns)
-[ns3] [bridge] NS3 paused at 19860 ns results=20
-[ns3] [bridge] Running NS3 for 10 ns (now=19860 ns, until=19870 ns)
-[ns3] [bridge] NS3 paused at 19870 ns results=20
-[ns3] [bridge] Running NS3 for 10 ns (now=19870 ns, until=19880 ns)
-[ns3] [bridge] NS3 paused at 19880 ns results=20
-[ns3] [bridge] Running NS3 for 10 ns (now=19880 ns, until=19890 ns)
-[ns3] [bridge] NS3 paused at 19890 ns results=20
-[ns3] [bridge] Running NS3 for 10 ns (now=19890 ns, until=19900 ns)
-[ns3] [bridge] NS3 paused at 19900 ns results=20
-[ns3] [bridge] Running NS3 for 10 ns (now=19900 ns, until=19910 ns)
-[ns3] [bridge] NS3 paused at 19910 ns results=20
+  [side-channel] writing NET_DONE WACS__CCTxNI 6186 iter=5
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCTxNI 1229 5
+  [side-channel] wrote NET_DONE WACS__CCTxNI 1229 iter=5
+[ns3] [bridge] NS3 paused at 30932 ns results=19
+[ns3] [bridge] Running NS3 for 8 ns (now=30932 ns, until=30940 ns)
+[ns3] [bridge] NS3 paused at 30940 ns results=19
+[ns3] [bridge] Running NS3 for 10 ns (now=30940 ns, until=30950 ns)
+[ns3] [bridge] NS3 paused at 30950 ns results=19
+[ns3] [bridge] Running NS3 for 10 ns (now=30950 ns, until=30960 ns)
+[ns3] [bridge] NS3 paused at 30960 ns results=19
+[ns3] [bridge] Running NS3 for 10 ns (now=30960 ns, until=30970 ns)
+[ns3] [bridge] NS3 paused at 30970 ns results=19
+[ns3] [bridge] Running NS3 for 10 ns (now=30970 ns, until=30980 ns)
+[ns3] [bridge] NS3 paused at 30980 ns results=19
+[ns3] [bridge] Running NS3 for 10 ns (now=30980 ns, until=30990 ns)
+[ns3] [bridge] NS3 paused at 30990 ns results=19
+[ns3] [bridge] Running NS3 for 10 ns (now=30990 ns, until=31000 ns)
+[ns3] [bridge] NS3 paused at 31000 ns results=19
+[ns3] [bridge] Running NS3 for 10 ns (now=31000 ns, until=31010 ns)
+[ns3] [bridge] NS3 paused at 31010 ns results=19
+[ns3] [bridge] Running NS3 for 10 ns (now=31010 ns, until=31020 ns)
+[ns3] [bridge] NS3 paused at 31020 ns results=19
+[ns3] [bridge] Running NS3 for 10 ns (now=31020 ns, until=31030 ns)
+[ns3] [bridge] NS3 paused at 31030 ns results=19
+[ns3] [bridge] Running NS3 for 10 ns (now=31030 ns, until=31040 ns)
+[ns3] [bridge] NS3 paused at 31040 ns results=19
+[ns3] [bridge] Running NS3 for 10 ns (now=31040 ns, until=31050 ns)
+[ns3] [bridge] NS3 paused at 31050 ns results=19
+[ns3] [bridge] Running NS3 for 10 ns (now=31050 ns, until=31060 ns)
+[ns3] [bridge] NS3 paused at 31060 ns results=19
+[ns3] [bridge] Running NS3 for 10 ns (now=31060 ns, until=31070 ns)
+[ns3] [bridge] NS3 paused at 31070 ns results=19
+[ns3] [bridge] Running NS3 for 10 ns (now=31070 ns, until=31080 ns)
+[ns3] [bridge] NS3 paused at 31080 ns results=19
+[ns3] [bridge] Running NS3 for 10 ns (now=31080 ns, until=31090 ns)
+[ns3] [bridge] NS3 paused at 31090 ns results=19
+[ns3] [bridge] Running NS3 for 10 ns (now=31090 ns, until=31100 ns)
+[ns3] [bridge] NS3 paused at 31100 ns results=19
+[ns3] [bridge] Running NS3 for 10 ns (now=31100 ns, until=31110 ns)
+[ns3] [bridge] NS3 paused at 31110 ns results=19
 
   [event] diplodocus.owl.ttl changed - found 1 new command(s) (submitting in creation order, without waiting for results).
 
@@ -1022,34 +1058,73 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [PART A]  cmd_WACS__CCTxNI_iter6_DataQty -> ns3:Packet? true
   [PART A]  EV_ChargingRequest_NetTask -> ns3:Socket? true
   [PART A]  cmd_WACS__CCTxNI_iter6_StartCycle -> ns3:NsTimePoint? true
-  [PART C - SWRL cycle->ns]  cycleValue=3984  f=2.0E8 Hz  -->  nsValue=19920.0 ns
+  [PART C - SWRL cycle->ns]  cycleValue=6224  f=2.0E8 Hz  -->  nsValue=31120.0 ns
 [DEBUG] pairedReceiverTaskName=WACS__SubRxNI
 [DEBUG] rcvStartFile=/home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI
 [DEBUG] receiverStartCycle=null
 [DEBUG] WACS__CCTxNI transport fields=';transport=TCP;sndBufSize=32'
 [DEBUG] WACS__CCTxNI direction=1
-  [bridge] Commande envoyée à NS3: packetSize=48;id=10;nsValue=19920;direction=1;transport=TCP;sndBufSize=32
+  [bridge] Commande envoyée à NS3: packetSize=48;id=10;nsValue=31120;direction=1;transport=TCP;sndBufSize=32
   Submitted cmd_WACS__CCTxNI_iter6_WriteCmd to NS-3 (packetSize=48, id=10) - moving on without waiting for its result.
-[ns3] [bridge] Drained #11 raw='packetSize=48;id=10;nsValue=19920;direction=1;transport=TCP;sndBufSize=32'
-[ns3] [bridge] SCHEDULED id=10 at 19920 ns
-[ns3] [bridge] Running NS3 for 10 ns (now=19910 ns, until=19920 ns)
-[ns3] INJECTION_TIME commandId=10 injectionTimeNs=19920
-[ns3] [bridge] INJECT id=10 NI1->NI0 size=48 TCP sndBuf=32 t=19920
-[ns3] [bridge] NS3 paused at 19920 ns results=20
-[ns3] [bridge] Running NS3 for 10 ns (now=19920 ns, until=19930 ns)
-[ns3] [bridge] NS3 paused at 19930 ns results=20
-[ns3] [bridge] Running NS3 for 10 ns (now=19930 ns, until=19940 ns)
-[ns3] [bridge] NS3 paused at 19940 ns results=20
-[ns3] [bridge] Running NS3 for 10 ns (now=19940 ns, until=19950 ns)
-[ns3] [bridge] NS3 paused at 19950 ns results=20
-[ns3] [bridge] Running NS3 for 10 ns (now=19950 ns, until=19960 ns)
-[ns3] [bridge] NS3 paused at 19960 ns results=20
-[ns3] [bridge] Running NS3 for 10 ns (now=19960 ns, until=19970 ns)
-[ns3] [bridge] NS3 paused at 19970 ns results=20
-[ns3] [bridge] Running NS3 for 10 ns (now=19970 ns, until=19980 ns)
-[ns3] [bridge] NS3 paused at 19980 ns results=20
-[ns3] [bridge] Running NS3 for 10 ns (now=19980 ns, until=19990 ns)
-[ns3] [bridge] NS3 paused at 19990 ns results=20
+[ns3] [bridge] Drained #11 raw='packetSize=48;id=10;nsValue=31120;direction=1;transport=TCP;sndBufSize=32'
+[ns3] [bridge] SCHEDULED id=10 at 31120 ns
+[ns3] [bridge] Running NS3 for 10 ns (now=31110 ns, until=31120 ns)
+[ns3] INJECTION_TIME commandId=10 injectionTimeNs=31120
+[ns3] [bridge] INJECT id=10 NI1->NI0 size=48 TCP sndBuf=32 t=31120
+[ns3] [bridge] NS3 paused at 31120 ns results=19
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=31120 ns, until=1.00311e+07 ns)
+[ns3] [bridge] RECV_END id=8 t=31592
+[ns3] RESULT_START
+[ns3] commandId=8
+[ns3] receiveMeasuredLatencyNs=31592
+[ns3] RESULT_END
+
+  --- NS-3 RECEIVE result for: cmd_WACS__CCTxNI_iter5_WriteCmd
+  Measured receive latency (ns): 6807.0
+  [DEBUG-RECV] receiveLatencyNs=6807.0
+  [DEBUG-RECV] capturedSendLatencyNs=6147.0
+  [DEBUG-RECV] capturedSenderEndCycle=6186
+  [DEBUG-RECV] propagationNs=660.0
+  [DEBUG-RECV] propagationCycles=132.0
+  [DEBUG-RECV] rcvEndCycle=6318
+  [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI) = 5264.0
+  [side-channel] NET_DONE WACS__SubRxNI 6318 iter=5  (senderEndCycle=6186, propagationNs=660.0, propagationCycles=132.0)
+  [DEBUG-RECV] rcvDurationCycles=1361
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubRxNI 1361 5
+  [side-channel] wrote NET_DONE WACS__SubRxNI 1361 iter=5
+[ns3] [bridge] NS3 paused at 31592 ns results=20
+[ns3] [bridge] Running NS3 for 8 ns (now=31592 ns, until=31600 ns)
+[ns3] [bridge] NS3 paused at 31600 ns results=20
+[ns3] [bridge] Running NS3 for 10 ns (now=31600 ns, until=31610 ns)
+[ns3] [bridge] NS3 paused at 31610 ns results=20
+[ns3] [bridge] Running NS3 for 10 ns (now=31610 ns, until=31620 ns)
+[ns3] [bridge] NS3 paused at 31620 ns results=20
+[ns3] [bridge] Running NS3 for 10 ns (now=31620 ns, until=31630 ns)
+[ns3] [bridge] NS3 paused at 31630 ns results=20
+[ns3] [bridge] Running NS3 for 10 ns (now=31630 ns, until=31640 ns)
+[ns3] [bridge] NS3 paused at 31640 ns results=20
+[ns3] [bridge] Running NS3 for 10 ns (now=31640 ns, until=31650 ns)
+[ns3] [bridge] NS3 paused at 31650 ns results=20
+[ns3] [bridge] Running NS3 for 10 ns (now=31650 ns, until=31660 ns)
+[ns3] [bridge] NS3 paused at 31660 ns results=20
+[ns3] [bridge] Running NS3 for 10 ns (now=31660 ns, until=31670 ns)
+[ns3] [bridge] NS3 paused at 31670 ns results=20
+[ns3] [bridge] Running NS3 for 10 ns (now=31670 ns, until=31680 ns)
+[ns3] [bridge] NS3 paused at 31680 ns results=20
+[ns3] [bridge] Running NS3 for 10 ns (now=31680 ns, until=31690 ns)
+[ns3] [bridge] NS3 paused at 31690 ns results=20
+[ns3] [bridge] Running NS3 for 10 ns (now=31690 ns, until=31700 ns)
+[ns3] [bridge] NS3 paused at 31700 ns results=20
+[ns3] [bridge] Running NS3 for 10 ns (now=31700 ns, until=31710 ns)
+[ns3] [bridge] NS3 paused at 31710 ns results=20
+[ns3] [bridge] Running NS3 for 10 ns (now=31710 ns, until=31720 ns)
+[ns3] [bridge] NS3 paused at 31720 ns results=20
+[ns3] [bridge] Running NS3 for 10 ns (now=31720 ns, until=31730 ns)
+[ns3] [bridge] NS3 paused at 31730 ns results=20
+[ns3] [bridge] Running NS3 for 10 ns (now=31730 ns, until=31740 ns)
+[ns3] [bridge] NS3 paused at 31740 ns results=20
+[ns3] [bridge] Running NS3 for 10 ns (now=31740 ns, until=31750 ns)
+[ns3] [bridge] NS3 paused at 31750 ns results=20
 
   [event] diplodocus.owl.ttl changed - found 1 new command(s) (submitting in creation order, without waiting for results).
 
@@ -1060,152 +1135,135 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [PART A]  cmd_WACS__SubTxNI_iter6_DataQty -> ns3:Packet? true
   [PART A]  EV_ChargingRequest_NetTask -> ns3:Socket? true
   [PART A]  cmd_WACS__SubTxNI_iter6_StartCycle -> ns3:NsTimePoint? true
-  [PART C - SWRL cycle->ns]  cycleValue=4000  f=2.0E8 Hz  -->  nsValue=20000.0 ns
+  [PART C - SWRL cycle->ns]  cycleValue=6352  f=2.0E8 Hz  -->  nsValue=31760.0 ns
 [DEBUG] pairedReceiverTaskName=WACS__CCRxNI
 [DEBUG] rcvStartFile=/home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI
 [DEBUG] receiverStartCycle=null
 [DEBUG] WACS__SubTxNI transport fields=';transport=UDP;errorRate=0.02'
 [DEBUG] WACS__SubTxNI direction=0
-  [bridge] Commande envoyée à NS3: packetSize=48;id=11;nsValue=20000;direction=0;transport=UDP;errorRate=0.02
+  [bridge] Commande envoyée à NS3: packetSize=48;id=11;nsValue=31760;direction=0;transport=UDP;errorRate=0.02
   Submitted cmd_WACS__SubTxNI_iter6_WriteCmd to NS-3 (packetSize=48, id=11) - moving on without waiting for its result.
-[ns3] [bridge] Drained #12 raw='packetSize=48;id=11;nsValue=20000;direction=0;transport=UDP;errorRate=0.02'
-[ns3] [bridge] SCHEDULED id=11 at 20000 ns
-[ns3] [bridge] Running NS3 for 10 ns (now=19990 ns, until=20000 ns)
-[ns3] INJECTION_TIME commandId=11 injectionTimeNs=20000
-[ns3] [bridge] INJECT id=11 NI0->NI1 size=48 UDP errorRate=0.020000 t=20000
-[ns3] [bridge] NS3 paused at 20000 ns results=20
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=20000 ns, until=1.002e+07 ns)
-[ns3] [bridge] SEND_END id=11 NI0 UDP t=20884
+[ns3] [bridge] Drained #12 raw='packetSize=48;id=11;nsValue=31760;direction=0;transport=UDP;errorRate=0.02'
+[ns3] [bridge] SCHEDULED id=11 at 31760 ns
+[ns3] [bridge] Running NS3 for 10 ns (now=31750 ns, until=31760 ns)
+[ns3] INJECTION_TIME commandId=11 injectionTimeNs=31760
+[ns3] [bridge] INJECT id=11 NI0->NI1 size=48 UDP errorRate=0.020000 t=31760
+[ns3] [bridge] NS3 paused at 31760 ns results=20
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=31760 ns, until=1.00318e+07 ns)
+[ns3] [bridge] SEND_END id=11 NI0 UDP t=32648
 [ns3] RESULT_START
 [ns3] commandId=11
-[ns3] sendMeasuredLatencyNs=20884
+[ns3] sendMeasuredLatencyNs=32648
 [ns3] RESULT_END
 
   --- NS-3 result ready for: cmd_WACS__SubTxNI_iter6_WriteCmd
-  Measured latency (ns): 884.0
+  Measured latency (ns): 888.0
   Created -> cmd_WACS__SubTxNI_iter6_DataQty_Packet, EV_ChargingRequest_NetTask_Socket, cmd_WACS__SubTxNI_iter6_StartCycle_NsTimePoint, _TransferResult12
   ns3.owl.ttl updated.
   --- Backpropagating result: _TransferResult12
-  [DEBUG-SEND] measuredLatencyNs=884.0
-  [DEBUG-SEND] cycleVal=4000
-  [DEBUG-SEND] endCycle=4177
+  [DEBUG-SEND] measuredLatencyNs=888.0
+  [DEBUG-SEND] cycleVal=6352
+  [DEBUG-SEND] endCycle=6530
   [DEBUG-SEND] masterClockHz=2.0E8
-  [PART D - SWRL inverse ns->cycle]  delay_cycles = 884.0 * (2.0E8 / 1e9) = 176.8
-  [PART D - SWRL inverse ns->cycle]  endCycle = 4000 + 177 = 4177
+  [PART D - SWRL inverse ns->cycle]  delay_cycles = 888.0 * (2.0E8 / 1e9) = 177.60000000000002
+  [PART D - SWRL inverse ns->cycle]  endCycle = 6352 + 178 = 6530
   Linked cmd_WACS__SubTxNI_iter6_WriteCmd --dip:endsAtCycle--> _TransferResult12_EndCycle
-  Created -> _TransferResult12_EndCycle with dip:cycleValue = 4177
+  Created -> _TransferResult12_EndCycle with dip:cycleValue = 6530
   diplodocus.owl.ttl updated.
-  [side-channel] writing NET_DONE WACS__SubTxNI 4177 iter=6
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubTxNI 177 6
-  [side-channel] wrote NET_DONE WACS__SubTxNI 177 iter=6
-[ns3] [bridge] NS3 paused at 20884 ns results=21
-[ns3] [bridge] Running NS3 for 1 ns (now=20884 ns, until=20885 ns)
-[ns3] [bridge] NS3 paused at 20885 ns results=21
-[ns3] [bridge] Running NS3 for 10 ns (now=20885 ns, until=20895 ns)
-[ns3] [bridge] NS3 paused at 20895 ns results=21
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=20895 ns, until=1.00209e+07 ns)
-[ns3] [bridge] RECV_END id=11 t=20984
+  [side-channel] writing NET_DONE WACS__SubTxNI 6530 iter=6
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubTxNI 178 6
+  [side-channel] wrote NET_DONE WACS__SubTxNI 178 iter=6
+[ns3] [bridge] NS3 paused at 32648 ns results=21
+[ns3] [bridge] Running NS3 for 2 ns (now=32648 ns, until=32650 ns)
+[ns3] [bridge] NS3 paused at 32650 ns results=21
+[ns3] [bridge] Running NS3 for 10 ns (now=32650 ns, until=32660 ns)
+[ns3] [bridge] NS3 paused at 32660 ns results=21
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=32660 ns, until=1.00327e+07 ns)
+[ns3] [bridge] RECV_END id=11 t=33372
 [ns3] RESULT_START
 [ns3] commandId=11
-[ns3] receiveMeasuredLatencyNs=20984
+[ns3] receiveMeasuredLatencyNs=33372
 [ns3] RESULT_END
 
   --- NS-3 RECEIVE result for: cmd_WACS__SubTxNI_iter6_WriteCmd
-  Measured receive latency (ns): 984.0
-  [DEBUG-RECV] receiveLatencyNs=984.0
-  [DEBUG-RECV] capturedSendLatencyNs=884.0
-  [DEBUG-RECV] capturedSenderEndCycle=4177
-  [DEBUG-RECV] propagationNs=100.0
-  [DEBUG-RECV] propagationCycles=20.0
-  [DEBUG-RECV] rcvEndCycle=4197
+  Measured receive latency (ns): 1612.0
+  [DEBUG-RECV] receiveLatencyNs=1612.0
+  [DEBUG-RECV] capturedSendLatencyNs=888.0
+  [DEBUG-RECV] capturedSenderEndCycle=6530
+  [DEBUG-RECV] propagationNs=724.0
+  [DEBUG-RECV] propagationCycles=144.8
+  [DEBUG-RECV] rcvEndCycle=6674
   [WARNING] Receiver startCycle for iter=6 not found in /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI, using 0
   [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI) = 0.0
-  [side-channel] NET_DONE WACS__CCRxNI 4197 iter=6  (senderEndCycle=4177, propagationNs=100.0, propagationCycles=20.0)
-  [DEBUG-RECV] rcvDurationCycles=197
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCRxNI 197 6
-  [side-channel] wrote NET_DONE WACS__CCRxNI 197 iter=6
-[ns3] [bridge] NS3 paused at 20984 ns results=22
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=20984 ns, until=1.0021e+07 ns)
-[ns3] [bridge] TCP connected id=10 t=21448
-[ns3] [bridge] SEND_END id=10 NI1 TCP t=23760
+  [side-channel] NET_DONE WACS__CCRxNI 6674 iter=6  (senderEndCycle=6530, propagationNs=724.0, propagationCycles=144.8)
+  [DEBUG-RECV] rcvDurationCycles=322
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCRxNI 322 6
+  [side-channel] wrote NET_DONE WACS__CCRxNI 322 iter=6
+[ns3] [bridge] NS3 paused at 33372 ns results=22
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=33372 ns, until=1.00334e+07 ns)
+[ns3] [bridge] TCP connected id=10 t=33836
+[ns3] [bridge] SEND_END id=10 NI1 TCP t=37268
 [ns3] RESULT_START
 [ns3] commandId=10
-[ns3] sendMeasuredLatencyNs=23760
+[ns3] sendMeasuredLatencyNs=37268
 [ns3] RESULT_END
 
   --- NS-3 result ready for: cmd_WACS__CCTxNI_iter6_WriteCmd
-  Measured latency (ns): 3840.0
+  Measured latency (ns): 6148.0
   Created -> cmd_WACS__CCTxNI_iter6_DataQty_Packet, EV_ChargingRequest_NetTask_Socket, cmd_WACS__CCTxNI_iter6_StartCycle_NsTimePoint, _TransferResult11
   ns3.owl.ttl updated.
   --- Backpropagating result: _TransferResult11
-  [DEBUG-SEND] measuredLatencyNs=3840.0
-  [DEBUG-SEND] cycleVal=3984
-  [DEBUG-SEND] endCycle=4752
+  [DEBUG-SEND] measuredLatencyNs=6148.0
+  [DEBUG-SEND] cycleVal=6224
+  [DEBUG-SEND] endCycle=7454
   [DEBUG-SEND] masterClockHz=2.0E8
-  [PART D - SWRL inverse ns->cycle]  delay_cycles = 3840.0 * (2.0E8 / 1e9) = 768.0
-  [PART D - SWRL inverse ns->cycle]  endCycle = 3984 + 768 = 4752
+  [PART D - SWRL inverse ns->cycle]  delay_cycles = 6148.0 * (2.0E8 / 1e9) = 1229.6000000000001
+  [PART D - SWRL inverse ns->cycle]  endCycle = 6224 + 1230 = 7454
   Linked cmd_WACS__CCTxNI_iter6_WriteCmd --dip:endsAtCycle--> _TransferResult11_EndCycle
-  Created -> _TransferResult11_EndCycle with dip:cycleValue = 4752
+  Created -> _TransferResult11_EndCycle with dip:cycleValue = 7454
   diplodocus.owl.ttl updated.
-  [side-channel] writing NET_DONE WACS__CCTxNI 4752 iter=6
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCTxNI 768 6
-  [side-channel] wrote NET_DONE WACS__CCTxNI 768 iter=6
-[ns3] [bridge] NS3 paused at 23760 ns results=23
-[ns3] [bridge] Running NS3 for 10 ns (now=23760 ns, until=23770 ns)
-[ns3] [bridge] NS3 paused at 23770 ns results=23
-[ns3] [bridge] Running NS3 for 10 ns (now=23770 ns, until=23780 ns)
-[ns3] [bridge] NS3 paused at 23780 ns results=23
-[ns3] [bridge] Running NS3 for 10 ns (now=23780 ns, until=23790 ns)
-[ns3] [bridge] NS3 paused at 23790 ns results=23
-[ns3] [bridge] Running NS3 for 10 ns (now=23790 ns, until=23800 ns)
-[ns3] [bridge] NS3 paused at 23800 ns results=23
-[ns3] [bridge] Running NS3 for 10 ns (now=23800 ns, until=23810 ns)
-[ns3] [bridge] NS3 paused at 23810 ns results=23
-[ns3] [bridge] Running NS3 for 10 ns (now=23810 ns, until=23820 ns)
-[ns3] [bridge] NS3 paused at 23820 ns results=23
-[ns3] [bridge] Running NS3 for 10 ns (now=23820 ns, until=23830 ns)
-[ns3] [bridge] NS3 paused at 23830 ns results=23
-[ns3] [bridge] Running NS3 for 10 ns (now=23830 ns, until=23840 ns)
-[ns3] [bridge] NS3 paused at 23840 ns results=23
-[ns3] [bridge] Running NS3 for 10 ns (now=23840 ns, until=23850 ns)
-[ns3] [bridge] NS3 paused at 23850 ns results=23
-[ns3] [bridge] Running NS3 for 10 ns (now=23850 ns, until=23860 ns)
-[ns3] [bridge] RECV_END id=10 t=23860
-[ns3] RESULT_START
-[ns3] commandId=10
-[ns3] receiveMeasuredLatencyNs=23860
-[ns3] RESULT_END
-
-  --- NS-3 RECEIVE result for: cmd_WACS__CCTxNI_iter6_WriteCmd
-  Measured receive latency (ns): 3940.0
-  [DEBUG-RECV] receiveLatencyNs=3940.0
-  [DEBUG-RECV] capturedSendLatencyNs=3840.0
-  [DEBUG-RECV] capturedSenderEndCycle=4752
-  [DEBUG-RECV] propagationNs=100.0
-  [DEBUG-RECV] propagationCycles=20.0
-  [DEBUG-RECV] rcvEndCycle=4772
-  [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI) = 4179.0
-  [side-channel] NET_DONE WACS__SubRxNI 4772 iter=6  (senderEndCycle=4752, propagationNs=100.0, propagationCycles=20.0)
-  [DEBUG-RECV] rcvDurationCycles=788
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubRxNI 788 6
-  [side-channel] wrote NET_DONE WACS__SubRxNI 788 iter=6
-[ns3] [bridge] NS3 paused at 23860 ns results=24
-[ns3] [bridge] Running NS3 for 10 ns (now=23860 ns, until=23870 ns)
-[ns3] [bridge] NS3 paused at 23870 ns results=24
-[ns3] [bridge] Running NS3 for 10 ns (now=23870 ns, until=23880 ns)
-[ns3] [bridge] NS3 paused at 23880 ns results=24
-[ns3] [bridge] Running NS3 for 10 ns (now=23880 ns, until=23890 ns)
-[ns3] [bridge] NS3 paused at 23890 ns results=24
-[ns3] [bridge] Running NS3 for 10 ns (now=23890 ns, until=23900 ns)
-[ns3] [bridge] NS3 paused at 23900 ns results=24
-[ns3] [bridge] Running NS3 for 10 ns (now=23900 ns, until=23910 ns)
-[ns3] [bridge] NS3 paused at 23910 ns results=24
-[ns3] [bridge] Running NS3 for 10 ns (now=23910 ns, until=23920 ns)
-[ns3] [bridge] NS3 paused at 23920 ns results=24
-[ns3] [bridge] Running NS3 for 10 ns (now=23920 ns, until=23930 ns)
-[ns3] [bridge] NS3 paused at 23930 ns results=24
-[ns3] [bridge] Running NS3 for 10 ns (now=23930 ns, until=23940 ns)
-[ns3] [bridge] NS3 paused at 23940 ns results=24
+  [side-channel] writing NET_DONE WACS__CCTxNI 7454 iter=6
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCTxNI 1230 6
+  [side-channel] wrote NET_DONE WACS__CCTxNI 1230 iter=6
+[ns3] [bridge] NS3 paused at 37268 ns results=23
+[ns3] [bridge] Running NS3 for 2 ns (now=37268 ns, until=37270 ns)
+[ns3] [bridge] NS3 paused at 37270 ns results=23
+[ns3] [bridge] Running NS3 for 10 ns (now=37270 ns, until=37280 ns)
+[ns3] [bridge] NS3 paused at 37280 ns results=23
+[ns3] [bridge] Running NS3 for 10 ns (now=37280 ns, until=37290 ns)
+[ns3] [bridge] NS3 paused at 37290 ns results=23
+[ns3] [bridge] Running NS3 for 10 ns (now=37290 ns, until=37300 ns)
+[ns3] [bridge] NS3 paused at 37300 ns results=23
+[ns3] [bridge] Running NS3 for 10 ns (now=37300 ns, until=37310 ns)
+[ns3] [bridge] NS3 paused at 37310 ns results=23
+[ns3] [bridge] Running NS3 for 10 ns (now=37310 ns, until=37320 ns)
+[ns3] [bridge] NS3 paused at 37320 ns results=23
+[ns3] [bridge] Running NS3 for 10 ns (now=37320 ns, until=37330 ns)
+[ns3] [bridge] NS3 paused at 37330 ns results=23
+[ns3] [bridge] Running NS3 for 10 ns (now=37330 ns, until=37340 ns)
+[ns3] [bridge] NS3 paused at 37340 ns results=23
+[ns3] [bridge] Running NS3 for 10 ns (now=37340 ns, until=37350 ns)
+[ns3] [bridge] NS3 paused at 37350 ns results=23
+[ns3] [bridge] Running NS3 for 10 ns (now=37350 ns, until=37360 ns)
+[ns3] [bridge] NS3 paused at 37360 ns results=23
+[ns3] [bridge] Running NS3 for 10 ns (now=37360 ns, until=37370 ns)
+[ns3] [bridge] NS3 paused at 37370 ns results=23
+[ns3] [bridge] Running NS3 for 10 ns (now=37370 ns, until=37380 ns)
+[ns3] [bridge] NS3 paused at 37380 ns results=23
+[ns3] [bridge] Running NS3 for 10 ns (now=37380 ns, until=37390 ns)
+[ns3] [bridge] NS3 paused at 37390 ns results=23
+[ns3] [bridge] Running NS3 for 10 ns (now=37390 ns, until=37400 ns)
+[ns3] [bridge] NS3 paused at 37400 ns results=23
+[ns3] [bridge] Running NS3 for 10 ns (now=37400 ns, until=37410 ns)
+[ns3] [bridge] NS3 paused at 37410 ns results=23
+[ns3] [bridge] Running NS3 for 10 ns (now=37410 ns, until=37420 ns)
+[ns3] [bridge] NS3 paused at 37420 ns results=23
+[ns3] [bridge] Running NS3 for 10 ns (now=37420 ns, until=37430 ns)
+[ns3] [bridge] NS3 paused at 37430 ns results=23
+[ns3] [bridge] Running NS3 for 10 ns (now=37430 ns, until=37440 ns)
+[ns3] [bridge] NS3 paused at 37440 ns results=23
+[ns3] [bridge] Running NS3 for 10 ns (now=37440 ns, until=37450 ns)
+[ns3] [bridge] NS3 paused at 37450 ns results=23
 
   [event] diplodocus.owl.ttl changed - found 1 new command(s) (submitting in creation order, without waiting for results).
 
@@ -1216,34 +1274,75 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [PART A]  cmd_WACS__CCTxNI_iter7_DataQty -> ns3:Packet? true
   [PART A]  EV_ChargingRequest_NetTask -> ns3:Socket? true
   [PART A]  cmd_WACS__CCTxNI_iter7_StartCycle -> ns3:NsTimePoint? true
-  [PART C - SWRL cycle->ns]  cycleValue=4790  f=2.0E8 Hz  -->  nsValue=23950.0 ns
+  [PART C - SWRL cycle->ns]  cycleValue=7492  f=2.0E8 Hz  -->  nsValue=37460.0 ns
 [DEBUG] pairedReceiverTaskName=WACS__SubRxNI
 [DEBUG] rcvStartFile=/home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI
 [DEBUG] receiverStartCycle=null
 [DEBUG] WACS__CCTxNI transport fields=';transport=TCP;sndBufSize=32'
 [DEBUG] WACS__CCTxNI direction=1
-  [bridge] Commande envoyée à NS3: packetSize=48;id=12;nsValue=23950;direction=1;transport=TCP;sndBufSize=32
+  [bridge] Commande envoyée à NS3: packetSize=48;id=12;nsValue=37460;direction=1;transport=TCP;sndBufSize=32
   Submitted cmd_WACS__CCTxNI_iter7_WriteCmd to NS-3 (packetSize=48, id=12) - moving on without waiting for its result.
-[ns3] [bridge] Drained #13 raw='packetSize=48;id=12;nsValue=23950;direction=1;transport=TCP;sndBufSize=32'
-[ns3] [bridge] SCHEDULED id=12 at 23950 ns
-[ns3] [bridge] Running NS3 for 10 ns (now=23940 ns, until=23950 ns)
-[ns3] INJECTION_TIME commandId=12 injectionTimeNs=23950
-[ns3] [bridge] INJECT id=12 NI1->NI0 size=48 TCP sndBuf=32 t=23950
-[ns3] [bridge] NS3 paused at 23950 ns results=24
-[ns3] [bridge] Running NS3 for 10 ns (now=23950 ns, until=23960 ns)
-[ns3] [bridge] NS3 paused at 23960 ns results=24
-[ns3] [bridge] Running NS3 for 10 ns (now=23960 ns, until=23970 ns)
-[ns3] [bridge] NS3 paused at 23970 ns results=24
-[ns3] [bridge] Running NS3 for 10 ns (now=23970 ns, until=23980 ns)
-[ns3] [bridge] NS3 paused at 23980 ns results=24
-[ns3] [bridge] Running NS3 for 10 ns (now=23980 ns, until=23990 ns)
-[ns3] [bridge] NS3 paused at 23990 ns results=24
-[ns3] [bridge] Running NS3 for 10 ns (now=23990 ns, until=24000 ns)
-[ns3] [bridge] NS3 paused at 24000 ns results=24
-[ns3] [bridge] Running NS3 for 10 ns (now=24000 ns, until=24010 ns)
-[ns3] [bridge] NS3 paused at 24010 ns results=24
-[ns3] [bridge] Running NS3 for 10 ns (now=24010 ns, until=24020 ns)
-[ns3] [bridge] NS3 paused at 24020 ns results=24
+[ns3] [bridge] Drained #13 raw='packetSize=48;id=12;nsValue=37460;direction=1;transport=TCP;sndBufSize=32'
+[ns3] [bridge] SCHEDULED id=12 at 37460 ns
+[ns3] [bridge] Running NS3 for 10 ns (now=37450 ns, until=37460 ns)
+[ns3] INJECTION_TIME commandId=12 injectionTimeNs=37460
+[ns3] [bridge] INJECT id=12 NI1->NI0 size=48 TCP sndBuf=32 t=37460
+[ns3] [bridge] NS3 paused at 37460 ns results=23
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=37460 ns, until=1.00375e+07 ns)
+[ns3] [bridge] RECV_END id=10 t=37928
+[ns3] RESULT_START
+[ns3] commandId=10
+[ns3] receiveMeasuredLatencyNs=37928
+[ns3] RESULT_END
+
+  --- NS-3 RECEIVE result for: cmd_WACS__CCTxNI_iter6_WriteCmd
+  Measured receive latency (ns): 6808.0
+  [DEBUG-RECV] receiveLatencyNs=6808.0
+  [DEBUG-RECV] capturedSendLatencyNs=6148.0
+  [DEBUG-RECV] capturedSenderEndCycle=7454
+  [DEBUG-RECV] propagationNs=660.0
+  [DEBUG-RECV] propagationCycles=132.0
+  [DEBUG-RECV] rcvEndCycle=7586
+  [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI) = 6532.0
+  [side-channel] NET_DONE WACS__SubRxNI 7586 iter=6  (senderEndCycle=7454, propagationNs=660.0, propagationCycles=132.0)
+  [DEBUG-RECV] rcvDurationCycles=1362
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubRxNI 1362 6
+  [side-channel] wrote NET_DONE WACS__SubRxNI 1362 iter=6
+[ns3] [bridge] NS3 paused at 37928 ns results=24
+[ns3] [bridge] Running NS3 for 2 ns (now=37928 ns, until=37930 ns)
+[ns3] [bridge] NS3 paused at 37930 ns results=24
+[ns3] [bridge] Running NS3 for 10 ns (now=37930 ns, until=37940 ns)
+[ns3] [bridge] NS3 paused at 37940 ns results=24
+[ns3] [bridge] Running NS3 for 10 ns (now=37940 ns, until=37950 ns)
+[ns3] [bridge] NS3 paused at 37950 ns results=24
+[ns3] [bridge] Running NS3 for 10 ns (now=37950 ns, until=37960 ns)
+[ns3] [bridge] NS3 paused at 37960 ns results=24
+[ns3] [bridge] Running NS3 for 10 ns (now=37960 ns, until=37970 ns)
+[ns3] [bridge] NS3 paused at 37970 ns results=24
+[ns3] [bridge] Running NS3 for 10 ns (now=37970 ns, until=37980 ns)
+[ns3] [bridge] NS3 paused at 37980 ns results=24
+[ns3] [bridge] Running NS3 for 10 ns (now=37980 ns, until=37990 ns)
+[ns3] [bridge] NS3 paused at 37990 ns results=24
+[ns3] [bridge] Running NS3 for 10 ns (now=37990 ns, until=38000 ns)
+[ns3] [bridge] NS3 paused at 38000 ns results=24
+[ns3] [bridge] Running NS3 for 10 ns (now=38000 ns, until=38010 ns)
+[ns3] [bridge] NS3 paused at 38010 ns results=24
+[ns3] [bridge] Running NS3 for 10 ns (now=38010 ns, until=38020 ns)
+[ns3] [bridge] NS3 paused at 38020 ns results=24
+[ns3] [bridge] Running NS3 for 10 ns (now=38020 ns, until=38030 ns)
+[ns3] [bridge] NS3 paused at 38030 ns results=24
+[ns3] [bridge] Running NS3 for 10 ns (now=38030 ns, until=38040 ns)
+[ns3] [bridge] NS3 paused at 38040 ns results=24
+[ns3] [bridge] Running NS3 for 10 ns (now=38040 ns, until=38050 ns)
+[ns3] [bridge] NS3 paused at 38050 ns results=24
+[ns3] [bridge] Running NS3 for 10 ns (now=38050 ns, until=38060 ns)
+[ns3] [bridge] NS3 paused at 38060 ns results=24
+[ns3] [bridge] Running NS3 for 10 ns (now=38060 ns, until=38070 ns)
+[ns3] [bridge] NS3 paused at 38070 ns results=24
+[ns3] [bridge] Running NS3 for 10 ns (now=38070 ns, until=38080 ns)
+[ns3] [bridge] NS3 paused at 38080 ns results=24
+[ns3] [bridge] Running NS3 for 10 ns (now=38080 ns, until=38090 ns)
+[ns3] [bridge] NS3 paused at 38090 ns results=24
 
   [event] diplodocus.owl.ttl changed - found 1 new command(s) (submitting in creation order, without waiting for results).
 
@@ -1254,152 +1353,136 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [PART A]  cmd_WACS__SubTxNI_iter7_DataQty -> ns3:Packet? true
   [PART A]  EV_ChargingRequest_NetTask -> ns3:Socket? true
   [PART A]  cmd_WACS__SubTxNI_iter7_StartCycle -> ns3:NsTimePoint? true
-  [PART C - SWRL cycle->ns]  cycleValue=4806  f=2.0E8 Hz  -->  nsValue=24030.0 ns
+  [PART C - SWRL cycle->ns]  cycleValue=7620  f=2.0E8 Hz  -->  nsValue=38100.0 ns
 [DEBUG] pairedReceiverTaskName=WACS__CCRxNI
 [DEBUG] rcvStartFile=/home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI
 [DEBUG] receiverStartCycle=null
 [DEBUG] WACS__SubTxNI transport fields=';transport=UDP;errorRate=0.02'
 [DEBUG] WACS__SubTxNI direction=0
-  [bridge] Commande envoyée à NS3: packetSize=48;id=13;nsValue=24030;direction=0;transport=UDP;errorRate=0.02
+  [bridge] Commande envoyée à NS3: packetSize=48;id=13;nsValue=38100;direction=0;transport=UDP;errorRate=0.02
   Submitted cmd_WACS__SubTxNI_iter7_WriteCmd to NS-3 (packetSize=48, id=13) - moving on without waiting for its result.
-[ns3] [bridge] Drained #14 raw='packetSize=48;id=13;nsValue=24030;direction=0;transport=UDP;errorRate=0.02'
-[ns3] [bridge] SCHEDULED id=13 at 24030 ns
-[ns3] [bridge] Running NS3 for 10 ns (now=24020 ns, until=24030 ns)
-[ns3] INJECTION_TIME commandId=13 injectionTimeNs=24030
-[ns3] [bridge] INJECT id=13 NI0->NI1 size=48 UDP errorRate=0.020000 t=24030
-[ns3] [bridge] NS3 paused at 24030 ns results=24
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=24030 ns, until=1.0024e+07 ns)
-[ns3] [bridge] SEND_END id=13 NI0 UDP t=24916
+[ns3] [bridge] Drained #14 raw='packetSize=48;id=13;nsValue=38100;direction=0;transport=UDP;errorRate=0.02'
+[ns3] [bridge] SCHEDULED id=13 at 38100 ns
+[ns3] [bridge] Running NS3 for 10 ns (now=38090 ns, until=38100 ns)
+[ns3] INJECTION_TIME commandId=13 injectionTimeNs=38100
+[ns3] [bridge] INJECT id=13 NI0->NI1 size=48 UDP errorRate=0.020000 t=38100
+[ns3] [bridge] NS3 paused at 38100 ns results=24
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=38100 ns, until=1.00381e+07 ns)
+[ns3] [bridge] SEND_END id=13 NI0 UDP t=38984
 [ns3] RESULT_START
 [ns3] commandId=13
-[ns3] sendMeasuredLatencyNs=24916
+[ns3] sendMeasuredLatencyNs=38984
 [ns3] RESULT_END
 
   --- NS-3 result ready for: cmd_WACS__SubTxNI_iter7_WriteCmd
-  Measured latency (ns): 886.0
+  Measured latency (ns): 884.0
   Created -> cmd_WACS__SubTxNI_iter7_DataQty_Packet, EV_ChargingRequest_NetTask_Socket, cmd_WACS__SubTxNI_iter7_StartCycle_NsTimePoint, _TransferResult14
   ns3.owl.ttl updated.
   --- Backpropagating result: _TransferResult14
-  [DEBUG-SEND] measuredLatencyNs=886.0
-  [DEBUG-SEND] cycleVal=4806
-  [DEBUG-SEND] endCycle=4983
+  [DEBUG-SEND] measuredLatencyNs=884.0
+  [DEBUG-SEND] cycleVal=7620
+  [DEBUG-SEND] endCycle=7797
   [DEBUG-SEND] masterClockHz=2.0E8
-  [PART D - SWRL inverse ns->cycle]  delay_cycles = 886.0 * (2.0E8 / 1e9) = 177.20000000000002
-  [PART D - SWRL inverse ns->cycle]  endCycle = 4806 + 177 = 4983
+  [PART D - SWRL inverse ns->cycle]  delay_cycles = 884.0 * (2.0E8 / 1e9) = 176.8
+  [PART D - SWRL inverse ns->cycle]  endCycle = 7620 + 177 = 7797
   Linked cmd_WACS__SubTxNI_iter7_WriteCmd --dip:endsAtCycle--> _TransferResult14_EndCycle
-  Created -> _TransferResult14_EndCycle with dip:cycleValue = 4983
+  Created -> _TransferResult14_EndCycle with dip:cycleValue = 7797
   diplodocus.owl.ttl updated.
-  [side-channel] writing NET_DONE WACS__SubTxNI 4983 iter=7
+  [side-channel] writing NET_DONE WACS__SubTxNI 7797 iter=7
 [DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubTxNI 177 7
   [side-channel] wrote NET_DONE WACS__SubTxNI 177 iter=7
-[ns3] [bridge] NS3 paused at 24916 ns results=25
-[ns3] [bridge] Running NS3 for 9 ns (now=24916 ns, until=24925 ns)
-[ns3] [bridge] NS3 paused at 24925 ns results=25
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=24925 ns, until=1.00249e+07 ns)
-[ns3] [bridge] RECV_END id=13 t=25016
+[ns3] [bridge] NS3 paused at 38984 ns results=25
+[ns3] [bridge] Running NS3 for 1 ns (now=38984 ns, until=38985 ns)
+[ns3] [bridge] NS3 paused at 38985 ns results=25
+[ns3] [bridge] Running NS3 for 10 ns (now=38985 ns, until=38995 ns)
+[ns3] [bridge] NS3 paused at 38995 ns results=25
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=38995 ns, until=1.0039e+07 ns)
+[ns3] PACKET_LOST commandId=13 t=39708 (errorRate=0.02)
+[ns3] [bridge] RECV_END id=13 t=39708
 [ns3] RESULT_START
 [ns3] commandId=13
-[ns3] receiveMeasuredLatencyNs=25016
+[ns3] receiveMeasuredLatencyNs=39708
 [ns3] RESULT_END
 
   --- NS-3 RECEIVE result for: cmd_WACS__SubTxNI_iter7_WriteCmd
-  Measured receive latency (ns): 986.0
-  [DEBUG-RECV] receiveLatencyNs=986.0
-  [DEBUG-RECV] capturedSendLatencyNs=886.0
-  [DEBUG-RECV] capturedSenderEndCycle=4983
-  [DEBUG-RECV] propagationNs=100.0
-  [DEBUG-RECV] propagationCycles=20.0
-  [DEBUG-RECV] rcvEndCycle=5003
+  Measured receive latency (ns): 1608.0
+  [DEBUG-RECV] receiveLatencyNs=1608.0
+  [DEBUG-RECV] capturedSendLatencyNs=884.0
+  [DEBUG-RECV] capturedSenderEndCycle=7797
+  [DEBUG-RECV] propagationNs=724.0
+  [DEBUG-RECV] propagationCycles=144.8
+  [DEBUG-RECV] rcvEndCycle=7941
   [WARNING] Receiver startCycle for iter=7 not found in /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI, using 0
   [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI) = 0.0
-  [side-channel] NET_DONE WACS__CCRxNI 5003 iter=7  (senderEndCycle=4983, propagationNs=100.0, propagationCycles=20.0)
-  [DEBUG-RECV] rcvDurationCycles=197
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCRxNI 197 7
-  [side-channel] wrote NET_DONE WACS__CCRxNI 197 iter=7
-[ns3] [bridge] NS3 paused at 25016 ns results=26
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=25016 ns, until=1.0025e+07 ns)
-[ns3] [bridge] TCP connected id=12 t=25480
-[ns3] [bridge] SEND_END id=12 NI1 TCP t=27792
+  [side-channel] NET_DONE WACS__CCRxNI 7941 iter=7  (senderEndCycle=7797, propagationNs=724.0, propagationCycles=144.8)
+  [DEBUG-RECV] rcvDurationCycles=322
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCRxNI 322 7
+  [side-channel] wrote NET_DONE WACS__CCRxNI 322 iter=7
+[ns3] [bridge] NS3 paused at 39708 ns results=26
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=39708 ns, until=1.00397e+07 ns)
+[ns3] [bridge] TCP connected id=12 t=40172
+[ns3] [bridge] SEND_END id=12 NI1 TCP t=43604
 [ns3] RESULT_START
 [ns3] commandId=12
-[ns3] sendMeasuredLatencyNs=27792
+[ns3] sendMeasuredLatencyNs=43604
 [ns3] RESULT_END
 
   --- NS-3 result ready for: cmd_WACS__CCTxNI_iter7_WriteCmd
-  Measured latency (ns): 3842.0
+  Measured latency (ns): 6144.0
   Created -> cmd_WACS__CCTxNI_iter7_DataQty_Packet, EV_ChargingRequest_NetTask_Socket, cmd_WACS__CCTxNI_iter7_StartCycle_NsTimePoint, _TransferResult13
   ns3.owl.ttl updated.
   --- Backpropagating result: _TransferResult13
-  [DEBUG-SEND] measuredLatencyNs=3842.0
-  [DEBUG-SEND] cycleVal=4790
-  [DEBUG-SEND] endCycle=5558
+  [DEBUG-SEND] measuredLatencyNs=6144.0
+  [DEBUG-SEND] cycleVal=7492
+  [DEBUG-SEND] endCycle=8721
   [DEBUG-SEND] masterClockHz=2.0E8
-  [PART D - SWRL inverse ns->cycle]  delay_cycles = 3842.0 * (2.0E8 / 1e9) = 768.4000000000001
-  [PART D - SWRL inverse ns->cycle]  endCycle = 4790 + 768 = 5558
+  [PART D - SWRL inverse ns->cycle]  delay_cycles = 6144.0 * (2.0E8 / 1e9) = 1228.8000000000002
+  [PART D - SWRL inverse ns->cycle]  endCycle = 7492 + 1229 = 8721
   Linked cmd_WACS__CCTxNI_iter7_WriteCmd --dip:endsAtCycle--> _TransferResult13_EndCycle
-  Created -> _TransferResult13_EndCycle with dip:cycleValue = 5558
+  Created -> _TransferResult13_EndCycle with dip:cycleValue = 8721
   diplodocus.owl.ttl updated.
-  [side-channel] writing NET_DONE WACS__CCTxNI 5558 iter=7
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCTxNI 768 7
-  [side-channel] wrote NET_DONE WACS__CCTxNI 768 iter=7
-[ns3] [bridge] NS3 paused at 27792 ns results=27
-[ns3] [bridge] Running NS3 for 8 ns (now=27792 ns, until=27800 ns)
-[ns3] [bridge] NS3 paused at 27800 ns results=27
-[ns3] [bridge] Running NS3 for 10 ns (now=27800 ns, until=27810 ns)
-[ns3] [bridge] NS3 paused at 27810 ns results=27
-[ns3] [bridge] Running NS3 for 10 ns (now=27810 ns, until=27820 ns)
-[ns3] [bridge] NS3 paused at 27820 ns results=27
-[ns3] [bridge] Running NS3 for 10 ns (now=27820 ns, until=27830 ns)
-[ns3] [bridge] NS3 paused at 27830 ns results=27
-[ns3] [bridge] Running NS3 for 10 ns (now=27830 ns, until=27840 ns)
-[ns3] [bridge] NS3 paused at 27840 ns results=27
-[ns3] [bridge] Running NS3 for 10 ns (now=27840 ns, until=27850 ns)
-[ns3] [bridge] NS3 paused at 27850 ns results=27
-[ns3] [bridge] Running NS3 for 10 ns (now=27850 ns, until=27860 ns)
-[ns3] [bridge] NS3 paused at 27860 ns results=27
-[ns3] [bridge] Running NS3 for 10 ns (now=27860 ns, until=27870 ns)
-[ns3] [bridge] NS3 paused at 27870 ns results=27
-[ns3] [bridge] Running NS3 for 10 ns (now=27870 ns, until=27880 ns)
-[ns3] [bridge] NS3 paused at 27880 ns results=27
-[ns3] [bridge] Running NS3 for 10 ns (now=27880 ns, until=27890 ns)
-[ns3] [bridge] NS3 paused at 27890 ns results=27
-[ns3] [bridge] Running NS3 for 10 ns (now=27890 ns, until=27900 ns)
-[ns3] [bridge] RECV_END id=12 t=27892
-[ns3] RESULT_START
-[ns3] commandId=12
-[ns3] receiveMeasuredLatencyNs=27892
-[ns3] RESULT_END
-
-  --- NS-3 RECEIVE result for: cmd_WACS__CCTxNI_iter7_WriteCmd
-  Measured receive latency (ns): 3942.0
-  [DEBUG-RECV] receiveLatencyNs=3942.0
-  [DEBUG-RECV] capturedSendLatencyNs=3842.0
-  [DEBUG-RECV] capturedSenderEndCycle=5558
-  [DEBUG-RECV] propagationNs=100.0
-  [DEBUG-RECV] propagationCycles=20.0
-  [DEBUG-RECV] rcvEndCycle=5578
-  [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI) = 4985.0
-  [side-channel] NET_DONE WACS__SubRxNI 5578 iter=7  (senderEndCycle=5558, propagationNs=100.0, propagationCycles=20.0)
-  [DEBUG-RECV] rcvDurationCycles=788
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubRxNI 788 7
-  [side-channel] wrote NET_DONE WACS__SubRxNI 788 iter=7
-[ns3] [bridge] NS3 paused at 27892 ns results=28
-[ns3] [bridge] Running NS3 for 8 ns (now=27892 ns, until=27900 ns)
-[ns3] [bridge] NS3 paused at 27900 ns results=28
-[ns3] [bridge] Running NS3 for 10 ns (now=27900 ns, until=27910 ns)
-[ns3] [bridge] NS3 paused at 27910 ns results=28
-[ns3] [bridge] Running NS3 for 10 ns (now=27910 ns, until=27920 ns)
-[ns3] [bridge] NS3 paused at 27920 ns results=28
-[ns3] [bridge] Running NS3 for 10 ns (now=27920 ns, until=27930 ns)
-[ns3] [bridge] NS3 paused at 27930 ns results=28
-[ns3] [bridge] Running NS3 for 10 ns (now=27930 ns, until=27940 ns)
-[ns3] [bridge] NS3 paused at 27940 ns results=28
-[ns3] [bridge] Running NS3 for 10 ns (now=27940 ns, until=27950 ns)
-[ns3] [bridge] NS3 paused at 27950 ns results=28
-[ns3] [bridge] Running NS3 for 10 ns (now=27950 ns, until=27960 ns)
-[ns3] [bridge] NS3 paused at 27960 ns results=28
-[ns3] [bridge] Running NS3 for 10 ns (now=27960 ns, until=27970 ns)
-[ns3] [bridge] NS3 paused at 27970 ns results=28
+  [side-channel] writing NET_DONE WACS__CCTxNI 8721 iter=7
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCTxNI 1229 7
+  [side-channel] wrote NET_DONE WACS__CCTxNI 1229 iter=7
+[ns3] [bridge] NS3 paused at 43604 ns results=27
+[ns3] [bridge] Running NS3 for 1 ns (now=43604 ns, until=43605 ns)
+[ns3] [bridge] NS3 paused at 43605 ns results=27
+[ns3] [bridge] Running NS3 for 10 ns (now=43605 ns, until=43615 ns)
+[ns3] [bridge] NS3 paused at 43615 ns results=27
+[ns3] [bridge] Running NS3 for 10 ns (now=43615 ns, until=43625 ns)
+[ns3] [bridge] NS3 paused at 43625 ns results=27
+[ns3] [bridge] Running NS3 for 10 ns (now=43625 ns, until=43635 ns)
+[ns3] [bridge] NS3 paused at 43635 ns results=27
+[ns3] [bridge] Running NS3 for 10 ns (now=43635 ns, until=43645 ns)
+[ns3] [bridge] NS3 paused at 43645 ns results=27
+[ns3] [bridge] Running NS3 for 10 ns (now=43645 ns, until=43655 ns)
+[ns3] [bridge] NS3 paused at 43655 ns results=27
+[ns3] [bridge] Running NS3 for 10 ns (now=43655 ns, until=43665 ns)
+[ns3] [bridge] NS3 paused at 43665 ns results=27
+[ns3] [bridge] Running NS3 for 10 ns (now=43665 ns, until=43675 ns)
+[ns3] [bridge] NS3 paused at 43675 ns results=27
+[ns3] [bridge] Running NS3 for 10 ns (now=43675 ns, until=43685 ns)
+[ns3] [bridge] NS3 paused at 43685 ns results=27
+[ns3] [bridge] Running NS3 for 10 ns (now=43685 ns, until=43695 ns)
+[ns3] [bridge] NS3 paused at 43695 ns results=27
+[ns3] [bridge] Running NS3 for 10 ns (now=43695 ns, until=43705 ns)
+[ns3] [bridge] NS3 paused at 43705 ns results=27
+[ns3] [bridge] Running NS3 for 10 ns (now=43705 ns, until=43715 ns)
+[ns3] [bridge] NS3 paused at 43715 ns results=27
+[ns3] [bridge] Running NS3 for 10 ns (now=43715 ns, until=43725 ns)
+[ns3] [bridge] NS3 paused at 43725 ns results=27
+[ns3] [bridge] Running NS3 for 10 ns (now=43725 ns, until=43735 ns)
+[ns3] [bridge] NS3 paused at 43735 ns results=27
+[ns3] [bridge] Running NS3 for 10 ns (now=43735 ns, until=43745 ns)
+[ns3] [bridge] NS3 paused at 43745 ns results=27
+[ns3] [bridge] Running NS3 for 10 ns (now=43745 ns, until=43755 ns)
+[ns3] [bridge] NS3 paused at 43755 ns results=27
+[ns3] [bridge] Running NS3 for 10 ns (now=43755 ns, until=43765 ns)
+[ns3] [bridge] NS3 paused at 43765 ns results=27
+[ns3] [bridge] Running NS3 for 10 ns (now=43765 ns, until=43775 ns)
+[ns3] [bridge] NS3 paused at 43775 ns results=27
+[ns3] [bridge] Running NS3 for 10 ns (now=43775 ns, until=43785 ns)
+[ns3] [bridge] NS3 paused at 43785 ns results=27
 
   [event] diplodocus.owl.ttl changed - found 1 new command(s) (submitting in creation order, without waiting for results).
 
@@ -1410,34 +1493,75 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [PART A]  cmd_WACS__CCTxNI_iter8_DataQty -> ns3:Packet? true
   [PART A]  EV_ChargingRequest_NetTask -> ns3:Socket? true
   [PART A]  cmd_WACS__CCTxNI_iter8_StartCycle -> ns3:NsTimePoint? true
-  [PART C - SWRL cycle->ns]  cycleValue=5596  f=2.0E8 Hz  -->  nsValue=27980.0 ns
+  [PART C - SWRL cycle->ns]  cycleValue=8759  f=2.0E8 Hz  -->  nsValue=43795.0 ns
 [DEBUG] pairedReceiverTaskName=WACS__SubRxNI
 [DEBUG] rcvStartFile=/home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI
 [DEBUG] receiverStartCycle=null
 [DEBUG] WACS__CCTxNI transport fields=';transport=TCP;sndBufSize=32'
 [DEBUG] WACS__CCTxNI direction=1
-  [bridge] Commande envoyée à NS3: packetSize=48;id=14;nsValue=27980;direction=1;transport=TCP;sndBufSize=32
+  [bridge] Commande envoyée à NS3: packetSize=48;id=14;nsValue=43795;direction=1;transport=TCP;sndBufSize=32
   Submitted cmd_WACS__CCTxNI_iter8_WriteCmd to NS-3 (packetSize=48, id=14) - moving on without waiting for its result.
-[ns3] [bridge] Drained #15 raw='packetSize=48;id=14;nsValue=27980;direction=1;transport=TCP;sndBufSize=32'
-[ns3] [bridge] SCHEDULED id=14 at 27980 ns
-[ns3] [bridge] Running NS3 for 10 ns (now=27970 ns, until=27980 ns)
-[ns3] INJECTION_TIME commandId=14 injectionTimeNs=27980
-[ns3] [bridge] INJECT id=14 NI1->NI0 size=48 TCP sndBuf=32 t=27980
-[ns3] [bridge] NS3 paused at 27980 ns results=28
-[ns3] [bridge] Running NS3 for 10 ns (now=27980 ns, until=27990 ns)
-[ns3] [bridge] NS3 paused at 27990 ns results=28
-[ns3] [bridge] Running NS3 for 10 ns (now=27990 ns, until=28000 ns)
-[ns3] [bridge] NS3 paused at 28000 ns results=28
-[ns3] [bridge] Running NS3 for 10 ns (now=28000 ns, until=28010 ns)
-[ns3] [bridge] NS3 paused at 28010 ns results=28
-[ns3] [bridge] Running NS3 for 10 ns (now=28010 ns, until=28020 ns)
-[ns3] [bridge] NS3 paused at 28020 ns results=28
-[ns3] [bridge] Running NS3 for 10 ns (now=28020 ns, until=28030 ns)
-[ns3] [bridge] NS3 paused at 28030 ns results=28
-[ns3] [bridge] Running NS3 for 10 ns (now=28030 ns, until=28040 ns)
-[ns3] [bridge] NS3 paused at 28040 ns results=28
-[ns3] [bridge] Running NS3 for 10 ns (now=28040 ns, until=28050 ns)
-[ns3] [bridge] NS3 paused at 28050 ns results=28
+[ns3] [bridge] Drained #15 raw='packetSize=48;id=14;nsValue=43795;direction=1;transport=TCP;sndBufSize=32'
+[ns3] [bridge] SCHEDULED id=14 at 43795 ns
+[ns3] [bridge] Running NS3 for 10 ns (now=43785 ns, until=43795 ns)
+[ns3] INJECTION_TIME commandId=14 injectionTimeNs=43795
+[ns3] [bridge] INJECT id=14 NI1->NI0 size=48 TCP sndBuf=32 t=43795
+[ns3] [bridge] NS3 paused at 43795 ns results=27
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=43795 ns, until=1.00438e+07 ns)
+[ns3] [bridge] RECV_END id=12 t=44264
+[ns3] RESULT_START
+[ns3] commandId=12
+[ns3] receiveMeasuredLatencyNs=44264
+[ns3] RESULT_END
+
+  --- NS-3 RECEIVE result for: cmd_WACS__CCTxNI_iter7_WriteCmd
+  Measured receive latency (ns): 6804.0
+  [DEBUG-RECV] receiveLatencyNs=6804.0
+  [DEBUG-RECV] capturedSendLatencyNs=6144.0
+  [DEBUG-RECV] capturedSenderEndCycle=8721
+  [DEBUG-RECV] propagationNs=660.0
+  [DEBUG-RECV] propagationCycles=132.0
+  [DEBUG-RECV] rcvEndCycle=8853
+  [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI) = 7799.0
+  [side-channel] NET_DONE WACS__SubRxNI 8853 iter=7  (senderEndCycle=8721, propagationNs=660.0, propagationCycles=132.0)
+  [DEBUG-RECV] rcvDurationCycles=1361
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubRxNI 1361 7
+  [side-channel] wrote NET_DONE WACS__SubRxNI 1361 iter=7
+[ns3] [bridge] NS3 paused at 44264 ns results=28
+[ns3] [bridge] Running NS3 for 1 ns (now=44264 ns, until=44265 ns)
+[ns3] [bridge] NS3 paused at 44265 ns results=28
+[ns3] [bridge] Running NS3 for 10 ns (now=44265 ns, until=44275 ns)
+[ns3] [bridge] NS3 paused at 44275 ns results=28
+[ns3] [bridge] Running NS3 for 10 ns (now=44275 ns, until=44285 ns)
+[ns3] [bridge] NS3 paused at 44285 ns results=28
+[ns3] [bridge] Running NS3 for 10 ns (now=44285 ns, until=44295 ns)
+[ns3] [bridge] NS3 paused at 44295 ns results=28
+[ns3] [bridge] Running NS3 for 10 ns (now=44295 ns, until=44305 ns)
+[ns3] [bridge] NS3 paused at 44305 ns results=28
+[ns3] [bridge] Running NS3 for 10 ns (now=44305 ns, until=44315 ns)
+[ns3] [bridge] NS3 paused at 44315 ns results=28
+[ns3] [bridge] Running NS3 for 10 ns (now=44315 ns, until=44325 ns)
+[ns3] [bridge] NS3 paused at 44325 ns results=28
+[ns3] [bridge] Running NS3 for 10 ns (now=44325 ns, until=44335 ns)
+[ns3] [bridge] NS3 paused at 44335 ns results=28
+[ns3] [bridge] Running NS3 for 10 ns (now=44335 ns, until=44345 ns)
+[ns3] [bridge] NS3 paused at 44345 ns results=28
+[ns3] [bridge] Running NS3 for 10 ns (now=44345 ns, until=44355 ns)
+[ns3] [bridge] NS3 paused at 44355 ns results=28
+[ns3] [bridge] Running NS3 for 10 ns (now=44355 ns, until=44365 ns)
+[ns3] [bridge] NS3 paused at 44365 ns results=28
+[ns3] [bridge] Running NS3 for 10 ns (now=44365 ns, until=44375 ns)
+[ns3] [bridge] NS3 paused at 44375 ns results=28
+[ns3] [bridge] Running NS3 for 10 ns (now=44375 ns, until=44385 ns)
+[ns3] [bridge] NS3 paused at 44385 ns results=28
+[ns3] [bridge] Running NS3 for 10 ns (now=44385 ns, until=44395 ns)
+[ns3] [bridge] NS3 paused at 44395 ns results=28
+[ns3] [bridge] Running NS3 for 10 ns (now=44395 ns, until=44405 ns)
+[ns3] [bridge] NS3 paused at 44405 ns results=28
+[ns3] [bridge] Running NS3 for 10 ns (now=44405 ns, until=44415 ns)
+[ns3] [bridge] NS3 paused at 44415 ns results=28
+[ns3] [bridge] Running NS3 for 10 ns (now=44415 ns, until=44425 ns)
+[ns3] [bridge] NS3 paused at 44425 ns results=28
 
   [event] diplodocus.owl.ttl changed - found 1 new command(s) (submitting in creation order, without waiting for results).
 
@@ -1448,157 +1572,131 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [PART A]  cmd_WACS__SubTxNI_iter8_DataQty -> ns3:Packet? true
   [PART A]  EV_ChargingRequest_NetTask -> ns3:Socket? true
   [PART A]  cmd_WACS__SubTxNI_iter8_StartCycle -> ns3:NsTimePoint? true
-  [PART C - SWRL cycle->ns]  cycleValue=5612  f=2.0E8 Hz  -->  nsValue=28060.0 ns
+  [PART C - SWRL cycle->ns]  cycleValue=8887  f=2.0E8 Hz  -->  nsValue=44435.0 ns
 [DEBUG] pairedReceiverTaskName=WACS__CCRxNI
 [DEBUG] rcvStartFile=/home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI
 [DEBUG] receiverStartCycle=null
 [DEBUG] WACS__SubTxNI transport fields=';transport=UDP;errorRate=0.02'
 [DEBUG] WACS__SubTxNI direction=0
-  [bridge] Commande envoyée à NS3: packetSize=48;id=15;nsValue=28060;direction=0;transport=UDP;errorRate=0.02
+  [bridge] Commande envoyée à NS3: packetSize=48;id=15;nsValue=44435;direction=0;transport=UDP;errorRate=0.02
   Submitted cmd_WACS__SubTxNI_iter8_WriteCmd to NS-3 (packetSize=48, id=15) - moving on without waiting for its result.
-[ns3] [bridge] Drained #16 raw='packetSize=48;id=15;nsValue=28060;direction=0;transport=UDP;errorRate=0.02'
-[ns3] [bridge] SCHEDULED id=15 at 28060 ns
-[ns3] [bridge] Running NS3 for 10 ns (now=28050 ns, until=28060 ns)
-[ns3] INJECTION_TIME commandId=15 injectionTimeNs=28060
-[ns3] [bridge] INJECT id=15 NI0->NI1 size=48 UDP errorRate=0.020000 t=28060
-[ns3] [bridge] NS3 paused at 28060 ns results=28
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=28060 ns, until=1.00281e+07 ns)
-[ns3] [bridge] SEND_END id=15 NI0 UDP t=28948
+[ns3] [bridge] Drained #16 raw='packetSize=48;id=15;nsValue=44435;direction=0;transport=UDP;errorRate=0.02'
+[ns3] [bridge] SCHEDULED id=15 at 44435 ns
+[ns3] [bridge] Running NS3 for 10 ns (now=44425 ns, until=44435 ns)
+[ns3] INJECTION_TIME commandId=15 injectionTimeNs=44435
+[ns3] [bridge] INJECT id=15 NI0->NI1 size=48 UDP errorRate=0.020000 t=44435
+[ns3] [bridge] NS3 paused at 44435 ns results=28
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=44435 ns, until=1.00444e+07 ns)
+[ns3] [bridge] SEND_END id=15 NI0 UDP t=45320
 [ns3] RESULT_START
 [ns3] commandId=15
-[ns3] sendMeasuredLatencyNs=28948
+[ns3] sendMeasuredLatencyNs=45320
 [ns3] RESULT_END
 
   --- NS-3 result ready for: cmd_WACS__SubTxNI_iter8_WriteCmd
-  Measured latency (ns): 888.0
+  Measured latency (ns): 885.0
   Created -> cmd_WACS__SubTxNI_iter8_DataQty_Packet, EV_ChargingRequest_NetTask_Socket, cmd_WACS__SubTxNI_iter8_StartCycle_NsTimePoint, _TransferResult16
   ns3.owl.ttl updated.
   --- Backpropagating result: _TransferResult16
-  [DEBUG-SEND] measuredLatencyNs=888.0
-  [DEBUG-SEND] cycleVal=5612
-  [DEBUG-SEND] endCycle=5790
+  [DEBUG-SEND] measuredLatencyNs=885.0
+  [DEBUG-SEND] cycleVal=8887
+  [DEBUG-SEND] endCycle=9064
   [DEBUG-SEND] masterClockHz=2.0E8
-  [PART D - SWRL inverse ns->cycle]  delay_cycles = 888.0 * (2.0E8 / 1e9) = 177.60000000000002
-  [PART D - SWRL inverse ns->cycle]  endCycle = 5612 + 178 = 5790
+  [PART D - SWRL inverse ns->cycle]  delay_cycles = 885.0 * (2.0E8 / 1e9) = 177.0
+  [PART D - SWRL inverse ns->cycle]  endCycle = 8887 + 177 = 9064
   Linked cmd_WACS__SubTxNI_iter8_WriteCmd --dip:endsAtCycle--> _TransferResult16_EndCycle
-  Created -> _TransferResult16_EndCycle with dip:cycleValue = 5790
+  Created -> _TransferResult16_EndCycle with dip:cycleValue = 9064
   diplodocus.owl.ttl updated.
-  [side-channel] writing NET_DONE WACS__SubTxNI 5790 iter=8
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubTxNI 178 8
-  [side-channel] wrote NET_DONE WACS__SubTxNI 178 iter=8
-[ns3] [bridge] NS3 paused at 28948 ns results=29
-[ns3] [bridge] Running NS3 for 2 ns (now=28948 ns, until=28950 ns)
-[ns3] [bridge] NS3 paused at 28950 ns results=29
-[ns3] [bridge] Running NS3 for 10 ns (now=28950 ns, until=28960 ns)
-[ns3] [bridge] NS3 paused at 28960 ns results=29
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=28960 ns, until=1.0029e+07 ns)
-[ns3] PACKET_LOST commandId=15 t=29048 (errorRate=0.02)
-[ns3] [bridge] RECV_END id=15 t=29048
+  [side-channel] writing NET_DONE WACS__SubTxNI 9064 iter=8
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubTxNI 177 8
+  [side-channel] wrote NET_DONE WACS__SubTxNI 177 iter=8
+[ns3] [bridge] NS3 paused at 45320 ns results=29
+[ns3] [bridge] Running NS3 for 10 ns (now=45320 ns, until=45330 ns)
+[ns3] [bridge] NS3 paused at 45330 ns results=29
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=45330 ns, until=1.00453e+07 ns)
+[ns3] [bridge] RECV_END id=15 t=46044
 [ns3] RESULT_START
 [ns3] commandId=15
-[ns3] receiveMeasuredLatencyNs=29048
+[ns3] receiveMeasuredLatencyNs=46044
 [ns3] RESULT_END
 
   --- NS-3 RECEIVE result for: cmd_WACS__SubTxNI_iter8_WriteCmd
-  Measured receive latency (ns): 988.0
-  [DEBUG-RECV] receiveLatencyNs=988.0
-  [DEBUG-RECV] capturedSendLatencyNs=888.0
-  [DEBUG-RECV] capturedSenderEndCycle=5790
-  [DEBUG-RECV] propagationNs=100.0
-  [DEBUG-RECV] propagationCycles=20.0
-  [DEBUG-RECV] rcvEndCycle=5810
+  Measured receive latency (ns): 1609.0
+  [DEBUG-RECV] receiveLatencyNs=1609.0
+  [DEBUG-RECV] capturedSendLatencyNs=885.0
+  [DEBUG-RECV] capturedSenderEndCycle=9064
+  [DEBUG-RECV] propagationNs=724.0
+  [DEBUG-RECV] propagationCycles=144.8
+  [DEBUG-RECV] rcvEndCycle=9208
   [WARNING] Receiver startCycle for iter=8 not found in /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI, using 0
   [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI) = 0.0
-  [side-channel] NET_DONE WACS__CCRxNI 5810 iter=8  (senderEndCycle=5790, propagationNs=100.0, propagationCycles=20.0)
-  [DEBUG-RECV] rcvDurationCycles=198
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCRxNI 198 8
-  [side-channel] wrote NET_DONE WACS__CCRxNI 198 iter=8
-[ns3] [bridge] NS3 paused at 29048 ns results=30
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=29048 ns, until=1.0029e+07 ns)
-[ns3] [bridge] TCP connected id=14 t=29512
-[ns3] [bridge] SEND_END id=14 NI1 TCP t=31824
+  [side-channel] NET_DONE WACS__CCRxNI 9208 iter=8  (senderEndCycle=9064, propagationNs=724.0, propagationCycles=144.8)
+  [DEBUG-RECV] rcvDurationCycles=322
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCRxNI 322 8
+  [side-channel] wrote NET_DONE WACS__CCRxNI 322 iter=8
+[ns3] [bridge] NS3 paused at 46044 ns results=30
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=46044 ns, until=1.0046e+07 ns)
+[ns3] [bridge] TCP connected id=14 t=46508
+[ns3] [bridge] SEND_END id=14 NI1 TCP t=49940
 [ns3] RESULT_START
 [ns3] commandId=14
-[ns3] sendMeasuredLatencyNs=31824
+[ns3] sendMeasuredLatencyNs=49940
 [ns3] RESULT_END
 
   --- NS-3 result ready for: cmd_WACS__CCTxNI_iter8_WriteCmd
-  Measured latency (ns): 3844.0
+  Measured latency (ns): 6145.0
   Created -> cmd_WACS__CCTxNI_iter8_DataQty_Packet, EV_ChargingRequest_NetTask_Socket, cmd_WACS__CCTxNI_iter8_StartCycle_NsTimePoint, _TransferResult15
   ns3.owl.ttl updated.
   --- Backpropagating result: _TransferResult15
-  [DEBUG-SEND] measuredLatencyNs=3844.0
-  [DEBUG-SEND] cycleVal=5596
-  [DEBUG-SEND] endCycle=6365
+  [DEBUG-SEND] measuredLatencyNs=6145.0
+  [DEBUG-SEND] cycleVal=8759
+  [DEBUG-SEND] endCycle=9988
   [DEBUG-SEND] masterClockHz=2.0E8
-  [PART D - SWRL inverse ns->cycle]  delay_cycles = 3844.0 * (2.0E8 / 1e9) = 768.8000000000001
-  [PART D - SWRL inverse ns->cycle]  endCycle = 5596 + 769 = 6365
+  [PART D - SWRL inverse ns->cycle]  delay_cycles = 6145.0 * (2.0E8 / 1e9) = 1229.0
+  [PART D - SWRL inverse ns->cycle]  endCycle = 8759 + 1229 = 9988
   Linked cmd_WACS__CCTxNI_iter8_WriteCmd --dip:endsAtCycle--> _TransferResult15_EndCycle
-  Created -> _TransferResult15_EndCycle with dip:cycleValue = 6365
+  Created -> _TransferResult15_EndCycle with dip:cycleValue = 9988
   diplodocus.owl.ttl updated.
-  [side-channel] writing NET_DONE WACS__CCTxNI 6365 iter=8
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCTxNI 769 8
-  [side-channel] wrote NET_DONE WACS__CCTxNI 769 iter=8
-[ns3] [bridge] NS3 paused at 31824 ns results=31
-[ns3] [bridge] Running NS3 for 1 ns (now=31824 ns, until=31825 ns)
-[ns3] [bridge] NS3 paused at 31825 ns results=31
-[ns3] [bridge] Running NS3 for 10 ns (now=31825 ns, until=31835 ns)
-[ns3] [bridge] NS3 paused at 31835 ns results=31
-[ns3] [bridge] Running NS3 for 10 ns (now=31835 ns, until=31845 ns)
-[ns3] [bridge] NS3 paused at 31845 ns results=31
-[ns3] [bridge] Running NS3 for 10 ns (now=31845 ns, until=31855 ns)
-[ns3] [bridge] NS3 paused at 31855 ns results=31
-[ns3] [bridge] Running NS3 for 10 ns (now=31855 ns, until=31865 ns)
-[ns3] [bridge] NS3 paused at 31865 ns results=31
-[ns3] [bridge] Running NS3 for 10 ns (now=31865 ns, until=31875 ns)
-[ns3] [bridge] NS3 paused at 31875 ns results=31
-[ns3] [bridge] Running NS3 for 10 ns (now=31875 ns, until=31885 ns)
-[ns3] [bridge] NS3 paused at 31885 ns results=31
-[ns3] [bridge] Running NS3 for 10 ns (now=31885 ns, until=31895 ns)
-[ns3] [bridge] NS3 paused at 31895 ns results=31
-[ns3] [bridge] Running NS3 for 10 ns (now=31895 ns, until=31905 ns)
-[ns3] [bridge] NS3 paused at 31905 ns results=31
-[ns3] [bridge] Running NS3 for 10 ns (now=31905 ns, until=31915 ns)
-[ns3] [bridge] NS3 paused at 31915 ns results=31
-[ns3] [bridge] Running NS3 for 10 ns (now=31915 ns, until=31925 ns)
-[ns3] [bridge] RECV_END id=14 t=31924
-[ns3] RESULT_START
-[ns3] commandId=14
-[ns3] receiveMeasuredLatencyNs=31924
-[ns3] RESULT_END
-
-  --- NS-3 RECEIVE result for: cmd_WACS__CCTxNI_iter8_WriteCmd
-  Measured receive latency (ns): 3944.0
-  [DEBUG-RECV] receiveLatencyNs=3944.0
-  [DEBUG-RECV] capturedSendLatencyNs=3844.0
-  [DEBUG-RECV] capturedSenderEndCycle=6365
-  [DEBUG-RECV] propagationNs=100.0
-  [DEBUG-RECV] propagationCycles=20.0
-  [DEBUG-RECV] rcvEndCycle=6385
-  [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI) = 5792.0
-  [side-channel] NET_DONE WACS__SubRxNI 6385 iter=8  (senderEndCycle=6365, propagationNs=100.0, propagationCycles=20.0)
-  [DEBUG-RECV] rcvDurationCycles=789
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubRxNI 789 8
-  [side-channel] wrote NET_DONE WACS__SubRxNI 789 iter=8
-[ns3] [bridge] NS3 paused at 31924 ns results=32
-[ns3] [bridge] Running NS3 for 1 ns (now=31924 ns, until=31925 ns)
-[ns3] [bridge] NS3 paused at 31925 ns results=32
-[ns3] [bridge] Running NS3 for 10 ns (now=31925 ns, until=31935 ns)
-[ns3] [bridge] NS3 paused at 31935 ns results=32
-[ns3] [bridge] Running NS3 for 10 ns (now=31935 ns, until=31945 ns)
-[ns3] [bridge] NS3 paused at 31945 ns results=32
-[ns3] [bridge] Running NS3 for 10 ns (now=31945 ns, until=31955 ns)
-[ns3] [bridge] NS3 paused at 31955 ns results=32
-[ns3] [bridge] Running NS3 for 10 ns (now=31955 ns, until=31965 ns)
-[ns3] [bridge] NS3 paused at 31965 ns results=32
-[ns3] [bridge] Running NS3 for 10 ns (now=31965 ns, until=31975 ns)
-[ns3] [bridge] NS3 paused at 31975 ns results=32
-[ns3] [bridge] Running NS3 for 10 ns (now=31975 ns, until=31985 ns)
-[ns3] [bridge] NS3 paused at 31985 ns results=32
-[ns3] [bridge] Running NS3 for 10 ns (now=31985 ns, until=31995 ns)
-[ns3] [bridge] NS3 paused at 31995 ns results=32
-[ns3] [bridge] Running NS3 for 10 ns (now=31995 ns, until=32005 ns)
-[ns3] [bridge] NS3 paused at 32005 ns results=32
+  [side-channel] writing NET_DONE WACS__CCTxNI 9988 iter=8
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCTxNI 1229 8
+  [side-channel] wrote NET_DONE WACS__CCTxNI 1229 iter=8
+[ns3] [bridge] NS3 paused at 49940 ns results=31
+[ns3] [bridge] Running NS3 for 10 ns (now=49940 ns, until=49950 ns)
+[ns3] [bridge] NS3 paused at 49950 ns results=31
+[ns3] [bridge] Running NS3 for 10 ns (now=49950 ns, until=49960 ns)
+[ns3] [bridge] NS3 paused at 49960 ns results=31
+[ns3] [bridge] Running NS3 for 10 ns (now=49960 ns, until=49970 ns)
+[ns3] [bridge] NS3 paused at 49970 ns results=31
+[ns3] [bridge] Running NS3 for 10 ns (now=49970 ns, until=49980 ns)
+[ns3] [bridge] NS3 paused at 49980 ns results=31
+[ns3] [bridge] Running NS3 for 10 ns (now=49980 ns, until=49990 ns)
+[ns3] [bridge] NS3 paused at 49990 ns results=31
+[ns3] [bridge] Running NS3 for 10 ns (now=49990 ns, until=50000 ns)
+[ns3] [bridge] NS3 paused at 50000 ns results=31
+[ns3] [bridge] Running NS3 for 10 ns (now=50000 ns, until=50010 ns)
+[ns3] [bridge] NS3 paused at 50010 ns results=31
+[ns3] [bridge] Running NS3 for 10 ns (now=50010 ns, until=50020 ns)
+[ns3] [bridge] NS3 paused at 50020 ns results=31
+[ns3] [bridge] Running NS3 for 10 ns (now=50020 ns, until=50030 ns)
+[ns3] [bridge] NS3 paused at 50030 ns results=31
+[ns3] [bridge] Running NS3 for 10 ns (now=50030 ns, until=50040 ns)
+[ns3] [bridge] NS3 paused at 50040 ns results=31
+[ns3] [bridge] Running NS3 for 10 ns (now=50040 ns, until=50050 ns)
+[ns3] [bridge] NS3 paused at 50050 ns results=31
+[ns3] [bridge] Running NS3 for 10 ns (now=50050 ns, until=50060 ns)
+[ns3] [bridge] NS3 paused at 50060 ns results=31
+[ns3] [bridge] Running NS3 for 10 ns (now=50060 ns, until=50070 ns)
+[ns3] [bridge] NS3 paused at 50070 ns results=31
+[ns3] [bridge] Running NS3 for 10 ns (now=50070 ns, until=50080 ns)
+[ns3] [bridge] NS3 paused at 50080 ns results=31
+[ns3] [bridge] Running NS3 for 10 ns (now=50080 ns, until=50090 ns)
+[ns3] [bridge] NS3 paused at 50090 ns results=31
+[ns3] [bridge] Running NS3 for 10 ns (now=50090 ns, until=50100 ns)
+[ns3] [bridge] NS3 paused at 50100 ns results=31
+[ns3] [bridge] Running NS3 for 10 ns (now=50100 ns, until=50110 ns)
+[ns3] [bridge] NS3 paused at 50110 ns results=31
+[ns3] [bridge] Running NS3 for 10 ns (now=50110 ns, until=50120 ns)
+[ns3] [bridge] NS3 paused at 50120 ns results=31
 
   [event] diplodocus.owl.ttl changed - found 1 new command(s) (submitting in creation order, without waiting for results).
 
@@ -1609,34 +1707,73 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [PART A]  cmd_WACS__CCTxNI_iter9_DataQty -> ns3:Packet? true
   [PART A]  EV_ChargingRequest_NetTask -> ns3:Socket? true
   [PART A]  cmd_WACS__CCTxNI_iter9_StartCycle -> ns3:NsTimePoint? true
-  [PART C - SWRL cycle->ns]  cycleValue=6403  f=2.0E8 Hz  -->  nsValue=32015.0 ns
+  [PART C - SWRL cycle->ns]  cycleValue=10026  f=2.0E8 Hz  -->  nsValue=50130.0 ns
 [DEBUG] pairedReceiverTaskName=WACS__SubRxNI
 [DEBUG] rcvStartFile=/home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI
 [DEBUG] receiverStartCycle=null
 [DEBUG] WACS__CCTxNI transport fields=';transport=TCP;sndBufSize=32'
 [DEBUG] WACS__CCTxNI direction=1
-  [bridge] Commande envoyée à NS3: packetSize=48;id=16;nsValue=32015;direction=1;transport=TCP;sndBufSize=32
+  [bridge] Commande envoyée à NS3: packetSize=48;id=16;nsValue=50130;direction=1;transport=TCP;sndBufSize=32
   Submitted cmd_WACS__CCTxNI_iter9_WriteCmd to NS-3 (packetSize=48, id=16) - moving on without waiting for its result.
-[ns3] [bridge] Drained #17 raw='packetSize=48;id=16;nsValue=32015;direction=1;transport=TCP;sndBufSize=32'
-[ns3] [bridge] SCHEDULED id=16 at 32015 ns
-[ns3] [bridge] Running NS3 for 10 ns (now=32005 ns, until=32015 ns)
-[ns3] INJECTION_TIME commandId=16 injectionTimeNs=32015
-[ns3] [bridge] INJECT id=16 NI1->NI0 size=48 TCP sndBuf=32 t=32015
-[ns3] [bridge] NS3 paused at 32015 ns results=32
-[ns3] [bridge] Running NS3 for 10 ns (now=32015 ns, until=32025 ns)
-[ns3] [bridge] NS3 paused at 32025 ns results=32
-[ns3] [bridge] Running NS3 for 10 ns (now=32025 ns, until=32035 ns)
-[ns3] [bridge] NS3 paused at 32035 ns results=32
-[ns3] [bridge] Running NS3 for 10 ns (now=32035 ns, until=32045 ns)
-[ns3] [bridge] NS3 paused at 32045 ns results=32
-[ns3] [bridge] Running NS3 for 10 ns (now=32045 ns, until=32055 ns)
-[ns3] [bridge] NS3 paused at 32055 ns results=32
-[ns3] [bridge] Running NS3 for 10 ns (now=32055 ns, until=32065 ns)
-[ns3] [bridge] NS3 paused at 32065 ns results=32
-[ns3] [bridge] Running NS3 for 10 ns (now=32065 ns, until=32075 ns)
-[ns3] [bridge] NS3 paused at 32075 ns results=32
-[ns3] [bridge] Running NS3 for 10 ns (now=32075 ns, until=32085 ns)
-[ns3] [bridge] NS3 paused at 32085 ns results=32
+[ns3] [bridge] Drained #17 raw='packetSize=48;id=16;nsValue=50130;direction=1;transport=TCP;sndBufSize=32'
+[ns3] [bridge] SCHEDULED id=16 at 50130 ns
+[ns3] [bridge] Running NS3 for 10 ns (now=50120 ns, until=50130 ns)
+[ns3] INJECTION_TIME commandId=16 injectionTimeNs=50130
+[ns3] [bridge] INJECT id=16 NI1->NI0 size=48 TCP sndBuf=32 t=50130
+[ns3] [bridge] NS3 paused at 50130 ns results=31
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=50130 ns, until=1.00501e+07 ns)
+[ns3] [bridge] RECV_END id=14 t=50600
+[ns3] RESULT_START
+[ns3] commandId=14
+[ns3] receiveMeasuredLatencyNs=50600
+[ns3] RESULT_END
+
+  --- NS-3 RECEIVE result for: cmd_WACS__CCTxNI_iter8_WriteCmd
+  Measured receive latency (ns): 6805.0
+  [DEBUG-RECV] receiveLatencyNs=6805.0
+  [DEBUG-RECV] capturedSendLatencyNs=6145.0
+  [DEBUG-RECV] capturedSenderEndCycle=9988
+  [DEBUG-RECV] propagationNs=660.0
+  [DEBUG-RECV] propagationCycles=132.0
+  [DEBUG-RECV] rcvEndCycle=10120
+  [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI) = 9066.0
+  [side-channel] NET_DONE WACS__SubRxNI 10120 iter=8  (senderEndCycle=9988, propagationNs=660.0, propagationCycles=132.0)
+  [DEBUG-RECV] rcvDurationCycles=1361
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubRxNI 1361 8
+  [side-channel] wrote NET_DONE WACS__SubRxNI 1361 iter=8
+[ns3] [bridge] NS3 paused at 50600 ns results=32
+[ns3] [bridge] Running NS3 for 10 ns (now=50600 ns, until=50610 ns)
+[ns3] [bridge] NS3 paused at 50610 ns results=32
+[ns3] [bridge] Running NS3 for 10 ns (now=50610 ns, until=50620 ns)
+[ns3] [bridge] NS3 paused at 50620 ns results=32
+[ns3] [bridge] Running NS3 for 10 ns (now=50620 ns, until=50630 ns)
+[ns3] [bridge] NS3 paused at 50630 ns results=32
+[ns3] [bridge] Running NS3 for 10 ns (now=50630 ns, until=50640 ns)
+[ns3] [bridge] NS3 paused at 50640 ns results=32
+[ns3] [bridge] Running NS3 for 10 ns (now=50640 ns, until=50650 ns)
+[ns3] [bridge] NS3 paused at 50650 ns results=32
+[ns3] [bridge] Running NS3 for 10 ns (now=50650 ns, until=50660 ns)
+[ns3] [bridge] NS3 paused at 50660 ns results=32
+[ns3] [bridge] Running NS3 for 10 ns (now=50660 ns, until=50670 ns)
+[ns3] [bridge] NS3 paused at 50670 ns results=32
+[ns3] [bridge] Running NS3 for 10 ns (now=50670 ns, until=50680 ns)
+[ns3] [bridge] NS3 paused at 50680 ns results=32
+[ns3] [bridge] Running NS3 for 10 ns (now=50680 ns, until=50690 ns)
+[ns3] [bridge] NS3 paused at 50690 ns results=32
+[ns3] [bridge] Running NS3 for 10 ns (now=50690 ns, until=50700 ns)
+[ns3] [bridge] NS3 paused at 50700 ns results=32
+[ns3] [bridge] Running NS3 for 10 ns (now=50700 ns, until=50710 ns)
+[ns3] [bridge] NS3 paused at 50710 ns results=32
+[ns3] [bridge] Running NS3 for 10 ns (now=50710 ns, until=50720 ns)
+[ns3] [bridge] NS3 paused at 50720 ns results=32
+[ns3] [bridge] Running NS3 for 10 ns (now=50720 ns, until=50730 ns)
+[ns3] [bridge] NS3 paused at 50730 ns results=32
+[ns3] [bridge] Running NS3 for 10 ns (now=50730 ns, until=50740 ns)
+[ns3] [bridge] NS3 paused at 50740 ns results=32
+[ns3] [bridge] Running NS3 for 10 ns (now=50740 ns, until=50750 ns)
+[ns3] [bridge] NS3 paused at 50750 ns results=32
+[ns3] [bridge] Running NS3 for 10 ns (now=50750 ns, until=50760 ns)
+[ns3] [bridge] NS3 paused at 50760 ns results=32
 
   [event] diplodocus.owl.ttl changed - found 1 new command(s) (submitting in creation order, without waiting for results).
 
@@ -1647,150 +1784,129 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [PART A]  cmd_WACS__SubTxNI_iter9_DataQty -> ns3:Packet? true
   [PART A]  EV_ChargingRequest_NetTask -> ns3:Socket? true
   [PART A]  cmd_WACS__SubTxNI_iter9_StartCycle -> ns3:NsTimePoint? true
-  [PART C - SWRL cycle->ns]  cycleValue=6419  f=2.0E8 Hz  -->  nsValue=32095.0 ns
+  [PART C - SWRL cycle->ns]  cycleValue=10154  f=2.0E8 Hz  -->  nsValue=50770.0 ns
 [DEBUG] pairedReceiverTaskName=WACS__CCRxNI
 [DEBUG] rcvStartFile=/home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI
 [DEBUG] receiverStartCycle=null
 [DEBUG] WACS__SubTxNI transport fields=';transport=UDP;errorRate=0.02'
 [DEBUG] WACS__SubTxNI direction=0
-  [bridge] Commande envoyée à NS3: packetSize=48;id=17;nsValue=32095;direction=0;transport=UDP;errorRate=0.02
+  [bridge] Commande envoyée à NS3: packetSize=48;id=17;nsValue=50770;direction=0;transport=UDP;errorRate=0.02
   Submitted cmd_WACS__SubTxNI_iter9_WriteCmd to NS-3 (packetSize=48, id=17) - moving on without waiting for its result.
-[ns3] [bridge] Drained #18 raw='packetSize=48;id=17;nsValue=32095;direction=0;transport=UDP;errorRate=0.02'
-[ns3] [bridge] SCHEDULED id=17 at 32095 ns
-[ns3] [bridge] Running NS3 for 10 ns (now=32085 ns, until=32095 ns)
-[ns3] INJECTION_TIME commandId=17 injectionTimeNs=32095
-[ns3] [bridge] INJECT id=17 NI0->NI1 size=48 UDP errorRate=0.020000 t=32095
-[ns3] [bridge] NS3 paused at 32095 ns results=32
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=32095 ns, until=1.00321e+07 ns)
-[ns3] [bridge] SEND_END id=17 NI0 UDP t=32980
+[ns3] [bridge] Drained #18 raw='packetSize=48;id=17;nsValue=50770;direction=0;transport=UDP;errorRate=0.02'
+[ns3] [bridge] SCHEDULED id=17 at 50770 ns
+[ns3] [bridge] Running NS3 for 10 ns (now=50760 ns, until=50770 ns)
+[ns3] INJECTION_TIME commandId=17 injectionTimeNs=50770
+[ns3] [bridge] INJECT id=17 NI0->NI1 size=48 UDP errorRate=0.020000 t=50770
+[ns3] [bridge] NS3 paused at 50770 ns results=32
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=50770 ns, until=1.00508e+07 ns)
+[ns3] [bridge] SEND_END id=17 NI0 UDP t=51656
 [ns3] RESULT_START
 [ns3] commandId=17
-[ns3] sendMeasuredLatencyNs=32980
+[ns3] sendMeasuredLatencyNs=51656
 [ns3] RESULT_END
 
   --- NS-3 result ready for: cmd_WACS__SubTxNI_iter9_WriteCmd
-  Measured latency (ns): 885.0
+  Measured latency (ns): 886.0
   Created -> cmd_WACS__SubTxNI_iter9_DataQty_Packet, EV_ChargingRequest_NetTask_Socket, cmd_WACS__SubTxNI_iter9_StartCycle_NsTimePoint, _TransferResult18
   ns3.owl.ttl updated.
   --- Backpropagating result: _TransferResult18
-  [DEBUG-SEND] measuredLatencyNs=885.0
-  [DEBUG-SEND] cycleVal=6419
-  [DEBUG-SEND] endCycle=6596
+  [DEBUG-SEND] measuredLatencyNs=886.0
+  [DEBUG-SEND] cycleVal=10154
+  [DEBUG-SEND] endCycle=10331
   [DEBUG-SEND] masterClockHz=2.0E8
-  [PART D - SWRL inverse ns->cycle]  delay_cycles = 885.0 * (2.0E8 / 1e9) = 177.0
-  [PART D - SWRL inverse ns->cycle]  endCycle = 6419 + 177 = 6596
+  [PART D - SWRL inverse ns->cycle]  delay_cycles = 886.0 * (2.0E8 / 1e9) = 177.20000000000002
+  [PART D - SWRL inverse ns->cycle]  endCycle = 10154 + 177 = 10331
   Linked cmd_WACS__SubTxNI_iter9_WriteCmd --dip:endsAtCycle--> _TransferResult18_EndCycle
-  Created -> _TransferResult18_EndCycle with dip:cycleValue = 6596
+  Created -> _TransferResult18_EndCycle with dip:cycleValue = 10331
   diplodocus.owl.ttl updated.
-  [side-channel] writing NET_DONE WACS__SubTxNI 6596 iter=9
+  [side-channel] writing NET_DONE WACS__SubTxNI 10331 iter=9
 [DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubTxNI 177 9
   [side-channel] wrote NET_DONE WACS__SubTxNI 177 iter=9
-[ns3] [bridge] NS3 paused at 32980 ns results=33
-[ns3] [bridge] Running NS3 for 10 ns (now=32980 ns, until=32990 ns)
-[ns3] [bridge] NS3 paused at 32990 ns results=33
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=32990 ns, until=1.0033e+07 ns)
-[ns3] [bridge] RECV_END id=17 t=33080
+[ns3] [bridge] NS3 paused at 51656 ns results=33
+[ns3] [bridge] Running NS3 for 9 ns (now=51656 ns, until=51665 ns)
+[ns3] [bridge] NS3 paused at 51665 ns results=33
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=51665 ns, until=1.00517e+07 ns)
+[ns3] [bridge] RECV_END id=17 t=52380
 [ns3] RESULT_START
 [ns3] commandId=17
-[ns3] receiveMeasuredLatencyNs=33080
+[ns3] receiveMeasuredLatencyNs=52380
 [ns3] RESULT_END
 
   --- NS-3 RECEIVE result for: cmd_WACS__SubTxNI_iter9_WriteCmd
-  Measured receive latency (ns): 985.0
-  [DEBUG-RECV] receiveLatencyNs=985.0
-  [DEBUG-RECV] capturedSendLatencyNs=885.0
-  [DEBUG-RECV] capturedSenderEndCycle=6596
-  [DEBUG-RECV] propagationNs=100.0
-  [DEBUG-RECV] propagationCycles=20.0
-  [DEBUG-RECV] rcvEndCycle=6616
+  Measured receive latency (ns): 1610.0
+  [DEBUG-RECV] receiveLatencyNs=1610.0
+  [DEBUG-RECV] capturedSendLatencyNs=886.0
+  [DEBUG-RECV] capturedSenderEndCycle=10331
+  [DEBUG-RECV] propagationNs=724.0
+  [DEBUG-RECV] propagationCycles=144.8
+  [DEBUG-RECV] rcvEndCycle=10475
   [WARNING] Receiver startCycle for iter=9 not found in /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI, using 0
   [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI) = 0.0
-  [side-channel] NET_DONE WACS__CCRxNI 6616 iter=9  (senderEndCycle=6596, propagationNs=100.0, propagationCycles=20.0)
-  [DEBUG-RECV] rcvDurationCycles=197
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCRxNI 197 9
-  [side-channel] wrote NET_DONE WACS__CCRxNI 197 iter=9
-[ns3] [bridge] NS3 paused at 33080 ns results=34
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=33080 ns, until=1.00331e+07 ns)
-[ns3] [bridge] TCP connected id=16 t=33544
-[ns3] [bridge] SEND_END id=16 NI1 TCP t=35856
+  [side-channel] NET_DONE WACS__CCRxNI 10475 iter=9  (senderEndCycle=10331, propagationNs=724.0, propagationCycles=144.8)
+  [DEBUG-RECV] rcvDurationCycles=322
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCRxNI 322 9
+  [side-channel] wrote NET_DONE WACS__CCRxNI 322 iter=9
+[ns3] [bridge] NS3 paused at 52380 ns results=34
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=52380 ns, until=1.00524e+07 ns)
+[ns3] [bridge] TCP connected id=16 t=52844
+[ns3] [bridge] SEND_END id=16 NI1 TCP t=56276
 [ns3] RESULT_START
 [ns3] commandId=16
-[ns3] sendMeasuredLatencyNs=35856
+[ns3] sendMeasuredLatencyNs=56276
 [ns3] RESULT_END
 
   --- NS-3 result ready for: cmd_WACS__CCTxNI_iter9_WriteCmd
-  Measured latency (ns): 3841.0
+  Measured latency (ns): 6146.0
   Created -> cmd_WACS__CCTxNI_iter9_DataQty_Packet, EV_ChargingRequest_NetTask_Socket, cmd_WACS__CCTxNI_iter9_StartCycle_NsTimePoint, _TransferResult17
   ns3.owl.ttl updated.
   --- Backpropagating result: _TransferResult17
-  [DEBUG-SEND] measuredLatencyNs=3841.0
-  [DEBUG-SEND] cycleVal=6403
-  [DEBUG-SEND] endCycle=7171
+  [DEBUG-SEND] measuredLatencyNs=6146.0
+  [DEBUG-SEND] cycleVal=10026
+  [DEBUG-SEND] endCycle=11255
   [DEBUG-SEND] masterClockHz=2.0E8
-  [PART D - SWRL inverse ns->cycle]  delay_cycles = 3841.0 * (2.0E8 / 1e9) = 768.2
-  [PART D - SWRL inverse ns->cycle]  endCycle = 6403 + 768 = 7171
+  [PART D - SWRL inverse ns->cycle]  delay_cycles = 6146.0 * (2.0E8 / 1e9) = 1229.2
+  [PART D - SWRL inverse ns->cycle]  endCycle = 10026 + 1229 = 11255
   Linked cmd_WACS__CCTxNI_iter9_WriteCmd --dip:endsAtCycle--> _TransferResult17_EndCycle
-  Created -> _TransferResult17_EndCycle with dip:cycleValue = 7171
+  Created -> _TransferResult17_EndCycle with dip:cycleValue = 11255
   diplodocus.owl.ttl updated.
-  [side-channel] writing NET_DONE WACS__CCTxNI 7171 iter=9
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCTxNI 768 9
-  [side-channel] wrote NET_DONE WACS__CCTxNI 768 iter=9
-[ns3] [bridge] NS3 paused at 35856 ns results=35
-[ns3] [bridge] Running NS3 for 9 ns (now=35856 ns, until=35865 ns)
-[ns3] [bridge] NS3 paused at 35865 ns results=35
-[ns3] [bridge] Running NS3 for 10 ns (now=35865 ns, until=35875 ns)
-[ns3] [bridge] NS3 paused at 35875 ns results=35
-[ns3] [bridge] Running NS3 for 10 ns (now=35875 ns, until=35885 ns)
-[ns3] [bridge] NS3 paused at 35885 ns results=35
-[ns3] [bridge] Running NS3 for 10 ns (now=35885 ns, until=35895 ns)
-[ns3] [bridge] NS3 paused at 35895 ns results=35
-[ns3] [bridge] Running NS3 for 10 ns (now=35895 ns, until=35905 ns)
-[ns3] [bridge] NS3 paused at 35905 ns results=35
-[ns3] [bridge] Running NS3 for 10 ns (now=35905 ns, until=35915 ns)
-[ns3] [bridge] NS3 paused at 35915 ns results=35
-[ns3] [bridge] Running NS3 for 10 ns (now=35915 ns, until=35925 ns)
-[ns3] [bridge] NS3 paused at 35925 ns results=35
-[ns3] [bridge] Running NS3 for 10 ns (now=35925 ns, until=35935 ns)
-[ns3] [bridge] NS3 paused at 35935 ns results=35
-[ns3] [bridge] Running NS3 for 10 ns (now=35935 ns, until=35945 ns)
-[ns3] [bridge] NS3 paused at 35945 ns results=35
-[ns3] [bridge] Running NS3 for 10 ns (now=35945 ns, until=35955 ns)
-[ns3] [bridge] NS3 paused at 35955 ns results=35
-[ns3] [bridge] Running NS3 for 10 ns (now=35955 ns, until=35965 ns)
-[ns3] [bridge] RECV_END id=16 t=35956
-[ns3] RESULT_START
-[ns3] commandId=16
-[ns3] receiveMeasuredLatencyNs=35956
-[ns3] RESULT_END
-
-  --- NS-3 RECEIVE result for: cmd_WACS__CCTxNI_iter9_WriteCmd
-  Measured receive latency (ns): 3941.0
-  [DEBUG-RECV] receiveLatencyNs=3941.0
-  [DEBUG-RECV] capturedSendLatencyNs=3841.0
-  [DEBUG-RECV] capturedSenderEndCycle=7171
-  [DEBUG-RECV] propagationNs=100.0
-  [DEBUG-RECV] propagationCycles=20.0
-  [DEBUG-RECV] rcvEndCycle=7191
-  [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI) = 6598.0
-  [side-channel] NET_DONE WACS__SubRxNI 7191 iter=9  (senderEndCycle=7171, propagationNs=100.0, propagationCycles=20.0)
-  [DEBUG-RECV] rcvDurationCycles=788
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubRxNI 788 9
-  [side-channel] wrote NET_DONE WACS__SubRxNI 788 iter=9
-[ns3] [bridge] NS3 paused at 35956 ns results=36
-[ns3] [bridge] Running NS3 for 9 ns (now=35956 ns, until=35965 ns)
-[ns3] [bridge] NS3 paused at 35965 ns results=36
-[ns3] [bridge] Running NS3 for 10 ns (now=35965 ns, until=35975 ns)
-[ns3] [bridge] NS3 paused at 35975 ns results=36
-[ns3] [bridge] Running NS3 for 10 ns (now=35975 ns, until=35985 ns)
-[ns3] [bridge] NS3 paused at 35985 ns results=36
-[ns3] [bridge] Running NS3 for 10 ns (now=35985 ns, until=35995 ns)
-[ns3] [bridge] NS3 paused at 35995 ns results=36
-[ns3] [bridge] Running NS3 for 10 ns (now=35995 ns, until=36005 ns)
-[ns3] [bridge] NS3 paused at 36005 ns results=36
-[ns3] [bridge] Running NS3 for 10 ns (now=36005 ns, until=36015 ns)
-[ns3] [bridge] NS3 paused at 36015 ns results=36
-[ns3] [bridge] Running NS3 for 10 ns (now=36015 ns, until=36025 ns)
-[ns3] [bridge] NS3 paused at 36025 ns results=36
+  [side-channel] writing NET_DONE WACS__CCTxNI 11255 iter=9
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCTxNI 1229 9
+  [side-channel] wrote NET_DONE WACS__CCTxNI 1229 iter=9
+[ns3] [bridge] NS3 paused at 56276 ns results=35
+[ns3] [bridge] Running NS3 for 9 ns (now=56276 ns, until=56285 ns)
+[ns3] [bridge] NS3 paused at 56285 ns results=35
+[ns3] [bridge] Running NS3 for 10 ns (now=56285 ns, until=56295 ns)
+[ns3] [bridge] NS3 paused at 56295 ns results=35
+[ns3] [bridge] Running NS3 for 10 ns (now=56295 ns, until=56305 ns)
+[ns3] [bridge] NS3 paused at 56305 ns results=35
+[ns3] [bridge] Running NS3 for 10 ns (now=56305 ns, until=56315 ns)
+[ns3] [bridge] NS3 paused at 56315 ns results=35
+[ns3] [bridge] Running NS3 for 10 ns (now=56315 ns, until=56325 ns)
+[ns3] [bridge] NS3 paused at 56325 ns results=35
+[ns3] [bridge] Running NS3 for 10 ns (now=56325 ns, until=56335 ns)
+[ns3] [bridge] NS3 paused at 56335 ns results=35
+[ns3] [bridge] Running NS3 for 10 ns (now=56335 ns, until=56345 ns)
+[ns3] [bridge] NS3 paused at 56345 ns results=35
+[ns3] [bridge] Running NS3 for 10 ns (now=56345 ns, until=56355 ns)
+[ns3] [bridge] NS3 paused at 56355 ns results=35
+[ns3] [bridge] Running NS3 for 10 ns (now=56355 ns, until=56365 ns)
+[ns3] [bridge] NS3 paused at 56365 ns results=35
+[ns3] [bridge] Running NS3 for 10 ns (now=56365 ns, until=56375 ns)
+[ns3] [bridge] NS3 paused at 56375 ns results=35
+[ns3] [bridge] Running NS3 for 10 ns (now=56375 ns, until=56385 ns)
+[ns3] [bridge] NS3 paused at 56385 ns results=35
+[ns3] [bridge] Running NS3 for 10 ns (now=56385 ns, until=56395 ns)
+[ns3] [bridge] NS3 paused at 56395 ns results=35
+[ns3] [bridge] Running NS3 for 10 ns (now=56395 ns, until=56405 ns)
+[ns3] [bridge] NS3 paused at 56405 ns results=35
+[ns3] [bridge] Running NS3 for 10 ns (now=56405 ns, until=56415 ns)
+[ns3] [bridge] NS3 paused at 56415 ns results=35
+[ns3] [bridge] Running NS3 for 10 ns (now=56415 ns, until=56425 ns)
+[ns3] [bridge] NS3 paused at 56425 ns results=35
+[ns3] [bridge] Running NS3 for 10 ns (now=56425 ns, until=56435 ns)
+[ns3] [bridge] NS3 paused at 56435 ns results=35
+[ns3] [bridge] Running NS3 for 10 ns (now=56435 ns, until=56445 ns)
+[ns3] [bridge] NS3 paused at 56445 ns results=35
 
   [event] diplodocus.owl.ttl changed - found 1 new command(s) (submitting in creation order, without waiting for results).
 
@@ -1801,34 +1917,73 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [PART A]  cmd_WACS__CCTxNI_iter10_DataQty -> ns3:Packet? true
   [PART A]  EV_ChargingRequest_NetTask -> ns3:Socket? true
   [PART A]  cmd_WACS__CCTxNI_iter10_StartCycle -> ns3:NsTimePoint? true
-  [PART C - SWRL cycle->ns]  cycleValue=7207  f=2.0E8 Hz  -->  nsValue=36035.0 ns
+  [PART C - SWRL cycle->ns]  cycleValue=11291  f=2.0E8 Hz  -->  nsValue=56455.0 ns
 [DEBUG] pairedReceiverTaskName=WACS__SubRxNI
 [DEBUG] rcvStartFile=/home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI
 [DEBUG] receiverStartCycle=null
 [DEBUG] WACS__CCTxNI transport fields=';transport=TCP;sndBufSize=32'
 [DEBUG] WACS__CCTxNI direction=1
-  [bridge] Commande envoyée à NS3: packetSize=48;id=18;nsValue=36035;direction=1;transport=TCP;sndBufSize=32
+  [bridge] Commande envoyée à NS3: packetSize=48;id=18;nsValue=56455;direction=1;transport=TCP;sndBufSize=32
   Submitted cmd_WACS__CCTxNI_iter10_WriteCmd to NS-3 (packetSize=48, id=18) - moving on without waiting for its result.
-[ns3] [bridge] Drained #19 raw='packetSize=48;id=18;nsValue=36035;direction=1;transport=TCP;sndBufSize=32'
-[ns3] [bridge] SCHEDULED id=18 at 36035 ns
-[ns3] [bridge] Running NS3 for 10 ns (now=36025 ns, until=36035 ns)
-[ns3] INJECTION_TIME commandId=18 injectionTimeNs=36035
-[ns3] [bridge] INJECT id=18 NI1->NI0 size=48 TCP sndBuf=32 t=36035
-[ns3] [bridge] NS3 paused at 36035 ns results=36
-[ns3] [bridge] Running NS3 for 10 ns (now=36035 ns, until=36045 ns)
-[ns3] [bridge] NS3 paused at 36045 ns results=36
-[ns3] [bridge] Running NS3 for 10 ns (now=36045 ns, until=36055 ns)
-[ns3] [bridge] NS3 paused at 36055 ns results=36
-[ns3] [bridge] Running NS3 for 10 ns (now=36055 ns, until=36065 ns)
-[ns3] [bridge] NS3 paused at 36065 ns results=36
-[ns3] [bridge] Running NS3 for 10 ns (now=36065 ns, until=36075 ns)
-[ns3] [bridge] NS3 paused at 36075 ns results=36
-[ns3] [bridge] Running NS3 for 10 ns (now=36075 ns, until=36085 ns)
-[ns3] [bridge] NS3 paused at 36085 ns results=36
-[ns3] [bridge] Running NS3 for 10 ns (now=36085 ns, until=36095 ns)
-[ns3] [bridge] NS3 paused at 36095 ns results=36
-[ns3] [bridge] Running NS3 for 10 ns (now=36095 ns, until=36105 ns)
-[ns3] [bridge] NS3 paused at 36105 ns results=36
+[ns3] [bridge] Drained #19 raw='packetSize=48;id=18;nsValue=56455;direction=1;transport=TCP;sndBufSize=32'
+[ns3] [bridge] SCHEDULED id=18 at 56455 ns
+[ns3] [bridge] Running NS3 for 10 ns (now=56445 ns, until=56455 ns)
+[ns3] INJECTION_TIME commandId=18 injectionTimeNs=56455
+[ns3] [bridge] INJECT id=18 NI1->NI0 size=48 TCP sndBuf=32 t=56455
+[ns3] [bridge] NS3 paused at 56455 ns results=35
+[ns3] [bridge] Running NS3 for 85 ns (now=56455 ns, until=56540 ns)
+[ns3] [bridge] NS3 paused at 56540 ns results=35
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=56540 ns, until=1.00565e+07 ns)
+[ns3] [bridge] RECV_END id=16 t=56936
+[ns3] RESULT_START
+[ns3] commandId=16
+[ns3] receiveMeasuredLatencyNs=56936
+[ns3] RESULT_END
+
+  --- NS-3 RECEIVE result for: cmd_WACS__CCTxNI_iter9_WriteCmd
+  Measured receive latency (ns): 6806.0
+  [DEBUG-RECV] receiveLatencyNs=6806.0
+  [DEBUG-RECV] capturedSendLatencyNs=6146.0
+  [DEBUG-RECV] capturedSenderEndCycle=11255
+  [DEBUG-RECV] propagationNs=660.0
+  [DEBUG-RECV] propagationCycles=132.0
+  [DEBUG-RECV] rcvEndCycle=11387
+  [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI) = 10333.0
+  [side-channel] NET_DONE WACS__SubRxNI 11387 iter=9  (senderEndCycle=11255, propagationNs=660.0, propagationCycles=132.0)
+  [DEBUG-RECV] rcvDurationCycles=1361
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubRxNI 1361 9
+  [side-channel] wrote NET_DONE WACS__SubRxNI 1361 iter=9
+[ns3] [bridge] NS3 paused at 56936 ns results=36
+[ns3] [bridge] Running NS3 for 9 ns (now=56936 ns, until=56945 ns)
+[ns3] [bridge] NS3 paused at 56945 ns results=36
+[ns3] [bridge] Running NS3 for 10 ns (now=56945 ns, until=56955 ns)
+[ns3] [bridge] NS3 paused at 56955 ns results=36
+[ns3] [bridge] Running NS3 for 10 ns (now=56955 ns, until=56965 ns)
+[ns3] [bridge] NS3 paused at 56965 ns results=36
+[ns3] [bridge] Running NS3 for 10 ns (now=56965 ns, until=56975 ns)
+[ns3] [bridge] NS3 paused at 56975 ns results=36
+[ns3] [bridge] Running NS3 for 10 ns (now=56975 ns, until=56985 ns)
+[ns3] [bridge] NS3 paused at 56985 ns results=36
+[ns3] [bridge] Running NS3 for 10 ns (now=56985 ns, until=56995 ns)
+[ns3] [bridge] NS3 paused at 56995 ns results=36
+[ns3] [bridge] Running NS3 for 10 ns (now=56995 ns, until=57005 ns)
+[ns3] [bridge] NS3 paused at 57005 ns results=36
+[ns3] [bridge] Running NS3 for 10 ns (now=57005 ns, until=57015 ns)
+[ns3] [bridge] NS3 paused at 57015 ns results=36
+[ns3] [bridge] Running NS3 for 10 ns (now=57015 ns, until=57025 ns)
+[ns3] [bridge] NS3 paused at 57025 ns results=36
+[ns3] [bridge] Running NS3 for 10 ns (now=57025 ns, until=57035 ns)
+[ns3] [bridge] NS3 paused at 57035 ns results=36
+[ns3] [bridge] Running NS3 for 10 ns (now=57035 ns, until=57045 ns)
+[ns3] [bridge] NS3 paused at 57045 ns results=36
+[ns3] [bridge] Running NS3 for 10 ns (now=57045 ns, until=57055 ns)
+[ns3] [bridge] NS3 paused at 57055 ns results=36
+[ns3] [bridge] Running NS3 for 10 ns (now=57055 ns, until=57065 ns)
+[ns3] [bridge] NS3 paused at 57065 ns results=36
+[ns3] [bridge] Running NS3 for 10 ns (now=57065 ns, until=57075 ns)
+[ns3] [bridge] NS3 paused at 57075 ns results=36
+[ns3] [bridge] Running NS3 for 10 ns (now=57075 ns, until=57085 ns)
+[ns3] [bridge] NS3 paused at 57085 ns results=36
 
   [event] diplodocus.owl.ttl changed - found 1 new command(s) (submitting in creation order, without waiting for results).
 
@@ -1839,31 +1994,27 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   [PART A]  cmd_WACS__SubTxNI_iter10_DataQty -> ns3:Packet? true
   [PART A]  EV_ChargingRequest_NetTask -> ns3:Socket? true
   [PART A]  cmd_WACS__SubTxNI_iter10_StartCycle -> ns3:NsTimePoint? true
-  [PART C - SWRL cycle->ns]  cycleValue=7223  f=2.0E8 Hz  -->  nsValue=36115.0 ns
+  [PART C - SWRL cycle->ns]  cycleValue=11419  f=2.0E8 Hz  -->  nsValue=57095.0 ns
 [DEBUG] pairedReceiverTaskName=WACS__CCRxNI
 [DEBUG] rcvStartFile=/home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI
 [DEBUG] receiverStartCycle=null
 [DEBUG] WACS__SubTxNI transport fields=';transport=UDP;errorRate=0.02'
 [DEBUG] WACS__SubTxNI direction=0
-  [bridge] Commande envoyée à NS3: packetSize=48;id=19;nsValue=36115;direction=0;transport=UDP;errorRate=0.02
+  [bridge] Commande envoyée à NS3: packetSize=48;id=19;nsValue=57095;direction=0;transport=UDP;errorRate=0.02
   Submitted cmd_WACS__SubTxNI_iter10_WriteCmd to NS-3 (packetSize=48, id=19) - moving on without waiting for its result.
-[ns3] [bridge] Drained #20 raw='packetSize=48;id=19;nsValue=36115;direction=0;transport=UDP;errorRate=0.02'
-[ns3] [bridge] SCHEDULED id=19 at 36115 ns
-[ns3] [bridge] Running NS3 for 10 ns (now=36105 ns, until=36115 ns)
-[ns3] INJECTION_TIME commandId=19 injectionTimeNs=36115
-[ns3] [bridge] INJECT id=19 NI0->NI1 size=48 UDP errorRate=0.020000 t=36115
-[ns3] [bridge] NS3 paused at 36115 ns results=36
-[ns3] [bridge] Running NS3 for 65 ns (now=36115 ns, until=36180 ns)
-[ns3] [bridge] NS3 paused at 36180 ns results=36
-[ns3] [bridge] Running NS3 for 10 ns (now=36180 ns, until=36190 ns)
-[ns3] [bridge] NS3 paused at 36190 ns results=36
-[ns3] [bridge] Running NS3 for 55 ns (now=36190 ns, until=36245 ns)
-[ns3] [bridge] NS3 paused at 36245 ns results=36
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=36245 ns, until=1.00362e+07 ns)
-[ns3] [bridge] SEND_END id=19 NI0 UDP t=37012
+[ns3] [bridge] Drained #20 raw='packetSize=48;id=19;nsValue=57095;direction=0;transport=UDP;errorRate=0.02'
+[ns3] [bridge] SCHEDULED id=19 at 57095 ns
+[ns3] [bridge] Running NS3 for 10 ns (now=57085 ns, until=57095 ns)
+[ns3] INJECTION_TIME commandId=19 injectionTimeNs=57095
+[ns3] [bridge] INJECT id=19 NI0->NI1 size=48 UDP errorRate=0.020000 t=57095
+[ns3] [bridge] NS3 paused at 57095 ns results=36
+[ns3] [bridge] Running NS3 for 295 ns (now=57095 ns, until=57390 ns)
+[ns3] [bridge] NS3 paused at 57390 ns results=36
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=57390 ns, until=1.00574e+07 ns)
+[ns3] [bridge] SEND_END id=19 NI0 UDP t=57992
 [ns3] RESULT_START
 [ns3] commandId=19
-[ns3] sendMeasuredLatencyNs=37012
+[ns3] sendMeasuredLatencyNs=57992
 [ns3] RESULT_END
 
   --- NS-3 result ready for: cmd_WACS__SubTxNI_iter10_WriteCmd
@@ -1872,129 +2023,129 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
   ns3.owl.ttl updated.
   --- Backpropagating result: _TransferResult20
   [DEBUG-SEND] measuredLatencyNs=897.0
-  [DEBUG-SEND] cycleVal=7223
-  [DEBUG-SEND] endCycle=7402
+  [DEBUG-SEND] cycleVal=11419
+  [DEBUG-SEND] endCycle=11598
   [DEBUG-SEND] masterClockHz=2.0E8
   [PART D - SWRL inverse ns->cycle]  delay_cycles = 897.0 * (2.0E8 / 1e9) = 179.4
-  [PART D - SWRL inverse ns->cycle]  endCycle = 7223 + 179 = 7402
+  [PART D - SWRL inverse ns->cycle]  endCycle = 11419 + 179 = 11598
   Linked cmd_WACS__SubTxNI_iter10_WriteCmd --dip:endsAtCycle--> _TransferResult20_EndCycle
-  Created -> _TransferResult20_EndCycle with dip:cycleValue = 7402
+  Created -> _TransferResult20_EndCycle with dip:cycleValue = 11598
   diplodocus.owl.ttl updated.
-  [side-channel] writing NET_DONE WACS__SubTxNI 7402 iter=10
+  [side-channel] writing NET_DONE WACS__SubTxNI 11598 iter=10
 [DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubTxNI 179 10
   [side-channel] wrote NET_DONE WACS__SubTxNI 179 iter=10
-[ns3] [bridge] NS3 paused at 37012 ns results=37
-[ns3] [bridge] Running NS3 for 8 ns (now=37012 ns, until=37020 ns)
-[ns3] [bridge] NS3 paused at 37020 ns results=37
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=37020 ns, until=1.0037e+07 ns)
-[ns3] [bridge] RECV_END id=19 t=37112
+[ns3] [bridge] NS3 paused at 57992 ns results=37
+[ns3] [bridge] Running NS3 for 8 ns (now=57992 ns, until=58000 ns)
+[ns3] [bridge] NS3 paused at 58000 ns results=37
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=58000 ns, until=1.0058e+07 ns)
+[ns3] [bridge] RECV_END id=19 t=58716
 [ns3] RESULT_START
 [ns3] commandId=19
-[ns3] receiveMeasuredLatencyNs=37112
+[ns3] receiveMeasuredLatencyNs=58716
 [ns3] RESULT_END
 
   --- NS-3 RECEIVE result for: cmd_WACS__SubTxNI_iter10_WriteCmd
-  Measured receive latency (ns): 997.0
-  [DEBUG-RECV] receiveLatencyNs=997.0
+  Measured receive latency (ns): 1621.0
+  [DEBUG-RECV] receiveLatencyNs=1621.0
   [DEBUG-RECV] capturedSendLatencyNs=897.0
-  [DEBUG-RECV] capturedSenderEndCycle=7402
-  [DEBUG-RECV] propagationNs=100.0
-  [DEBUG-RECV] propagationCycles=20.0
-  [DEBUG-RECV] rcvEndCycle=7422
+  [DEBUG-RECV] capturedSenderEndCycle=11598
+  [DEBUG-RECV] propagationNs=724.0
+  [DEBUG-RECV] propagationCycles=144.8
+  [DEBUG-RECV] rcvEndCycle=11742
   [WARNING] Receiver startCycle for iter=10 not found in /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI, using 0
   [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__CCRxNI) = 0.0
-  [side-channel] NET_DONE WACS__CCRxNI 7422 iter=10  (senderEndCycle=7402, propagationNs=100.0, propagationCycles=20.0)
-  [DEBUG-RECV] rcvDurationCycles=199
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCRxNI 199 10
-  [side-channel] wrote NET_DONE WACS__CCRxNI 199 iter=10
-[ns3] [bridge] NS3 paused at 37112 ns results=38
-[ns3] [bridge] Running NS3 for 1e+07 ns (now=37112 ns, until=1.00371e+07 ns)
-[ns3] [bridge] TCP connected id=18 t=37576
-[ns3] [bridge] SEND_END id=18 NI1 TCP t=39888
+  [side-channel] NET_DONE WACS__CCRxNI 11742 iter=10  (senderEndCycle=11598, propagationNs=724.0, propagationCycles=144.8)
+  [DEBUG-RECV] rcvDurationCycles=324
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCRxNI 324 10
+  [side-channel] wrote NET_DONE WACS__CCRxNI 324 iter=10
+[ns3] [bridge] NS3 paused at 58716 ns results=38
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=58716 ns, until=1.00587e+07 ns)
+[ns3] [bridge] TCP connected id=18 t=59180
+[ns3] [bridge] SEND_END id=18 NI1 TCP t=62612
 [ns3] RESULT_START
 [ns3] commandId=18
-[ns3] sendMeasuredLatencyNs=39888
+[ns3] sendMeasuredLatencyNs=62612
 [ns3] RESULT_END
 
   --- NS-3 result ready for: cmd_WACS__CCTxNI_iter10_WriteCmd
-  Measured latency (ns): 3853.0
+  Measured latency (ns): 6157.0
   Created -> cmd_WACS__CCTxNI_iter10_DataQty_Packet, EV_ChargingRequest_NetTask_Socket, cmd_WACS__CCTxNI_iter10_StartCycle_NsTimePoint, _TransferResult19
   ns3.owl.ttl updated.
   --- Backpropagating result: _TransferResult19
-  [DEBUG-SEND] measuredLatencyNs=3853.0
-  [DEBUG-SEND] cycleVal=7207
-  [DEBUG-SEND] endCycle=7978
+  [DEBUG-SEND] measuredLatencyNs=6157.0
+  [DEBUG-SEND] cycleVal=11291
+  [DEBUG-SEND] endCycle=12522
   [DEBUG-SEND] masterClockHz=2.0E8
-  [PART D - SWRL inverse ns->cycle]  delay_cycles = 3853.0 * (2.0E8 / 1e9) = 770.6
-  [PART D - SWRL inverse ns->cycle]  endCycle = 7207 + 771 = 7978
+  [PART D - SWRL inverse ns->cycle]  delay_cycles = 6157.0 * (2.0E8 / 1e9) = 1231.4
+  [PART D - SWRL inverse ns->cycle]  endCycle = 11291 + 1231 = 12522
   Linked cmd_WACS__CCTxNI_iter10_WriteCmd --dip:endsAtCycle--> _TransferResult19_EndCycle
-  Created -> _TransferResult19_EndCycle with dip:cycleValue = 7978
+  Created -> _TransferResult19_EndCycle with dip:cycleValue = 12522
   diplodocus.owl.ttl updated.
-  [side-channel] writing NET_DONE WACS__CCTxNI 7978 iter=10
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCTxNI 771 10
-  [side-channel] wrote NET_DONE WACS__CCTxNI 771 iter=10
-[ns3] [bridge] NS3 paused at 39888 ns results=39
-[ns3] [bridge] Running NS3 for 2 ns (now=39888 ns, until=39890 ns)
-[ns3] [bridge] NS3 paused at 39890 ns results=39
-[ns3] [bridge] Running NS3 for 10 ns (now=39890 ns, until=39900 ns)
-[ns3] [bridge] NS3 paused at 39900 ns results=39
-[ns3] [bridge] Running NS3 for 10 ns (now=39900 ns, until=39910 ns)
-[ns3] [bridge] NS3 paused at 39910 ns results=39
-[ns3] [bridge] Running NS3 for 10 ns (now=39910 ns, until=39920 ns)
-[ns3] [bridge] NS3 paused at 39920 ns results=39
-[ns3] [bridge] Running NS3 for 10 ns (now=39920 ns, until=39930 ns)
-[ns3] [bridge] NS3 paused at 39930 ns results=39
-[ns3] [bridge] Running NS3 for 10 ns (now=39930 ns, until=39940 ns)
-[ns3] [bridge] NS3 paused at 39940 ns results=39
-[ns3] [bridge] Running NS3 for 10 ns (now=39940 ns, until=39950 ns)
-[ns3] [bridge] NS3 paused at 39950 ns results=39
-[ns3] [bridge] Running NS3 for 10 ns (now=39950 ns, until=39960 ns)
-[ns3] [bridge] NS3 paused at 39960 ns results=39
-[ns3] [bridge] Running NS3 for 10 ns (now=39960 ns, until=39970 ns)
-[ns3] [bridge] NS3 paused at 39970 ns results=39
-[ns3] [bridge] Running NS3 for 10 ns (now=39970 ns, until=39980 ns)
-[ns3] [bridge] NS3 paused at 39980 ns results=39
-[ns3] [bridge] Running NS3 for 10 ns (now=39980 ns, until=39990 ns)
-[ns3] [bridge] RECV_END id=18 t=39988
+  [side-channel] writing NET_DONE WACS__CCTxNI 12522 iter=10
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__CCTxNI 1231 10
+  [side-channel] wrote NET_DONE WACS__CCTxNI 1231 iter=10
+[ns3] [bridge] NS3 paused at 62612 ns results=39
+[ns3] [bridge] Running NS3 for 8 ns (now=62612 ns, until=62620 ns)
+[ns3] [bridge] NS3 paused at 62620 ns results=39
+[ns3] [bridge] Running NS3 for 10 ns (now=62620 ns, until=62630 ns)
+[ns3] [bridge] NS3 paused at 62630 ns results=39
+[ns3] [bridge] Running NS3 for 10 ns (now=62630 ns, until=62640 ns)
+[ns3] [bridge] NS3 paused at 62640 ns results=39
+[ns3] [bridge] Running NS3 for 10 ns (now=62640 ns, until=62650 ns)
+[ns3] [bridge] NS3 paused at 62650 ns results=39
+[ns3] [bridge] Running NS3 for 10 ns (now=62650 ns, until=62660 ns)
+[ns3] [bridge] NS3 paused at 62660 ns results=39
+[ns3] [bridge] Running NS3 for 10 ns (now=62660 ns, until=62670 ns)
+[ns3] [bridge] NS3 paused at 62670 ns results=39
+[ns3] [bridge] Running NS3 for 10 ns (now=62670 ns, until=62680 ns)
+[ns3] [bridge] NS3 paused at 62680 ns results=39
+[ns3] [bridge] Running NS3 for 10 ns (now=62680 ns, until=62690 ns)
+[ns3] [bridge] NS3 paused at 62690 ns results=39
+[ns3] [bridge] Running NS3 for 10 ns (now=62690 ns, until=62700 ns)
+[ns3] [bridge] NS3 paused at 62700 ns results=39
+[ns3] [bridge] Running NS3 for 10 ns (now=62700 ns, until=62710 ns)
+[ns3] [bridge] NS3 paused at 62710 ns results=39
+[ns3] [bridge] Running NS3 for 10 ns (now=62710 ns, until=62720 ns)
+[ns3] [bridge] NS3 paused at 62720 ns results=39
+[ns3] [bridge] Running NS3 for 1e+07 ns (now=62720 ns, until=1.00627e+07 ns)
+[ns3] [bridge] RECV_END id=18 t=63272
 [ns3] RESULT_START
 [ns3] commandId=18
-[ns3] receiveMeasuredLatencyNs=39988
+[ns3] receiveMeasuredLatencyNs=63272
 [ns3] RESULT_END
 
   --- NS-3 RECEIVE result for: cmd_WACS__CCTxNI_iter10_WriteCmd
-  Measured receive latency (ns): 3953.0
-  [DEBUG-RECV] receiveLatencyNs=3953.0
-  [DEBUG-RECV] capturedSendLatencyNs=3853.0
-  [DEBUG-RECV] capturedSenderEndCycle=7978
-  [DEBUG-RECV] propagationNs=100.0
-  [DEBUG-RECV] propagationCycles=20.0
-  [DEBUG-RECV] rcvEndCycle=7998
-  [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI) = 7404.0
-  [side-channel] NET_DONE WACS__SubRxNI 7998 iter=10  (senderEndCycle=7978, propagationNs=100.0, propagationCycles=20.0)
-  [DEBUG-RECV] rcvDurationCycles=791
-[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubRxNI 791 10
-  [side-channel] wrote NET_DONE WACS__SubRxNI 791 iter=10
-[ns3] [bridge] NS3 paused at 39988 ns results=40
-[ns3] [bridge] Running NS3 for 2 ns (now=39988 ns, until=39990 ns)
-[ns3] [bridge] NS3 paused at 39990 ns results=40
-[ns3] [bridge] Running NS3 for 10 ns (now=39990 ns, until=40000 ns)
-[ns3] [bridge] NS3 paused at 40000 ns results=40
-[ns3] [bridge] Running NS3 for 10 ns (now=40000 ns, until=40010 ns)
-[ns3] [bridge] NS3 paused at 40010 ns results=40
-[ns3] [bridge] Running NS3 for 10 ns (now=40010 ns, until=40020 ns)
-[ns3] [bridge] NS3 paused at 40020 ns results=40
-[ns3] [bridge] Running NS3 for 10 ns (now=40020 ns, until=40030 ns)
-[ns3] [bridge] NS3 paused at 40030 ns results=40
-[ns3] [bridge] Running NS3 for 10 ns (now=40030 ns, until=40040 ns)
-[ns3] [bridge] NS3 paused at 40040 ns results=40
-[ns3] [bridge] Running NS3 for 10 ns (now=40040 ns, until=40050 ns)
-[ns3] [bridge] NS3 paused at 40050 ns results=40
-[ns3] [bridge] Running NS3 for 10 ns (now=40050 ns, until=40060 ns)
-[ns3] [bridge] NS3 paused at 40060 ns results=40
-[ns3] [bridge] Running NS3 for 10 ns (now=40060 ns, until=40070 ns)
-[ns3] [bridge] NS3 paused at 40070 ns results=40
-[ns3] [bridge] Running NS3 for 10 ns (now=40070 ns, until=40080 ns)
-[ns3] [bridge] NS3 paused at 40080 ns results=40
+  Measured receive latency (ns): 6817.0
+  [DEBUG-RECV] receiveLatencyNs=6817.0
+  [DEBUG-RECV] capturedSendLatencyNs=6157.0
+  [DEBUG-RECV] capturedSenderEndCycle=12522
+  [DEBUG-RECV] propagationNs=660.0
+  [DEBUG-RECV] propagationCycles=132.0
+  [DEBUG-RECV] rcvEndCycle=12654
+  [DEBUG-RECV] receiver startCycle (from /home/isso84/TTool-ns3/simulators/c++2/net_done.sidechannel.receiver_start.cmd_WACS__SubRxNI) = 11600.0
+  [side-channel] NET_DONE WACS__SubRxNI 12654 iter=10  (senderEndCycle=12522, propagationNs=660.0, propagationCycles=132.0)
+  [DEBUG-RECV] rcvDurationCycles=1363
+[DEBUG-SIDECHANNEL] Writing: NET_DONE WACS__SubRxNI 1363 10
+  [side-channel] wrote NET_DONE WACS__SubRxNI 1363 iter=10
+[ns3] [bridge] NS3 paused at 63272 ns results=40
+[ns3] [bridge] Running NS3 for 8 ns (now=63272 ns, until=63280 ns)
+[ns3] [bridge] NS3 paused at 63280 ns results=40
+[ns3] [bridge] Running NS3 for 10 ns (now=63280 ns, until=63290 ns)
+[ns3] [bridge] NS3 paused at 63290 ns results=40
+[ns3] [bridge] Running NS3 for 10 ns (now=63290 ns, until=63300 ns)
+[ns3] [bridge] NS3 paused at 63300 ns results=40
+[ns3] [bridge] Running NS3 for 10 ns (now=63300 ns, until=63310 ns)
+[ns3] [bridge] NS3 paused at 63310 ns results=40
+[ns3] [bridge] Running NS3 for 10 ns (now=63310 ns, until=63320 ns)
+[ns3] [bridge] NS3 paused at 63320 ns results=40
+[ns3] [bridge] Running NS3 for 10 ns (now=63320 ns, until=63330 ns)
+[ns3] [bridge] NS3 paused at 63330 ns results=40
+[ns3] [bridge] Running NS3 for 10 ns (now=63330 ns, until=63340 ns)
+[ns3] [bridge] NS3 paused at 63340 ns results=40
+[ns3] [bridge] Running NS3 for 10 ns (now=63340 ns, until=63350 ns)
+[ns3] [bridge] NS3 paused at 63350 ns results=40
+[ns3] [bridge] Running NS3 for 10 ns (now=63350 ns, until=63360 ns)
+[ns3] [bridge] NS3 paused at 63360 ns results=40
 
   [final pass] Running one last check for any unhandled command...
 
@@ -2008,7 +2159,7 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
 ########################################################
   PHASE III -- After the simulation: requirements and traceability (SPARQL)
 ########################################################
-  Results loaded: 1067 triples (diplodocus + ns3 + mapping).
+  Results loaded: 1120 triples (diplodocus + ns3 + mapping).
 
   Enter your SPARQL queries on the simulation results
   (prefixes dip:, ns3:, rdf:, rdfs:, owl:, xsd: are predefined).
@@ -2028,8 +2179,8 @@ GROUP BY ?req ?flow ?boundNs
 -----------------------------------------------------------------------------------------------
 | req                  | flow      | transfers | worstNs              | boundNs | verdict     |
 ===============================================================================================
-| "Req_PMU_PDC_100ms"  | "SubTxNI" | 10        | "997.0"^^xsd:double  | 1.0E8   | "SATISFIED" |
-| "Req_WADC_PSS_100ms" | "CCTxNI"  | 10        | "3957.0"^^xsd:double | 1.0E8   | "SATISFIED" |
+| "Req_PMU_PDC_100ms"  | "SubTxNI" | 10        | "1621.0"^^xsd:double | 1.0E8   | "SATISFIED" |
+| "Req_WADC_PSS_100ms" | "CCTxNI"  | 10        | "6819.0"^^xsd:double | 1.0E8   | "SATISFIED" |
 -----------------------------------------------------------------------------------------------
 sparql> SELECT ?req ?flow (COUNT(?res) AS ?transfers) (MAX(?lat) AS ?worstNs) ?boundNs
        (IF(MAX(?lat) <= ?boundNs, "SATISFIED", "VIOLATED") AS ?verdict)
@@ -2045,8 +2196,8 @@ GROUP BY ?req ?flow ?boundNs
 ---------------------------------------------------------------------------------------------
 | req                | flow      | transfers | worstNs              | boundNs | verdict     |
 =============================================================================================
-| "Req_WADC_PSS_3us" | "CCTxNI"  | 10        | "3957.0"^^xsd:double | 3000.0  | "VIOLATED"  |
-| "Req_PMU_PDC_3us"  | "SubTxNI" | 10        | "997.0"^^xsd:double  | 3000.0  | "SATISFIED" |
+| "Req_WADC_PSS_3us" | "CCTxNI"  | 10        | "6819.0"^^xsd:double | 3000.0  | "VIOLATED"  |
+| "Req_PMU_PDC_3us"  | "SubTxNI" | 10        | "1621.0"^^xsd:double | 3000.0  | "SATISFIED" |
 ---------------------------------------------------------------------------------------------
 sparql> SELECT ?cmd ?startCycle ?endCycle ?sendNs ?recvNs
 WHERE {
@@ -2057,18 +2208,18 @@ WHERE {
 }
 ORDER BY ?startCycle
 ;
-----------------------------------------------------------------------------------------------------------------------------------
-| cmd                                  | startCycle         | endCycle             | sendNs               | recvNs               |
-==================================================================================================================================
-| dip:cmd_WACS__CCTxNI_iter1_WriteCmd  | "20"^^xsd:double   | "720.0"^^xsd:double  | "3500.0"^^xsd:double | "3600.0"^^xsd:double |
-| dip:cmd_WACS__CCTxNI_iter2_WriteCmd  | "755"^^xsd:double  | "1526.0"^^xsd:double | "3857.0"^^xsd:double | "3957.0"^^xsd:double |
-| dip:cmd_WACS__CCTxNI_iter3_WriteCmd  | "1564"^^xsd:double | "2333.0"^^xsd:double | "3844.0"^^xsd:double | "3944.0"^^xsd:double |
-| dip:cmd_WACS__CCTxNI_iter4_WriteCmd  | "2371"^^xsd:double | "3139.0"^^xsd:double | "3841.0"^^xsd:double | "3941.0"^^xsd:double |
-| dip:cmd_WACS__CCTxNI_iter5_WriteCmd  | "3177"^^xsd:double | "3946.0"^^xsd:double | "3843.0"^^xsd:double | "3943.0"^^xsd:double |
-| dip:cmd_WACS__CCTxNI_iter6_WriteCmd  | "3984"^^xsd:double | "4752.0"^^xsd:double | "3840.0"^^xsd:double | "3940.0"^^xsd:double |
-| dip:cmd_WACS__CCTxNI_iter7_WriteCmd  | "4790"^^xsd:double | "5558.0"^^xsd:double | "3842.0"^^xsd:double | "3942.0"^^xsd:double |
-| dip:cmd_WACS__CCTxNI_iter8_WriteCmd  | "5596"^^xsd:double | "6365.0"^^xsd:double | "3844.0"^^xsd:double | "3944.0"^^xsd:double |
-| dip:cmd_WACS__CCTxNI_iter9_WriteCmd  | "6403"^^xsd:double | "7171.0"^^xsd:double | "3841.0"^^xsd:double | "3941.0"^^xsd:double |
-| dip:cmd_WACS__CCTxNI_iter10_WriteCmd | "7207"^^xsd:double | "7978.0"^^xsd:double | "3853.0"^^xsd:double | "3953.0"^^xsd:double |
-----------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+| cmd                                  | startCycle          | endCycle              | sendNs               | recvNs               |
+====================================================================================================================================
+| dip:cmd_WACS__CCTxNI_iter1_WriteCmd  | "20"^^xsd:double    | "1118.0"^^xsd:double  | "5488.0"^^xsd:double | "6148.0"^^xsd:double |
+| dip:cmd_WACS__CCTxNI_iter2_WriteCmd  | "1153"^^xsd:double  | "2385.0"^^xsd:double  | "6159.0"^^xsd:double | "6819.0"^^xsd:double |
+| dip:cmd_WACS__CCTxNI_iter3_WriteCmd  | "2423"^^xsd:double  | "3652.0"^^xsd:double  | "6145.0"^^xsd:double | "6805.0"^^xsd:double |
+| dip:cmd_WACS__CCTxNI_iter4_WriteCmd  | "3690"^^xsd:double  | "4919.0"^^xsd:double  | "6146.0"^^xsd:double | "6806.0"^^xsd:double |
+| dip:cmd_WACS__CCTxNI_iter5_WriteCmd  | "4957"^^xsd:double  | "6186.0"^^xsd:double  | "6147.0"^^xsd:double | "6807.0"^^xsd:double |
+| dip:cmd_WACS__CCTxNI_iter6_WriteCmd  | "6224"^^xsd:double  | "7454.0"^^xsd:double  | "6148.0"^^xsd:double | "6808.0"^^xsd:double |
+| dip:cmd_WACS__CCTxNI_iter7_WriteCmd  | "7492"^^xsd:double  | "8721.0"^^xsd:double  | "6144.0"^^xsd:double | "6804.0"^^xsd:double |
+| dip:cmd_WACS__CCTxNI_iter8_WriteCmd  | "8759"^^xsd:double  | "9988.0"^^xsd:double  | "6145.0"^^xsd:double | "6805.0"^^xsd:double |
+| dip:cmd_WACS__CCTxNI_iter9_WriteCmd  | "10026"^^xsd:double | "11255.0"^^xsd:double | "6146.0"^^xsd:double | "6806.0"^^xsd:double |
+| dip:cmd_WACS__CCTxNI_iter10_WriteCmd | "11291"^^xsd:double | "12522.0"^^xsd:double | "6157.0"^^xsd:double | "6817.0"^^xsd:double |
+------------------------------------------------------------------------------------------------------------------------------------
 sparql> 
