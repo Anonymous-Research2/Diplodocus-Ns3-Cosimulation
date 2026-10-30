@@ -4,7 +4,7 @@
 # DIPLODOCUS ↔ ns-3 Semantic Bridge
 
 An OWL-based bridge for co-simulating the **DIPLODOCUS** System-on-Chip simulator (TTool) with the **ns-3** network simulator.  
-Two videos are provided to show the cosimulation of the two examples used in the paper in our bridge (descibed in 5.Run).
+Two videos are provided to show the cosimulation of the two examples used in the paper in our bridge (descibed in **5.Run**).
 
 ---
 
