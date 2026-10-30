@@ -68,11 +68,11 @@ We provide two videos to show the execution of two cosimulation (nominal example
 
 ### Execution flow
 
-1. DIPLODOCUS requests the model check → Java reasons and returns the verdict and the transport per channel.
-2. A network transaction starts on an NI → it is written to the ontology → Java maps it and sends it to NS-3 → NS-3 injects it at the same time instant.
+1. DIPLODOCUS requests the model check → The mapper reasons and returns the verdict and the transport per channel.
+2. A network transaction starts on an NI → it is written to the ontology → The mapper maps it and sends it to NS-3 → NS-3 injects it at the same time instant.
 3. DIPLODOCUS and NS-3 advance together, slice by slice.
-4. NS-3 produces a result → Java converts it to cycles → DIPLODOCUS ends the transaction at that cycle.
-5. Java gives the hand to the user to enter their SPARQL queries for tracability and requierements check.
+4. NS-3 produces a result → The mapper converts it to cycles → DIPLODOCUS ends the transaction at that cycle.
+5. The mapper gives the hand to the user to enter their SPARQL queries for tracability and requierements check.
 
 ## 6. Results
 
