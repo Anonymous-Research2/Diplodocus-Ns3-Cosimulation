@@ -92,7 +92,7 @@ The co-simulation links three parts: an extension of the **DIPLODOCUS** C++ simu
 `scratch/java-bridge-sim-Visual-RT2_SynAuto.cc` builds the network and simulates the transfers sent by the bridge.
 
 
-## 5. Diplodocus ↔ NS3 synchronisation — WACS nominal model (UDP + TCP)
+### 5. Diplodocus ↔ NS3 synchronisation — WACS nominal model (UDP + TCP)
 We provide also the table of synchronization to prove both clocks advance consistently. It takes examples of iterations from the beginning, the middle and the end of the cosimulation. 
 
 Session: 20 network commands (10 iterations per direction), 20 simulated, 0 failed.
