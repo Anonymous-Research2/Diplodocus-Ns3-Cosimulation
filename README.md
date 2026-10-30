@@ -10,10 +10,10 @@ DIPLODOCUS and ns-3 don't talk to each other directly. Each one works with its o
 
 ## 1. Prerequisites
 
-- **TTool / DIPLODOCUS** with our modifications to integrate the bridge:
-Our TTool modifications are in [`ttool-patch/`](ttool-patch/): a patch
-(`ttool-ns3-bridge.patch`) and the modified/added files in plain form
-([`ttool-patch/files/`](ttool-patch/files/)).
+- **TTool / DIPLODOCUS** with our modifications to integrate the bridge:  
+Our TTool modifications are in [`ttool-patch/`](ttool-patch/): a patch  
+(`ttool-ns3-bridge.patch`) and the modified/added files in plain form  
+([`ttool-patch/files/`](ttool-patch/files/)).  
 
 ```bash
 git clone https://gitlab.telecom-paris.fr/mbe-tools/TTool.git
