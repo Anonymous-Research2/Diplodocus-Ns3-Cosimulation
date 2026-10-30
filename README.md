@@ -43,7 +43,8 @@ The three ontologies are in [`ontologies/`](ontologies/):
 - **`ns3.owl.ttl`**
 - **`mapping.owl.ttl`** 
 
-The mapper adds individuals to these ontologies at run time. Start each run from the original files.
+The mapper adds individuals to these ontologies at run time. Start each run from the original files.  
+They should be added to the mapper project before starting it.
 
 ## 3. NS-3 script
 The script that is used to configure on runtime NS-3 is in [`ns3/`](ns3/):
