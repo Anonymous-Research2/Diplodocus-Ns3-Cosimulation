@@ -10,10 +10,7 @@ DIPLODOCUS and ns-3 don't talk to each other directly. Each one works with its o
 
 ## 1. Prerequisites
 
-- **TTool / DIPLODOCUS** with our modifications (see [TTool with the bridge](#ttool-with-the-bridge)).
-
-### TTool with the bridge
-
+- **TTool / DIPLODOCUS** with our modifications to integrate the bridge:
 Our TTool modifications are in [`ttool-patch/`](ttool-patch/): a patch
 (`ttool-ns3-bridge.patch`) and the modified/added files in plain form
 ([`ttool-patch/files/`](ttool-patch/files/)).
@@ -31,7 +28,7 @@ Then replace `/home/USER` with your own paths in:
 `simulators/c++2/src_ns3/OntologyBridgeRunner.cpp`,
 `simulators/c++2/src_ns3/OntologyBridgeTask.cpp` and
 `src/main/java/tmltranslator/tomappingsystemc2/ns3/NS3GlobalNetwork.java`
-(path of `diplodocus.owl.ttl`, of ns-3 and of the TTool simulator folder).
+
 
 
 
