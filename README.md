@@ -10,10 +10,31 @@ DIPLODOCUS and ns-3 don't talk to each other directly. Each one works with its o
 
 ## 1. Prerequisites
 
-- **TTool / DIPLODOCUS**: install it by following https://ttool.telecom-paris.fr
-  
-  *Important*: To use the Diplodocus–NS-3 integration, download the diplodocus-ns3 branch instead of the standard TTool version.
-  
+- **TTool / DIPLODOCUS** with our modifications (see [TTool with the bridge](#ttool-with-the-bridge)).
+
+## TTool with the bridge
+
+Our TTool modifications are in [`ttool-patch/`](ttool-patch/): a patch
+(`ttool-ns3-bridge.patch`) and the modified/added files in plain form
+([`ttool-patch/files/`](ttool-patch/files/)).
+
+```bash
+git clone https://gitlab.telecom-paris.fr/mbe-tools/TTool.git
+cd TTool
+git checkout 0c1d6dd03d6883a309a6cd4f2f4dacc74f50ccc5
+git apply /path/to/ttool-patch/ttool-ns3-bridge.patch
+make ttool
+```
+
+Then replace `/home/USER` with your own paths in:
+`simulators/c++2/netbridge.conf`, `simulators/c++2/src_ns3/NetBridgeConfig.h`,
+`simulators/c++2/src_ns3/OntologyBridgeRunner.cpp`,
+`simulators/c++2/src_ns3/OntologyBridgeTask.cpp` and
+`src/main/java/tmltranslator/tomappingsystemc2/ns3/NS3GlobalNetwork.java`
+(path of `diplodocus.owl.ttl`, of ns-3 and of the TTool simulator folder).
+
+
+
 - **ns-3**: install it by following https://www.nsnam.org
 - **Java** (JDK) and **Maven**, used to build the mapper.
 
