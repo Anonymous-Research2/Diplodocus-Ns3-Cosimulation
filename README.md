@@ -45,7 +45,7 @@ Launch the mapper (DiploToNs3Mapper.java).
 Start the simulation of the model from TTool/DIPLODOCUS simulator.
 Wait for results
 
-### 6. Execution flow
+### Execution flow
 
 1. DIPLODOCUS requests the model check → Java reasons and returns the verdict and the transport per channel.
 2. A network transaction starts on an NI → it is written to the ontology → Java maps it and sends it to NS-3 → NS-3 injects it at the same time instant.
@@ -53,7 +53,7 @@ Wait for results
 4. NS-3 produces a result → Java converts it to cycles → DIPLODOCUS ends the transaction at that cycle.
 5. Java gives the hand to the user to enter their SPARQL queries for tracability and requierements check.
 
-## 5. Results
+## 6. Results
 
 The log of the co-simulation and the html file showing the co-simulation are in [`results/`](results/):
 
