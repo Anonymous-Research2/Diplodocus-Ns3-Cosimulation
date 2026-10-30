@@ -64,7 +64,7 @@ It reads the TTool model, runs the reasoner, configures ns-3 command by command,
 4. Start the simulation of the model from TTool/DIPLODOCUS simulator.*
 5. Wait for results
 
-We provide two videos to show how to execute the semantic bridge in [`run/`](run/)
+We provide two videos to show the execution of two cosimulation (nominal example and fault example) using the semantic bridge in [`run/`](run/)
 
 ### Execution flow
 
