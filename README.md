@@ -39,11 +39,13 @@ It reads the TTool model, runs the reasoner, configures ns-3 command by command,
 
 
 ## 5. Run
-Lauch TTool and upload an example from [`models/`](models/): Nominal example: `models/WACS_WADC_nominal.xml`, Fault example: `models/WACS_WADC_fault.xml`
-Launch TTool/DIPLODOCUS simulator
-Launch the mapper (DiploToNs3Mapper.java). 
-Start the simulation of the model from TTool/DIPLODOCUS simulator.
-Wait for results
+1. Lauch TTool and upload an example from [`models/`](models/): Nominal example: `models/WACS_WADC_nominal.xml`, Fault example: `models/WACS_WADC_fault.xml`
+2. Launch TTool/DIPLODOCUS simulator
+3. Launch the mapper (DiploToNs3Mapper.java).
+4. Start the simulation of the model from TTool/DIPLODOCUS simulator.*
+5. Wait for results
+
+We provide two videos to show how to execute the semantic bridge in [`run/`](run/)
 
 ### Execution flow
 
