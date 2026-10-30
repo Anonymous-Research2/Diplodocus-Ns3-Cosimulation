@@ -1,0 +1,53 @@
+[netbridge.conf] SubTxNI -> CCRxNI senderNode=0
+[netbridge.conf] CCTxNI -> SubRxNI senderNode=1
+========================================================
+  STEP 1: Loading ontologies
+========================================================
+log4j:WARN No appenders could be found for logger (org.apache.jena.util.FileManager).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+  Loaded 565 triples (TBox + ABox + mapping).
+
+#########################################################
+  CO-SIMULATION PIPELINE (Phase I model check, then Phase II co-simulation)
+#########################################################
+
+  Watching /home/isso84/eclipse/eclipse-workspace/Diplo-Ns3-mapper1/diplodocus.owl.ttl for changes (event-driven, no fixed polling delay).
+  Running for 90s total. The command generator will inject commands automatically for the first 3s.
+  [model-check] request found: ModelCheck_startup
+
+########################################################
+  PHASE I -- Before the simulation: start-up model check (before cycle 0)
+########################################################
+  [model-check] TTool model : /home/isso84/TTool-ns3/modeling/NS3/WACS_WADC_fault.xml
+  [model-check] NI tasks    : [CCRxNI, CCTxNI, SubTxNI, SubRxNI]
+  [model-check] channel measPktOut__measPktIn  SubTxNI -> CCRxNI  mapped on Network [Network1, Network0]  blocking=true lossy=true loss%=2 capacity=8 width=4
+  [model-check] channel cmdPktOut__cmdPktIn  CCTxNI -> SubRxNI  mapped on Network [Network1, Network0]  blocking=true lossy=false loss%=0 capacity=8 width=4
+  [model-check] channel measToPDC__measFromNI  CCRxNI -> PDC  mapped on Bus [Bus1]  blocking=true lossy=false loss%=0 capacity=8 width=4
+  [model-check] channel cmdOut__cmdIn  WADC -> CCTxNI  mapped on Bus [Bus1]  blocking=true lossy=false loss%=0 capacity=8 width=4
+  [model-check] channel measOut__measIn  PMU -> SubTxNI  mapped on Bus [Bus0]  blocking=true lossy=false loss%=0 capacity=8 width=4
+  [model-check] channel cmdToPSS__cmdFromNI  SubRxNI -> PSS  mapped on Bus [Bus0]  blocking=true lossy=false loss%=0 capacity=8 width=4
+  [model-check] 98 triples added to diplodocus.owl.ttl (channels, NI tasks, networks, buses).
+  [model-check] Running Openllet on diplodocus + ns3 + mapping ...
+  [model-check] Reasoner: ontology INCONSISTENT -> the model CANNOT be co-simulated faithfully.
+  [model-check] CONFLICT on channel measPktOut__measPktIn (SubTxNI -> CCRxNI):
+      NetworkChannel      : mapped on Network [Network1, Network0]
+      BackpressureChannel : isBlocking=true  => its NI tasks must be ns3:TcpSocket
+      LossyChannel        : isLossy=true (2%) => its NI tasks must be ns3:UdpSocket
+      ns3:TcpSocket owl:disjointWith ns3:UdpSocket  => no individual can be both: inconsistency.
+      Accepted by TTool, but no single ns-3 transport reproduces this channel. Fix: make it non-blocking (-> UDP) or lossless (-> TCP).
+  [model-check] topology: router {NR0=1000000000}, NI bandwidths {NI1=10000000, NI0=10000000}, networks {Network1=1000000000, Network0=1000000000}, connections [NI0-Network0, NI1-Network1, NR0-Network1, NR0-Network0] -> /home/isso84/TTool-ns3/simulators/c++2/net_topology.conf
+########################################################
+
+
+  [final pass] Running one last check for any unhandled command...
+
+  Waiting up to 195s for any results still in flight...
+
+  Pipeline window ended.
+  Commands detected      : 1
+  Successfully simulated  : 0
+  Failed / timed out      : 0
+
+  DONE.
+
