@@ -8,27 +8,6 @@ DIPLODOCUS and ns-3 don't talk to each other directly. Each one works with its o
 
 ---
 
-## Repository content
-
-```
-.
-├── models/
-│   ├── WACS_WADC_nominal.xml     # nominal case study (co-simulable)
-│   └── WACS_WADC_fault.xml       # fault case study (rejected before cycle 0)
-├── ontologies/
-│   ├── diplodocus.owl.ttl        # DIPLODOCUS ontology
-│   ├── ns3.owl.ttl               # ns-3 ontology
-│   └── mapping.owl.ttl           # mapping ontology (equivalences, SWRL rules, transport axioms)
-├── mapper/                       # <!-- path / description of the mapper (Java, Maven) -->
-├── ns3/                          # <!-- path of the ns-3 script (SynAuto.cc) -->
-├── results/
-│   ├── nominal/                  # <!--  console output + DIPLODOCUS trace (.html) -->
-│   └── fault/                    # <!-- console output -->
-└── Makefile
-```
-
----
-
 ## 1. Prerequisites
 
 - **TTool / DIPLODOCUS**: install it by following https://ttool.telecom-paris.fr
