@@ -39,21 +39,23 @@ It reads the TTool model, runs the reasoner, configures ns-3 command by command,
 
 
 ## 5. Run
+Lauch TTool and upload an example from [`models/`](models/): Nominal example: `models/WACS_WADC_nominal.xml`, Fault example: `models/WACS_WADC_fault.xml`
+Launch TTool/DIPLODOCUS simulator
+Launch the mapper (DiploToNs3Mapper.java). 
+Start the simulation of the model from TTool/DIPLODOCUS simulator.
+Wait for results
 
-Launch the mapper. Then start the simulation of the model from TTool (DIPLODOCUS simulator).
+### 6. Execution flow
 
-### Nominal example: `models/WACS_WADC_nominal.xml`
-- The measurement channel is non-blocking and lossy (2 %), so it gets **UDP** with `errorRate = 0.02`.
-- The command channel is blocking and lossless, so it gets **TCP** with `sndBufSize = 32` bytes.
-- The co-simulation runs, and both flows are transferred concurrently in a single ns-3 session.
-
-### Fault example: `models/WACS_WADC_fault.xml`
-- The measurement channel is **blocking and lossy**. TTool accepts this model, but no single transport can reproduce it.
-- The reasoner reports the ontology as **inconsistent** and explains the conflict. DIPLODOCUS stops before cycle 0 and ns-3 is not started.
+1. DIPLODOCUS requests the model check → Java reasons and returns the verdict and the transport per channel.
+2. A network transaction starts on an NI → it is written to the ontology → Java maps it and sends it to NS-3 → NS-3 injects it at the same time instant.
+3. DIPLODOCUS and NS-3 advance together, slice by slice.
+4. NS-3 produces a result → Java converts it to cycles → DIPLODOCUS ends the transaction at that cycle.
+5. Java gives the hand to the user to enter their SPARQL queries for tracability and requierements check.
 
 ## 5. Results
 
-The log of the co-simulation and the html file showing the co-simulation is in [`results/`](results/):
+The log of the co-simulation and the html file showing the co-simulation are in [`results/`](results/):
 
 
 ## Appendix: Some details of implementation of the semantic bridge and it works
@@ -82,24 +84,15 @@ The co-simulation links three parts: an extension of the **DIPLODOCUS** C++ simu
 | Class | Role |
 |---|---|
 | `ModelChecker.java` | Model check and ns-3 configuration before the simulation. |
-| `DiploToNs3Mapper3PelletJenaOldRT2D2cl2SyncUDP.java` | Mapping of the transfers between DIPLODOCUS and ns-3, then SPARQL queries. |
+| `DiploToNs3Mapper.java` | Mapping of the transfers between DIPLODOCUS and ns-3, then SPARQL queries. |
 | `Ns3RunnerVisualSyncUDP.java` | Communication with ns-3. |
 
 ### 4. ns-3 script
 
 `scratch/java-bridge-sim-Visual-RT2_SynAuto.cc` builds the network and simulates the transfers sent by the bridge.
 
-### 5. Execution flow
 
-1. DIPLODOCUS requests the model check → Java reasons and returns the verdict and the transport per channel.
-2. A network transaction starts on an NI → it is written to the ontology → Java maps it and sends it to NS-3 → NS-3 injects it at the same time instant.
-3. DIPLODOCUS and NS-3 advance together, slice by slice.
-4. NS-3 produces a result → Java converts it to cycles → DIPLODOCUS ends the transaction at that cycle.
-5. Java gives the hand to the user to enter their SPARQL queries for tracability and requierements check.
-
-
-
-## 6. Diplodocus ↔ NS3 synchronisation — WACS nominal model (UDP + TCP)
+## 5. Diplodocus ↔ NS3 synchronisation — WACS nominal model (UDP + TCP)
 We provide also the table of synchronization to prove both clocks advance consistently. It takes examples of iterations from the beginning, the middle and the end of the cosimulation. 
 
 Session: 20 network commands (10 iterations per direction), 20 simulated, 0 failed.
