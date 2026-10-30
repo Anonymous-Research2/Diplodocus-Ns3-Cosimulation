@@ -12,7 +12,7 @@ DIPLODOCUS and ns-3 don't talk to each other directly. Each one works with its o
 
 - **TTool / DIPLODOCUS** with our modifications (see [TTool with the bridge](#ttool-with-the-bridge)).
 
-## TTool with the bridge
+### TTool with the bridge
 
 Our TTool modifications are in [`ttool-patch/`](ttool-patch/): a patch
 (`ttool-ns3-bridge.patch`) and the modified/added files in plain form
