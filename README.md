@@ -52,7 +52,7 @@ It should be put in: /home/your-machine/ns-3-dev/scratch
 ## 4. The mapper
 
 
-The mapper is in [`mapper/`](mapper/) .
+The mapper is in [`mapper/`](mapper/) . It should be imported as a maven project.
 It reads the TTool model, runs the reasoner, configures ns-3 command by command, and writes the results back into the ontologies.
 
 
