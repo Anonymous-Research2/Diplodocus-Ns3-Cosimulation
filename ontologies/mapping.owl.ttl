@@ -56,13 +56,13 @@ var:NsToCycleRule_dc     rdf:type swrl:Variable .
 ### PART C — SWRL Rule 1: Diplodocus cycle -> NS3 nanoseconds
 ###
 ### In human terms:
-###   ns_value = cycleValue * (1e9 / masterClockFrequencyHz)
+###   ns_value = cycleValue * (1e9 / FrequencyHz)
 ###
 ### SWRL body:
 ###   dip:CycleTimePoint(?c)
 ###   dip:cycleValue(?c, ?cv)
 ###   dip:NetTask(?t)
-###   dip:masterClockFrequencyHz(?t, ?f)
+###   dip:FrequencyHz(?t, ?f)
 ###   swrlb:divide(?period, 1000000000.0, ?f)   -- period = 1e9/f
 ###   swrlb:multiply(?nsv, ?cv, ?period)         -- nsv = cv * period
 ###
@@ -100,7 +100,7 @@ var:NsToCycleRule_dc     rdf:type swrl:Variable .
                     rdf:type swrl:AtomList ;
                     rdf:first [
                         rdf:type swrl:DatavaluedPropertyAtom ;
-                        swrl:propertyPredicate dip:masterClockFrequencyHz ;
+                        swrl:propertyPredicate dip:FrequencyHz ;
                         swrl:argument1 var:CycleToNsRule_t ;
                         swrl:argument2 var:CycleToNsRule_f
                     ] ;
@@ -172,13 +172,13 @@ var:NsToCycleRule_dc     rdf:type swrl:Variable .
 ### PART D — SWRL Rule 2: NS3 nanoseconds -> Diplodocus cycles
 ###
 ### In human terms:
-###   delay_cycles = measuredLatencyNs * (masterClockFrequencyHz / 1e9)
+###   delay_cycles = measuredLatencyNs * (FrequencyHz / 1e9)
 ###
 ### SWRL body:
 ###   ns3:TransferResult(?r)
 ###   ns3:measuredLatencyNs(?r, ?lat)
 ###   dip:NetTask(?t)
-###   dip:masterClockFrequencyHz(?t, ?f)
+###   dip:FrequencyHz(?t, ?f)
 ###   swrlb:divide(?fGHz, ?f, 1000000000.0)     -- fGHz = f/1e9
 ###   swrlb:multiply(?dc, ?lat, ?fGHz)           -- dc = lat * fGHz
 ###
@@ -216,7 +216,7 @@ var:NsToCycleRule_dc     rdf:type swrl:Variable .
                     rdf:type swrl:AtomList ;
                     rdf:first [
                         rdf:type swrl:DatavaluedPropertyAtom ;
-                        swrl:propertyPredicate dip:masterClockFrequencyHz ;
+                        swrl:propertyPredicate dip:FrequencyHz ;
                         swrl:argument1 var:NsToCycleRule_t ;
                         swrl:argument2 var:NsToCycleRule_f
                     ] ;
@@ -412,3 +412,31 @@ var:ErrorRateRule_r rdf:type swrl:Variable .
     rdf:rest rdf:nil
 ] .
 
+
+### ================================================================
+### PART G - Topology correspondences
+###
+### Structural correspondences between the DIPLODOCUS architecture
+### and the ns-3 topology. 
+###
+### Network interfaces and routers use rdfs:subClassOf, not
+### owl:equivalentClass: ns3:Router is a subclass of ns3:Node, so
+### NetworkInterface = Node and NetworkRouter = Router would make
+### every router a network interface, which contradicts
+### ExecutionNode disjointWith CommunicationElement (DIPLODOCUS).
+### ================================================================
+
+dip:NetworkInterface rdfs:subClassOf ns3:Node .
+dip:NetworkRouter    rdfs:subClassOf ns3:Router .
+dip:Network          owl:equivalentClass ns3:Link .
+
+dip:attachedTo owl:equivalentProperty ns3:connectedTo .
+dip:executesOn owl:equivalentProperty ns3:boundTo .
+
+### Link data rate (computational, computed by the bridge, no rule):
+###   ns3:dataRateBps(link) = min( dip:bandwidthBps of the NI or router,
+###                                dip:bandwidthBps of the network )
+### No property equivalence on purpose: dip:bandwidthBps is also
+### asserted on NIs and routers, while ns3:dataRateBps has domain
+### ns3:Link; an equivalence would type every NI as a Link (= Network)
+### and make the ontology inconsistent.
